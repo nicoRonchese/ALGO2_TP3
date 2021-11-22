@@ -7,8 +7,8 @@ Menu::Menu(){
  this->datosMateriales = new DatosMateriales;
  this->turno = JUGADOR_UNO;
  this->energia = new int[2];
- energia[JUGADOR_UNO] = 50;
- energia[JUGADOR_DOS] = 50;
+ energia[JUGADOR_UNO] = ENERGIA_INICIAL;
+ energia[JUGADOR_DOS] = ENERGIA_INICIAL;
 }
 
 string Menu::minusculizar(string nombre){
@@ -157,8 +157,8 @@ void Menu::chequear_energia(){
   cout<<endl;
   finalizar_turno();
  }
- if (energia[turno]>100)
-  energia[turno] = 100;
+ if (energia[turno]>ENERGIA_MAXIMA)
+  energia[turno] = ENERGIA_MAXIMA;
 }
 
 void Menu::procesar_opcion_juego(int opcion){
