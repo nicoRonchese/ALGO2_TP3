@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string.h>
 //#include "Mapa.h"
-//#include "Datos Materiales.h"
+#include "DatosMateriales.h"
 
 using namespace std;
 
@@ -41,7 +41,7 @@ class Menu{
      //Atributos
 
      //Mapa* mapa;
-     //Datos_materiales* datosMateriales;
+     DatosMateriales* datosMateriales;
      int turno;
      int* energia;
      //Como podemos guardar los objetivos??
