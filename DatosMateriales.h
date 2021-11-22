@@ -19,8 +19,7 @@ const string NOMBRE_MADERA = "madera";
 const string NOMBRE_METAL = "metal";
 const string NOMBRE_ANDYCOIN = "andycoins";
 const string NOMBRE_BOMBA = "bombas";
-
-
+const int COSTO_BOMBA = 100;
 
 struct Material{
     string nombre;
