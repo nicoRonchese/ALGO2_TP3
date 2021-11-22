@@ -33,8 +33,9 @@ const int COSTO_ATACAR = 30;
 const int COSTO_REPARAR = 25;
 const int COSTO_COMPRAR = 5;
 const int COSTO_RECOLECTAR = 20;
+const int ENERGIA_INICIAL = 50;
 const int ENERGIA_RECIBIDA = 20;
-
+const int ENERGIA_MAXIMA = 100;
 
 class Menu{
  private:
