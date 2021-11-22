@@ -1,5 +1,6 @@
 
 #include "Menu.h"
+#include "DatosMateriales.cpp"
 
 Menu::Menu(){
  //this->mapa = new Mapa;
@@ -320,7 +321,7 @@ void Menu::consultar_coordenada(){
 }
 
 void Menu::mostrar_inventario(){
- datosMateriales->mostrar_materiales();
+ datosMateriales->mostrar_materiales(turno);
 }
 
 void Menu::mostrar_objetivos(){
