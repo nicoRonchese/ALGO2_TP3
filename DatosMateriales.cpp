@@ -47,10 +47,10 @@ void DatosMateriales::mostrar_materiales(int jugador){
 
 bool DatosMateriales::comprar_bombas(int jugador, int cantidad){
  bool compra_realizada=false;
- if (cantidad*100>materiales[jugador][ANDYCOIN]->cantidad)
+ if (cantidad*COSTO_BOMBA>materiales[jugador][ANDYCOIN]->cantidad)
     cout<<"No tiene la cantidad necesaria de Andycoins para esta compra"<<endl;
  else{
-    materiales[jugador][ANDYCOIN]->cantidad-=cantidad*100;
+    materiales[jugador][ANDYCOIN]->cantidad-=cantidad*COSTO_BOMBA;
     materiales[jugador][BOMBA]->cantidad+=cantidad;
     cout<<"Compra realizada con exito"<<endl;
     compra_realizada=true;
