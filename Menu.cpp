@@ -3,7 +3,7 @@
 
 Menu::Menu(){
  //this->mapa = new Mapa;
- //this->datos_materiales = new Datos_materiales;
+ this->datosMateriales = new DatosMateriales;
  this->turno = JUGADOR_UNO;
  this->energia = new int[2];
  energia[JUGADOR_UNO] = 50;
@@ -291,9 +291,17 @@ void Menu::reparar_construccion(){
 }
 
 void Menu::comprar_bombas(){
- //datosMateriales->comprar_bombas();
- if (energia[turno] >= COSTO_COMPRAR)
-  energia[turno] -= COSTO_COMPRAR;
+ if (energia[turno] >= COSTO_COMPRAR){
+  string cantidad_string;
+  int cantidad;
+  cout<<"Cantidad de bombas a comprar: ";
+  cin>>cantidad_string;
+  cantidad = ingrese_numero(cantidad_string);
+  if (datosMateriales->comprar_bombas(turno, cantidad))
+   energia[turno] -= COSTO_COMPRAR;
+ }
+ else
+    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::consultar_coordenada(){
@@ -312,7 +320,7 @@ void Menu::consultar_coordenada(){
 }
 
 void Menu::mostrar_inventario(){
- //datosMateriales->mostrar_materiales();
+ datosMateriales->mostrar_materiales();
 }
 
 void Menu::mostrar_objetivos(){
@@ -342,14 +350,14 @@ void Menu::finalizar_turno(){
 }
 
 void Menu::guardar_salir(){
- //datosMateriales->guardar_materiales();
+ datosMateriales->guardar_materiales();
  //mapa->guardar_construcciones();
  //mapa->guardar_edificios();
 }
 
 Menu::~Menu(){
  //delete mapa;
- //delete datosMateriales;
+ delete datosMateriales;
 }
 
 
