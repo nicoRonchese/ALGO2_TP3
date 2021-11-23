@@ -348,6 +348,7 @@ void Menu::mostrar_inventario(){
 }
 
 void Menu::mostrar_objetivos(){
+ objetivos[turno]->mostrar_objetivos();
 }
 
 void Menu::recolectar_recursos(){
