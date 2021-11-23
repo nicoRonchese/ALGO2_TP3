@@ -334,9 +334,10 @@ void Menu::comprar_bombas(){
   cout<<"Cantidad de bombas a comprar: ";
   cin>>cantidad_string;
   cantidad = ingrese_numero(cantidad_string);
-  if (datosMateriales->comprar_bombas(turno, cantidad))
+  if (datosMateriales->comprar_bombas(turno, cantidad)){
    energia[turno] -= COSTO_COMPRAR;
    objetivos[turno]->actualizar_objetivo(EXTREMISTA, cantidad);
+  }
  }
  else
     cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
