@@ -4,6 +4,7 @@
 #include <string.h>
 //#include "Mapa.h"
 #include "DatosMateriales.h"
+#include "Objetivos.h"
 
 using namespace std;
 
@@ -43,6 +44,7 @@ class Menu{
 
      //Mapa* mapa;
      DatosMateriales* datosMateriales;
+     Objetivos** objetivos;
      int turno;
      int* energia;
      //Como podemos guardar los objetivos??
@@ -67,6 +69,10 @@ class Menu{
  private:
      //Métodos privados
 
+     //PRE:
+     //POS:
+     void cambiar_turno();
+ 
      //PRE: debe recibir un int
      //POS: segun el numero realizara una tarea
      void procesar_opcion_inicial(int opcion);
