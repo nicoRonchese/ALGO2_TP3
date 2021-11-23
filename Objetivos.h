@@ -26,14 +26,17 @@ class Objetivos{
  private:
   Objetivo** objetivos;
   int* maximo_escuelas;
+  bool obelisco_construido;
 
  public:
   Objetivos(int maximo_escuelas);
 
   ~Objetivos();
+  
+  void construccion_obelisco();
 
-  void obelisco_construido();
-
+  void mostrar_victoria(int jugador);
+ 
   bool comprobar_objetivo(int tipo_objetivo);
 
   bool comprobar_objetivos_cumplidos();
