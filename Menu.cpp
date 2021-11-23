@@ -5,14 +5,7 @@
 
 Menu::Menu(){
  //this->mapa = new Mapa;
- this->datosMateriales = new DatosMateriales;
- this->objetivos = new Objetivos*[2];
- for (int jugador = 0; jugador < 2; jugador++)
-    objetivos[jugador] = new Objetivos(5);
- this->turno = JUGADOR_UNO;
- this->energia = new int[2];
- energia[JUGADOR_UNO] = ENERGIA_INICIAL;
- energia[JUGADOR_DOS] = ENERGIA_INICIAL;
+ this->cantidad_jugadores = CANTIDAD_JUGADORES;
 }
 
 string Menu::minusculizar(string nombre){
@@ -33,6 +26,17 @@ int Menu::ingrese_numero(string numero){
     }
     opcion = stoi(numero);
     return opcion;
+}
+
+void Menu::crear_datos_jugadores(){
+ this->datosMateriales = new DatosMateriales(cantidad_jugadores);
+ this->objetivos = new Objetivos*[cantidad_jugadores];
+ for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
+    objetivos[jugador] = new Objetivos(5);
+ this->energia = new int[cantidad_jugadores];
+ for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
+    energia[jugador] = ENERGIA_INICIAL;
+ this->turno = JUGADOR_UNO;
 }
 
 void Menu::empezar_menu(){
@@ -62,8 +66,9 @@ void Menu::mostrar_menu_inicial(){
  cout<<"1. Modificar edificio por nombre."<<endl;
  cout<<"2. Listar todos los edificios."<<endl;
  cout<<"3. Mostrar mapa."<<endl;
- cout<<"4. Comenzar partida"<<endl;
- cout<<"5. Guardar y salir"<<endl;
+ cout<<"4. Cambiar cantidad de jugadores."<<endl;
+ cout<<"5. Comenzar partida"<<endl;
+ cout<<"6. Guardar y salir"<<endl;
 }
 
 void Menu::mostrar_menu_juego(){
@@ -93,6 +98,9 @@ void Menu::procesar_opcion_inicial(int opcion){
         case MOSTRAR_MAPA:
             mostrar_mapa();
             break;
+        case CAMBIAR_CANTIDAD_JUGADORES:
+            cambiar_cantidad_jugadores();
+            break;
         case COMENZAR_PARTIDA:
             comenzar_partida();
             break;
@@ -116,10 +124,18 @@ void Menu::mostrar_mapa(){
  //mapa->mostrar_mapa();
 }
 
+void Menu::cambiar_cantidad_jugadores(){
+ string cantidad_jugadores_string;
+ int cantidad_jugadores;
+ cout<<"Cantidad de jugadores: ";
+ cin>>cantidad_jugadores_string;
+ cantidad_jugadores = ingrese_numero(cantidad_jugadores_string);
+ this->cantidad_jugadores = cantidad_jugadores;
+}
+
 void Menu::cambiar_turno(){
- if (turno==JUGADOR_UNO)
-    turno = JUGADOR_DOS;
- else
+ turno++;
+ if (turno == cantidad_jugadores)
     turno = JUGADOR_UNO;
 }
 
@@ -127,7 +143,8 @@ void Menu::comenzar_partida(){
  int opcion = 0;
  string basura,resp;
  lluvia_recursos();
- for (int jugador = 0; jugador < 2; jugador++){
+ crear_datos_jugadores();
+ for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
   objetivos[jugador]->actualizar_objetivo(COMPRAR_ANDYPOLIS, datosMateriales->devolver_cantidad(jugador, ANDYCOIN));
   objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
   objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
@@ -164,10 +181,7 @@ void Menu::lluvia_recursos(){
 }
 
 void Menu::mostrar_turno(){
- if (turno==JUGADOR_UNO)
-    cout<<"Turno: Jugador 1"<<endl;
- else
-    cout<<"Turno: Jugador 2"<<endl;
+ cout<<"Turno: Jugador "<<turno+1<<endl;
 }
 
 void Menu::mostrar_energia(){
