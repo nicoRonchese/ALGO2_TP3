@@ -1,10 +1,14 @@
 
 #include "Menu.h"
 #include "DatosMateriales.cpp"
+#include "Objetivos.cpp"
 
 Menu::Menu(){
  //this->mapa = new Mapa;
  this->datosMateriales = new DatosMateriales;
+ this->objetivos = new Objetivos*[2];
+ for (int jugador = 0; jugador < 2; jugador++)
+    objetivos[jugador] = new Objetivos(5);
  this->turno = JUGADOR_UNO;
  this->energia = new int[2];
  energia[JUGADOR_UNO] = ENERGIA_INICIAL;
@@ -112,11 +116,22 @@ void Menu::mostrar_mapa(){
  //mapa->mostrar_mapa();
 }
 
+void Menu::cambiar_turno(){
+ if (turno==JUGADOR_UNO)
+    turno = JUGADOR_DOS;
+ else
+    turno = JUGADOR_UNO;
+}
 
 void Menu::comenzar_partida(){
  int opcion = 0;
  string basura,resp;
  lluvia_recursos();
+ for (int jugador = 0; jugador < 2; jugador++){
+  objetivos[jugador]->actualizar_objetivo(COMPRAR_ANDYPOLIS, datosMateriales->devolver_cantidad(jugador, ANDYCOIN));
+  objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
+  objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
+ }
  while (opcion!=GUARDAR_SALIR){
     mostrar_turno();
     mostrar_energia();
@@ -126,9 +141,16 @@ void Menu::comenzar_partida(){
     opcion = ingrese_numero(resp);
     cout<<endl;
     procesar_opcion_juego(opcion);
+    objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
+    objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
     chequear_energia();
-    if (opcion!=GUARDAR_SALIR)
-    {
+    if (objetivos[turno]->comprobar_objetivos_cumplidos()){
+        system(CLR_SCREEN);
+        cout << "FELICITACIONES JUGADOR "<< turno+1 <<" GANASTE!!!"<<endl<<endl;
+        objetivos[turno]->mostrar_objetivos();
+        break;
+    }
+    else if (opcion!=GUARDAR_SALIR){
         cout<<endl;
         cout << "Presione una letra y enter para continuar: ";
         cin >> basura;
@@ -300,6 +322,7 @@ void Menu::comprar_bombas(){
   cantidad = ingrese_numero(cantidad_string);
   if (datosMateriales->comprar_bombas(turno, cantidad))
    energia[turno] -= COSTO_COMPRAR;
+   objetivos[turno]->actualizar_objetivo(EXTREMISTA, cantidad);
  }
  else
     cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
@@ -338,15 +361,15 @@ void Menu::moverse_coordenada(){
 }
 
 void Menu::finalizar_turno(){
+ objetivos[turno]->actualizar_objetivo(CANSADO, energia[turno]);
+ objetivos[turno]->actualizar_objetivo(ENERGETICO, energia[turno]);
  if (energia[turno]==0)
     cout<<"Turno finalizado por falta de energia"<<endl;
  else
     cout<<"Turno finalizado"<<endl;
  energia[turno] += ENERGIA_RECIBIDA;
- if (turno==JUGADOR_UNO)
-    turno = JUGADOR_DOS;
- else
-    turno = JUGADOR_UNO;
+ if (!objetivos[turno]->comprobar_objetivos_cumplidos())
+    cambiar_turno();
  lluvia_recursos();
 }
 
@@ -359,6 +382,7 @@ void Menu::guardar_salir(){
 Menu::~Menu(){
  //delete mapa;
  delete datosMateriales;
+ delete [] energia;
 }
 
 
