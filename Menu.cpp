@@ -149,7 +149,7 @@ void Menu::comenzar_partida(){
   objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
   objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
  }
- while (opcion!=GUARDAR_SALIR){
+ while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
     mostrar_turno();
     mostrar_energia();
     mostrar_menu_juego();
@@ -163,9 +163,7 @@ void Menu::comenzar_partida(){
     chequear_energia();
     if (objetivos[turno]->comprobar_objetivos_cumplidos()){
         system(CLR_SCREEN);
-        cout << "FELICITACIONES JUGADOR "<< turno+1 <<" GANASTE!!!"<<endl<<endl;
-        objetivos[turno]->mostrar_objetivos();
-        break;
+        objetivos[turno]->mostrar_victoria(turno);
     }
     else if (opcion!=GUARDAR_SALIR){
         cout<<endl;
