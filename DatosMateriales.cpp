@@ -1,9 +1,41 @@
 #include "DatosMateriales.h"
 
-DatosMateriales::DatosMateriales() {
+DatosMateriales::DatosMateriales(int cantidad_jugadores) {
+    this->materiales = new Material**[cantidad_jugadores];
+    this->cantidad_jugadores = cantidad_jugadores;
+    if (cantidad_jugadores==CANTIDAD_JUGADORES)
+     leer_archivo();
+    else
+     leer_archivo_inicial();
+    ordenar_materiales();
+}
+
+void DatosMateriales::leer_archivo_inicial(){
     cantidad_materiales = 0;
     ifstream archivo(PATH_MATERIALES);
-    this->materiales = new Material**[2];
+    string nombre, cantidad_uno, cantidad_dos;
+    Material* material;
+    if(archivo.fail()){
+     cout << "Error abriendo el fichero " << PATH_MATERIALES << endl;
+    }
+    else{
+     while(archivo >> nombre){
+        archivo >> cantidad_uno;
+        archivo >> cantidad_dos;
+        material = new Material;
+        material -> nombre = nombre;
+        material -> cantidad = 0;
+        for (int jugador = 0; jugador<cantidad_jugadores; jugador++)
+         agregar_material(material, jugador);
+        cantidad_materiales++;
+     }
+    }
+    archivo.close();
+}
+
+void DatosMateriales::leer_archivo(){
+    cantidad_materiales = 0;
+    ifstream archivo(PATH_MATERIALES);
     string nombre, cantidad_uno, cantidad_dos;
     Material* material_uno;
     Material* material_dos;
@@ -26,7 +58,6 @@ DatosMateriales::DatosMateriales() {
      }
     }
     archivo.close();
-    ordenar_materiales();
 }
 
 void DatosMateriales::agregar_material(Material* material, int jugador){
@@ -63,12 +94,12 @@ bool DatosMateriales::comprar_bombas(int jugador, int cantidad){
 }
 
 void DatosMateriales::cambio(int posicion1, int posicion2){
-    Material *aux = materiales[JUGADOR_UNO][posicion1];
-    materiales[JUGADOR_UNO][posicion1] = materiales[JUGADOR_UNO][posicion2];
-    materiales[JUGADOR_UNO][posicion2] = aux;
-    Material *aux2 = materiales[JUGADOR_DOS][posicion1];
-    materiales[JUGADOR_DOS][posicion1] = materiales[JUGADOR_DOS][posicion2];
-    materiales[JUGADOR_DOS][posicion2] = aux2;
+    Material *aux;
+    for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+     aux = materiales[jugador][posicion1];
+     materiales[jugador][posicion1] = materiales[jugador][posicion2];
+     materiales[jugador][posicion2] = aux;
+    }
 }
 
 void DatosMateriales::ordenar_materiales(){
@@ -127,9 +158,9 @@ void DatosMateriales::restar_materiales_usados(//edificio edificio
 }
 
 DatosMateriales::~DatosMateriales() {
-   for (int jugador=0; jugador<2; jugador++){
+   for (int jugador=0; jugador<cantidad_jugadores; jugador++){
     for (int material=0; material<cantidad_materiales; material++){
-            delete materiales[jugador][cantidad_materiales];
+            delete materiales[jugador][material];
     }
     delete [] materiales[jugador];
    }
