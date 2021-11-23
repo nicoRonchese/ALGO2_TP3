@@ -48,6 +48,10 @@ class DatosMateriales{
     ~DatosMateriales();
 
     //PRE:
+    //POS:
+    int devolver_cantidad(int jugador, int material);
+    
+    //PRE:
     //POS:Muestra la informacion de los materiales
     void mostrar_materiales(int jugador);
 
