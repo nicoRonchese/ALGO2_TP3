@@ -2,6 +2,7 @@
 
 Objetivos::Objetivos(int maximo_escuelas){
  //sorteo de objetivos
+ this->obelisco_construido = false;
  this->maximo_escuelas = nullptr;
  this->objetivos = new Objetivo*[3];
  int objetivos_preparados[3] = {6,8,9};
@@ -20,11 +21,21 @@ Objetivos::Objetivos(int maximo_escuelas){
  }
 }
 
-void Objetivos::obelisco_construido(){
+void Objetivos::construccion_obelisco(){
+ obelisco_construido = true;
  for (int objetivo=0; objetivo<3; objetivo++){
    objetivos[objetivo]->cumplido = true;
  }
 }
+
+void Objetivos::mostrar_victoria(int turno){
+ cout << "FELICITACIONES JUGADOR "<< turno+1 <<" GANASTE!!!"<<endl<<endl;
+ if (!obelisco_construido)
+  mostrar_objetivos();
+ else
+  cout<<"Obelisco fue construido y la patria se restauro"<<endl;
+}
+
 
 bool Objetivos::comprobar_objetivo(int tipo_objetivo){
  bool objetivo_disponible = false;
@@ -110,12 +121,12 @@ void Objetivos::mostrar_bombardero(int ubicacion_objetivo){
 }
 
 void Objetivos::mostrar_energetico(int ubicacion_objetivo){
- cout<<"Energético: haber terminado un turno con 100 puntos de energía."<<endl;
+ cout<<"EnergÃ©tico: haber terminado un turno con 100 puntos de energÃ­a."<<endl;
  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_letrado(int ubicacion_objetivo){
- cout<<"Letrado: haber construido el máximo posible de escuelas."<<endl;
+ cout<<"Letrado: haber construido el mÃ¡ximo posible de escuelas."<<endl;
  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", "<<maximo_escuelas<<")"<<endl<<endl;
 }
 
@@ -125,7 +136,7 @@ void Objetivos::mostrar_minero(int ubicacion_objetivo){
 }
 
 void Objetivos::mostrar_cansado(int ubicacion_objetivo){
- cout<<"Cansado: terminar un turno con 0 de energía."<<endl;
+ cout<<"Cansado: terminar un turno con 0 de energÃ­a."<<endl;
  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 0)"<<endl<<endl;
 }
 
