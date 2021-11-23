@@ -40,6 +40,10 @@ void DatosMateriales::agregar_material(Material* material, int jugador){
     materiales[jugador]= materiales_aux;
 }
 
+int DatosMateriales::devolver_cantidad(int jugador, int material){
+ return materiales[jugador][material] -> cantidad;
+}
+
 void DatosMateriales::mostrar_materiales(int jugador){
     for (int material=0; material<cantidad_materiales; material++)
         cout<<materiales[jugador][material] -> nombre<<": "<<materiales[jugador][material] -> cantidad<<" unidades"<<endl;
