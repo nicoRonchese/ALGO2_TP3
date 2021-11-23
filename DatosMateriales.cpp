@@ -15,6 +15,7 @@ void DatosMateriales::leer_archivo_inicial(){
     ifstream archivo(PATH_MATERIALES);
     string nombre, cantidad_uno, cantidad_dos;
     Material* material;
+    Material aux;
     if(archivo.fail()){
      cout << "Error abriendo el fichero " << PATH_MATERIALES << endl;
     }
@@ -25,8 +26,13 @@ void DatosMateriales::leer_archivo_inicial(){
         material = new Material;
         material -> nombre = nombre;
         material -> cantidad = 0;
-        for (int jugador = 0; jugador<cantidad_jugadores; jugador++)
+        for (int jugador = 0; jugador<cantidad_jugadores; jugador++){
          agregar_material(material, jugador);
+         aux = *material;
+         material = new Material;
+         *material = aux;
+        }
+        delete material;
         cantidad_materiales++;
      }
     }
