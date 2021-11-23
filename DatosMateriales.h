@@ -32,6 +32,7 @@ class DatosMateriales{
     //Atributos
     Material*** materiales;
     int cantidad_materiales;
+    int cantidad_jugadores;
 
    public:
     //Métodos públicos
@@ -40,7 +41,7 @@ class DatosMateriales{
     //PRE:el archivo materiales.txt debe existir en el directorio donde se encuentre el programa
     //POS: carga la informacion del archivo en el vector dinamico materiales y la cantidad de
     //materiales que haya en cantidad_materiales
-    DatosMateriales();
+    DatosMateriales(int cantidad_jugadores);
 
     //Destructor
     //PRE:
@@ -84,6 +85,14 @@ class DatosMateriales{
 
    private:
     //Métodos privados
+    
+    //PRE:
+    //POS:
+    void leer_archivo_inicial();
+
+    //PRE:
+    //POS:
+    void leer_archivo();
 
     //PRE:Recibir un puntero de un material
     //POS:Redimensiona el vector que guarda los materiales y le agrega el nuevo material
