@@ -8,13 +8,16 @@
 
 using namespace std;
 
+
+const int CANTIDAD_JUGADORES = 2;
 const int JUGADOR_UNO = 0;
 const int JUGADOR_DOS = 1;
 const int MODIFICAR_EDIFICIO = 1;
 const int LISTAR_EDIFICIOS = 2;
 const int MOSTRAR_MAPA = 3;
-const int COMENZAR_PARTIDA = 4;
-const int GUARDAR_SALIR_INICIAL = 5;
+const int CAMBIAR_CANTIDAD_JUGADORES = 4;
+const int COMENZAR_PARTIDA = 5;
+const int GUARDAR_SALIR_INICIAL = 6;
 const int CONSTRUIR_EDIFICIO = 1;
 const int LISTAR_CONSTRUCCIONES = 2;
 const int DEMOLER_CONSTRUCCION = 3;
@@ -46,6 +49,7 @@ class Menu{
      DatosMateriales* datosMateriales;
      Objetivos** objetivos;
      int turno;
+     int cantidad_jugadores;
      int* energia;
      //Como podemos guardar los objetivos??
 
@@ -69,6 +73,10 @@ class Menu{
  private:
      //Métodos privados
 
+     //PRE:
+     //POS:
+     void crear_datos_jugadores();
+ 
      //PRE:
      //POS:
      void cambiar_turno();
@@ -120,6 +128,10 @@ class Menu{
      // esta matriz representa el mapa del juego
      void mostrar_mapa();
 
+     //PRE:
+     //POS:
+     void cambiar_cantidad_jugadores();
+ 
      //PRE:
      //POS: comienza el juego
      void comenzar_partida();
