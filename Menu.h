@@ -2,7 +2,7 @@
 #define MENU_H_INCLUDED
 #include <iostream>
 #include <string.h>
-//#include "Mapa.h"
+#include "Mapa.h"
 #include "DatosMateriales.h"
 #include "Objetivos.h"
 
@@ -45,13 +45,12 @@ class Menu{
  private:
      //Atributos
 
-     //Mapa* mapa;
+     Mapa* mapa;
      DatosMateriales* datosMateriales;
      Objetivos** objetivos;
      int turno;
      int cantidad_jugadores;
      int* energia;
-     //Como podemos guardar los objetivos??
 
  public:
      //Métodos públicos
