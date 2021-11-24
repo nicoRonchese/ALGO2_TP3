@@ -40,7 +40,7 @@ class Casillero{
 
     //PRE:
     //POS: muestra en terminal una letra segun el casillero
-    void mostrar_en_mapa();
+    virtual void mostrar_en_mapa();
 
     //PRE:
     //POS: segun el string identifica que tipo de edifcio es y que caracteristicas tiene
