@@ -41,11 +41,12 @@ void Menu::crear_datos_jugadores(){
 }
 
 void Menu::empezar_menu(){
- //if (mapa->construcciones_vacio())
- //else
  int opcion = 0;
  string basura,resp;
- while (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
+ if (mapa->ubicar_edificios_archivo())
+    comenzar_partida();
+ else  {
+  while (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
     mostrar_menu_inicial();
     cout <<"Ingrese una opcion: ";
     cin>>resp;
@@ -60,6 +61,7 @@ void Menu::empezar_menu(){
      cin >> basura;
      system(CLR_SCREEN);
     }
+  }
  }
 }
 
