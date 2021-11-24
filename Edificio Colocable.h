@@ -63,7 +63,7 @@ class EdificioColocable{
 
      void recibir_bomba();
 
-     virtual void reparar_edificio();
+     void reparar_edificio();
 
      //PRE: debe recibir un puntero a Datos_materiales con al menos piedra,metal y madera
      //POS: segun el edificio recolecta los materiales que se producen
