@@ -4,6 +4,36 @@
 #include "Casillero Inaccesible.cpp"
 #include "Casillero.cpp"
 
+Mapa::Mapa(){
+   cantidad_transitables = 0;
+   cantidad_transitables_ocupados = 0;
+   crear_matriz_archivo();
+}
+
+void Mapa::crear_matriz_archivo(){
+   int filas, columnas;
+   string tipo_casillero;
+   ifstream archivo(PATH_MAPA);
+   if(archivo.fail() || archivo.eof()){
+     cout << "Error abriendo el fichero " << PATH_MAPA << endl;
+   }
+   else{
+    archivo >> filas;
+    archivo >> columnas;
+    this->filas_matriz = filas;
+    this->columnas_matriz = columnas;
+    this->Matriz = new Casillero**[filas];
+    for (int i=0;i<filas;i++)
+     Matriz[i]=new Casillero*[columnas];
+    for (int fila=0; fila<filas_matriz; fila++){
+     for (int columna=0; columna<columnas_matriz; columna++){
+      archivo >> tipo_casillero;
+      Matriz[fila][columna]=definir_casillero(tipo_casillero,fila,columna);
+     }
+    }
+   }
+}
+
 Casillero* Mapa::definir_casillero(string tipo_terreno,int fila,int columna){
    Casillero* casillero;
    if (tipo_terreno == BETUN || tipo_terreno == CAMINO || tipo_terreno == MUELLE){
@@ -22,20 +52,12 @@ Casillero* Mapa::definir_casillero(string tipo_terreno,int fila,int columna){
    return casillero;
 }
 
-string Mapa::quitar_espacio_final(string edificio){
-  string sin_espacio;
-  int longitud = int(edificio.size())-1;
-  for (int i = 0; i < longitud; i++)
-        sin_espacio += edificio[i];
-  return sin_espacio;
-}
-
-void Mapa::ubicar_edificios_archivo(){
+bool Mapa::ubicar_edificios_archivo(){
+  bool archivo_usable = true;
   ifstream archivo(PATH_UBICACIONES);
   string objeto;
-  if(archivo.fail()){
-     cout << "Error abriendo el fichero " << PATH_UBICACIONES << endl;
-  }
+  if(archivo.fail() || archivo.eof())
+     archivo_usable = false;
   else{
      while (!archivo.eof()){
         getline(archivo, objeto, '(');
@@ -46,6 +68,7 @@ void Mapa::ubicar_edificios_archivo(){
      }
   }
   archivo.close();
+  return archivo_usable;
  }
 
 string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
@@ -116,32 +139,15 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
     return objeto;
  }
 
-
-Mapa::Mapa(){
-   ifstream archivo(PATH_MAPA);
-   cantidad_transitables = 0;
-   int filas, columnas;
-   if(archivo.fail()){
-     cout << "Error abriendo el fichero " << PATH_MAPA << endl;
-   }
-   else{
-    archivo >> filas;
-    archivo >> columnas;
-    this->filas_matriz = filas;
-    this->columnas_matriz = columnas;
-    this->Matriz = new Casillero**[filas];
-    for (int i=0;i<filas;i++)
-     Matriz[i]=new Casillero*[columnas];
-    string tipo_casillero;
-    for (int fila=0; fila<filas_matriz; fila++){
-     for (int columna=0; columna<columnas_matriz; columna++){
-      archivo >> tipo_casillero;
-      Matriz[fila][columna]=definir_casillero(tipo_casillero,fila,columna);
-     }
-    }
-   }
-   ubicar_edificios_archivo();
+string Mapa::quitar_espacio_final(string edificio){
+  string sin_espacio;
+  int longitud = int(edificio.size())-1;
+  for (int i = 0; i < longitud; i++)
+        sin_espacio += edificio[i];
+  return sin_espacio;
 }
+
+
 
 void Mapa::mostrar_mapa(){
   for (int fila=0; fila<filas_matriz; fila++){
