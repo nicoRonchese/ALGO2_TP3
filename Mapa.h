@@ -25,7 +25,7 @@ class Mapa{
     int columnas_matriz;
     int **transitables;
     int cantidad_transitables;
-    int cantidad_transitables_ocupados = 0;
+    int cantidad_transitables_ocupados;
 
  public:
     //Métodos públicos
@@ -39,6 +39,10 @@ class Mapa{
     //PRE:
     //POS: libera la memoria tomada por matriz y transitables
     ~Mapa();
+
+    //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
+    //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
+    bool ubicar_edificios_archivo();
 
     //PRE:
     //POS: muestra en la terminal una matriz que representa al mapa del juego
@@ -119,9 +123,7 @@ class Mapa{
  private:
     //Métodos privados
 
-    //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
-    //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
-    void ubicar_edificios_archivo();
+    void crear_matriz_archivo();
 
     string leer_materiales_ubicaciones(ifstream &archivo, string objeto);
 
