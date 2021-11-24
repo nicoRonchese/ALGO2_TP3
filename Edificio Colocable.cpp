@@ -22,13 +22,15 @@ void EdificioColocable::recibir_bomba(){
  vida -= 50;
 }
 
-void EdificioColocable::reparar_edificio(){}
+void EdificioColocable::reparar_edificio(){
+  vida += 50;
+}
 
 
 void EdificioColocable::recolectar(DatosMateriales* materiales){}
 
 void EdificioColocable::mostrar_en_mapa(){
-  cout<<signo_mapa<<endl;
+  cout<<signo_mapa<<" ";
 }
 
 EdificioColocable::~EdificioColocable(){
