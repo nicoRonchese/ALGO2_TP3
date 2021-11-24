@@ -49,7 +49,7 @@ void CasilleroConstruible:: mostrar(){
 
 void CasilleroConstruible:: mostrar_en_mapa(){
    if (comprobar_vacio())
-    cout<<tipo_terreno<<endl;
+    cout<<tipo_terreno<<" ";
    else
     edificio->mostrar_en_mapa();
 }
@@ -66,8 +66,20 @@ string CasilleroConstruible::demoler_edificio(){
   return (nombre_edificio);
 }
 
-void CasilleroConstruible::reparar_edificio(){
+void CasilleroConstruible::atacar_edificio(){
+ edificio->recibir_bomba();
+ cout<<edificio->nombre_edificio()<<" fue atacado/a con exito y";
+ if (edificio->devolver_vida()==0){
+  delete edificio;
+  edificio = nullptr;
+  cout<<" se ha destruido"<<endl;
+ }
+ else
+  cout<<" se encuentra en malas condiciones"<<endl;
+}
 
+void CasilleroConstruible::reparar_edificio(){
+ edificio->reparar_edificio();
 }
 
 string CasilleroConstruible::devolver_elemento_colocable(){
