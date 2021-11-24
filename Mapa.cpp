@@ -13,7 +13,7 @@ Casillero* Mapa::definir_casillero(string tipo_terreno,int fila,int columna){
    else if (tipo_terreno == LAGO){
       casillero = new CasilleroInaccesible(tipo_terreno);
    }
-   else if (tipo_terreno == CONSTRUIBLE){
+   else if (tipo_terreno == TERRENO){
       casillero = new CasilleroConstruible(tipo_terreno);
    }
    else{
@@ -82,7 +82,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
         getline(archivo, basura, '\n');
         fila = stoi(fila_objeto) - 1;
         columna = stoi(columna_objeto) - 1;
-        //Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_UNO);
+        Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_UNO);
         getline(archivo, objeto, '(');
         objeto = quitar_espacio_final(objeto);
       }
@@ -108,7 +108,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
              getline(archivo, basura, '\n');
              fila = stoi(fila_objeto) - 1;
              columna = stoi(columna_objeto) - 1;
-             //Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_DOS);
+             Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_DOS);
              getline(archivo, objeto, '(');
              objeto = quitar_espacio_final(objeto);
          }
@@ -157,13 +157,11 @@ void Mapa::mostrar_mapa(){
 }
 
 void Mapa::mostrar_casillero(int fila, int columna){
-  fila--;
-  columna--;
   Matriz[(fila)][(columna)]->mostrar();
 }
 
 bool Mapa::consultar_coordenada(int fila,int columna){
- return (fila<=filas_matriz && fila>0 && columna<=columnas_matriz && columna>0);
+ return (fila<filas_matriz && fila>=0 && columna<columnas_matriz && columna>=0);
 }
 
 void Mapa::agregar_transitables(int fila, int columna){
@@ -244,7 +242,7 @@ void Mapa::mostrar_construcciones(int turno){
  int construcciones = 0;
  for (int fila=0; fila<filas_matriz; fila++){
      for (int columna=0; columna<columnas_matriz; columna++){
-        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio())){
+        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(turno))){
             cout<<Matriz[fila][columna]->devolver_elemento_colocable()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
             construcciones++;
         }
@@ -254,38 +252,40 @@ void Mapa::mostrar_construcciones(int turno){
     cout<<"No tienes edificios construidos"<<endl;
 }
 
-void Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
-  fila--;
-  columna--;
+bool Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
+   bool construccion_completada = false;
   //datos_edificios->edificio_construido(nombre);
-  if (comprobar_coordenadas_construccion(fila, columna))
-    Matriz[fila-1][columna-1]->colocar_edificio(nombre, turno);
+  if (comprobar_coordenadas_construccion(fila, columna)){
+    Matriz[fila][columna]->colocar_edificio(nombre, turno);
+    construccion_completada = true;
+  }
+  return construccion_completada;
 }
 
 string Mapa::demoler_edificio(int fila, int columna, int turno){
  string edificio;
- fila--;
- columna--;
  if (comprobar_coordenadas_demolicion(fila, columna, turno))
-   edificio = Matriz[fila-1][columna-1]->demoler_edificio();
+   edificio = Matriz[fila][columna]->demoler_edificio();
  //datos_edificios->edificio_demolido(edificio);
  return (edificio);
 }
 
-void Mapa::atacar_edificio(int fila, int columna, int turno){
-  fila--;
-  columna--;
-  //datos_edificios->edificio_construido(nombre);
-  if (comprobar_coordenadas_reparacion(fila, columna, turno))
-    Matriz[fila-1][columna-1]->reparar_edificio();
+bool Mapa::atacar_edificio(int fila, int columna, int turno){
+  bool ataque_completado = false;
+  if (comprobar_coordenadas_ataque(fila, columna, turno)){
+    Matriz[fila][columna]->atacar_edificio();
+    ataque_completado = true;
+  }
+  return ataque_completado;
 }
 
-void Mapa::reparar_edificio(int fila, int columna, int turno){
-  fila--;
-  columna--;
-  //datos_edificios->edificio_construido(nombre);
-  if (comprobar_coordenadas_reparacion(fila, columna, turno))
-    Matriz[fila-1][columna-1]->reparar_edificio();
+bool Mapa::reparar_edificio(int fila, int columna, int turno){
+  bool reparacion_completada = false;
+  if (comprobar_coordenadas_reparacion(fila, columna, turno)){
+    Matriz[fila][columna]->reparar_edificio();
+    reparacion_completada = true;
+  }
+  return reparacion_completada;
 }
 
 void Mapa::guardar_construcciones(){
