@@ -1,19 +1,23 @@
 #include "Mapa.h"
+#include "Casillero Transitable.cpp"
+#include "Casillero Construible.cpp"
+#include "Casillero Inaccesible.cpp"
+#include "Casillero.cpp"
 
-Casillero* Mapa::definir_casillero(string tipo_casillero,int fila,int columna){
+Casillero* Mapa::definir_casillero(string tipo_terreno,int fila,int columna){
    Casillero* casillero;
-   if (tipo_casillero == TRANSITABLE){
-      casillero = new CasilleroTransitable;
+   if (tipo_terreno == BETUN || tipo_terreno == CAMINO || tipo_terreno == MUELLE){
+      casillero = new CasilleroTransitable(tipo_terreno);
       agregar_transitables(fila,columna);
    }
-   else if (tipo_casillero == INACCESIBLE){
-      casillero = new CasilleroInaccesible;
+   else if (tipo_terreno == LAGO){
+      casillero = new CasilleroInaccesible(tipo_terreno);
    }
-   else if (tipo_casillero == CONSTRUIBLE){
-      casillero = new CasilleroConstruible;
+   else if (tipo_terreno == CONSTRUIBLE){
+      casillero = new CasilleroConstruible(tipo_terreno);
    }
    else{
-     casillero =  new CasilleroInaccesible;
+     casillero =  new CasilleroInaccesible(LAGO);
    }
    return casillero;
 }
@@ -44,7 +48,7 @@ void Mapa::ubicar_edificios_archivo(){
   archivo.close();
  }
 
-string leer_materiales_ubicaciones(ifstream &archivo, string objeto){
+string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
     string fila_objeto, columna_objeto, basura;
     int fila, columna;
     while (objeto!="1"){
@@ -60,7 +64,7 @@ string leer_materiales_ubicaciones(ifstream &archivo, string objeto){
     return objeto;
  }
 
- string leer_jugador_uno(ifstream &archivo, string objeto){
+ string Mapa::leer_jugador_uno(ifstream &archivo, string objeto){
     string fila_objeto, columna_objeto, basura;
     int fila, columna;
     if (objeto == "1"){
@@ -86,7 +90,7 @@ string leer_materiales_ubicaciones(ifstream &archivo, string objeto){
     return objeto;
  }
 
- string leer_jugador_dos(ifstream &archivo, string objeto){
+ string Mapa::leer_jugador_dos(ifstream &archivo, string objeto){
     string fila_objeto, columna_objeto, basura;
     int fila, columna;
     if (objeto == "2"){
@@ -118,7 +122,7 @@ Mapa::Mapa(){
    cantidad_transitables = 0;
    int filas, columnas;
    if(archivo.fail()){
-     cout << "Error abriendo el fichero" << PATH_MAPA << endl;
+     cout << "Error abriendo el fichero " << PATH_MAPA << endl;
    }
    else{
     archivo >> filas;
@@ -216,17 +220,17 @@ bool Mapa::consultar_vacio(int fila,int columna){
 }
 
 bool Mapa::consultar_propietario(int fila, int columna, int turno){
-  return (Matriz[fila][columna]->comprobar_propietario())
+  return (Matriz[fila][columna]->comprobar_propietario(turno));
 }
 
-void Mapa::recolectar_recursos(int turno, Datos_materiales* materiales){
+void Mapa::recolectar_recursos(int turno, DatosMateriales* materiales){
      int producido = 0;
      for (int fila=0; fila<filas_matriz; fila++){
       for (int columna=0; columna<columnas_matriz; columna++){
         if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (consultar_propietario(fila, columna, turno))){
-          if ((Matriz[fila][columna]->devolver_edificio()==ASERRADERO) || (Matriz[fila][columna]->devolver_edificio()==MINA) || (Matriz[fila][columna]->devolver_edificio()==FABRICA)) {
+          if ((Matriz[fila][columna]->devolver_elemento_colocable()==ASERRADERO) || (Matriz[fila][columna]->devolver_elemento_colocable()==MINA) || (Matriz[fila][columna]->devolver_elemento_colocable()==FABRICA)) {
            cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<") ";
-           Matriz[fila][columna]->recoleccion(materiales);
+           Matriz[fila][columna]->recoleccion(materiales, turno);
            producido++;
           }
          }
@@ -241,7 +245,7 @@ void Mapa::mostrar_construcciones(int turno){
  for (int fila=0; fila<filas_matriz; fila++){
      for (int columna=0; columna<columnas_matriz; columna++){
         if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio())){
-            cout<<Matriz[fila][columna]->devolver_edificio()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
+            cout<<Matriz[fila][columna]->devolver_elemento_colocable()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
             construcciones++;
         }
      }
@@ -259,10 +263,11 @@ void Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
 }
 
 string Mapa::demoler_edificio(int fila, int columna, int turno){
+ string edificio;
  fila--;
  columna--;
  if (comprobar_coordenadas_demolicion(fila, columna, turno))
-   string edificio = Matriz[fila-1][columna-1]->demoler_edificio();
+   edificio = Matriz[fila-1][columna-1]->demoler_edificio();
  //datos_edificios->edificio_demolido(edificio);
  return (edificio);
 }
@@ -290,8 +295,8 @@ void Mapa::guardar_construcciones(){
     }
     else{
         guardar_materiales(archivo);
-        guardar_jugador_uno(archivo);
-        guardar_jugador_dos(archivo);
+        guardar_jugador(archivo, JUGADOR_UNO);
+        guardar_jugador(archivo, JUGADOR_DOS);
         cout<<"Datos ubicaciones guardados"<<endl;
         archivo.close();
     }
@@ -301,28 +306,17 @@ void Mapa::guardar_materiales(ofstream &archivo){
   for (int fila=0; fila<filas_matriz; fila++){
     for (int columna=0; columna<columnas_matriz; columna++){
       if ((Matriz[fila][columna]->devolver_tipo_casillero()==TRANSITABLE) && (!Matriz[fila][columna]->comprobar_vacio()))
-            archivo<<Matriz[fila][columna]->devolver_material()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
+            archivo<<Matriz[fila][columna]->devolver_elemento_colocable()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
     }
   }
 }
 
-void Mapa::guardar_jugador_uno(ofstream &archivo){
-  archivo<<"1 ("<<coordenada_jugador(JUGADOR_UNO)<<")"<<endl;
+void Mapa::guardar_jugador(ofstream &archivo, int jugador){
+  //archivo<<jugador+1<<" ("<<coordenada_jugador(jugador)<<")"<<endl;
   for (int fila=0; fila<filas_matriz; fila++){
     for (int columna=0; columna<columnas_matriz; columna++){
-      if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(JUGADOR_UNO)))
-            archivo<<Matriz[fila][columna]->devolver_edificio()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
-
-    }
-  }
-}
-
-void Mapa::guardar_jugador_dos(ofstream &archivo){
-  archivo<<"2 ("<<coordenada_jugador(JUGADOR_DOS)<<")"<<endl;
-  for (int fila=0; fila<filas_matriz; fila++){
-    for (int columna=0; columna<columnas_matriz; columna++){
-      if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(JUGADOR_DOS)))
-            archivo<<Matriz[fila][columna]->devolver_edificio()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
+      if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(jugador)))
+            archivo<<Matriz[fila][columna]->devolver_elemento_colocable()<<" ("<<fila+1<<", "<<columna+1<<")"<<endl;
 
     }
   }
@@ -410,4 +404,6 @@ Mapa::~Mapa(){
    delete [] transitables;
 
 }
+
+
 
