@@ -27,6 +27,8 @@ string Casillero :: demoler_edificio(){
  return "";
 }
 
+void Casillero :: atacar_edificio(){}
+
 void Casillero :: reparar_edificio(){}
 
 string Casillero :: devolver_elemento_colocable(){
