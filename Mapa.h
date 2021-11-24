@@ -5,9 +5,9 @@
 #include <random>
 #include <ctime>
 #include <fstream>
-//#include "Casillero Transitable.h"
-//#include "Casillero Construible.h"
-//#include "Casillero Inaccesible.h"
+#include "Casillero Transitable.h"
+#include "Casillero Construible.h"
+#include "Casillero Inaccesible.h"
 //#include "Datos Edificios.h"
 //#include "Datos Materiales.h"
 
@@ -50,7 +50,7 @@ class Mapa{
 
     //PRE: la string que se le pasa representa al nombre del edificio
     //POS: devuelve el edificio si es que este existe
-    edificio buscar_edificio(string nombre);
+    void buscar_edificio(string nombre);
 
     //PRE: fila y columna deben estar dentro de los limites de la matriz
     //POS: muestra en terminal que tipo de casillero es
@@ -76,9 +76,11 @@ class Mapa{
     //POS: devuelve si el casillero que se encuentra en esa coordenada esta vacio en forma de booleano
     bool consultar_vacio(int fila, int columna);
 
+    bool consultar_propietario(int fila, int columna, int turno);
+
     //PRE: fila y columna deben estar dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: suma 1 a la cantidad de esdificios construidos de ese tipo y lo coloca en matriz
-    void construir_edificio(string nombre, int fila,int columna);
+    void construir_edificio(string nombre, int fila,int columna, int turno);
 
     //PRE: fila y columna deben estra dentro del rango de la matriz
     //POS: devuelve el nombre del edificio demolido
@@ -90,7 +92,7 @@ class Mapa{
 
     //PRE: debe recibir un puntero a un dato tipo Datos_materiales
     //POS: "recolecta" los recursos que hayan generado los edificios construidos y se los suma a materiales
-    void recolectar_recursos(Datos_materiales* materiales);
+    void recolectar_recursos(int turno, DatosMateriales* materiales);
 
     //PRE:
     //POS: mustra en la terminal todos los edificios que se hayan construido
@@ -129,7 +131,7 @@ class Mapa{
 
     //PRE: fila y columna deben estar dentro del rango de la matriz
     //POS: devuelve un  puntero a casillero que reprensenta un tipo de casillero segun el string
-    Casillero* definir_casillero(string tipo_casillero,int fila,int columna);
+    Casillero* definir_casillero(string tipo_terreno,int fila,int columna);
 
     //PRE: fila y columna deben estar dentro del rango de la matriz
     //POS: guarda en un vector dinamico las coordenadas de los casilleros transitables
@@ -137,9 +139,7 @@ class Mapa{
 
     void guardar_materiales(ofstream &archivo);
 
-    void guardar_jugador_uno(ofstream &archivo);
-
-    void guardar_jugador_dos(ofstream &archivo);
+    void guardar_jugador(ofstream &archivo, int jugador);
 
     //PRE:
     //POS: elimina el espacio final de la palabra
@@ -148,4 +148,6 @@ class Mapa{
 };
 
 #endif // MAPA_H_INCLUDED
+
+
 
