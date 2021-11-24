@@ -2,9 +2,10 @@
 #include "Menu.h"
 #include "DatosMateriales.cpp"
 #include "Objetivos.cpp"
+#include "Mapa.cpp"
 
 Menu::Menu(){
- //this->mapa = new Mapa;
+ this->mapa = new Mapa;
  this->cantidad_jugadores = CANTIDAD_JUGADORES;
 }
 
