@@ -122,7 +122,7 @@ void Menu::listar_edificios(){
 }
 
 void Menu::mostrar_mapa(){
- //mapa->mostrar_mapa();
+ mapa->mostrar_mapa();
 }
 
 void Menu::cambiar_cantidad_jugadores(){
@@ -291,7 +291,7 @@ bool Menu::comprobar_construccion(//edificio edificio
 }
 
 void Menu::listar_edificios_construidos(){
- //mapa->mostrar_construcciones();
+ mapa->mostrar_construcciones(turno);
 }
 
 void Menu::demoler_edificio(){
@@ -325,8 +325,22 @@ void Menu::demoler_edificio(){
 
 void Menu::atacar_construccion(){
  if (energia[turno] >= COSTO_ATACAR){
-  //if (mapa->atacar_construccion(int fila, int columna))
-     energia[turno] -= COSTO_ATACAR;
+    if (datosMateriales->devolver_cantidad(turno, BOMBA)>=1){
+     string fila_string,columna_string;
+     int fila,columna;
+     cout<<"Fila: ";
+     cin>>fila_string;
+     fila = ingrese_numero(fila_string);
+     cout<<"Columna: ";
+     cin>>columna_string;
+     columna = ingrese_numero(columna_string);
+     fila--;
+     columna--;
+     if (mapa->atacar_edificio(fila, columna, turno))
+      energia[turno] -= COSTO_ATACAR;
+    }
+    else
+     cout<<"No tienes bombas, no puede atacar"<<endl;
  }
  else
   cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
@@ -334,11 +348,21 @@ void Menu::atacar_construccion(){
 
 void Menu::reparar_construccion(){
  if (energia[turno] >= COSTO_REPARAR){
-  //if (mapa->reparar_construccion(int fila, int columna))
-     energia[turno] -= COSTO_REPARAR;
- }
- else
-  cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
+     string fila_string,columna_string;
+     int fila,columna;
+     cout<<"Fila: ";
+     cin>>fila_string;
+     fila = ingrese_numero(fila_string);
+     cout<<"Columna: ";
+     cin>>columna_string;
+     columna = ingrese_numero(columna_string);
+     fila--;
+     columna--;
+     if (mapa->reparar_edificio(fila, columna, turno))
+      energia[turno] -= COSTO_REPARAR;
+   }
+   else
+    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::comprar_bombas(){
@@ -366,10 +390,12 @@ void Menu::consultar_coordenada(){
  cout<<"Columna: ";
  cin>>columna_string;
  columna = ingrese_numero(columna_string);
- //if (!mapa->consultar_coordenada(fila,columna))
-    //cout<<"Error: Coordenada fuera del mapa"<<endl;
- //else
-    //mapa->mostrar_casillero(fila,columna);
+ fila--;
+ columna--;
+ if (!mapa->consultar_coordenada(fila,columna))
+    cout<<"Error: Coordenada fuera del mapa"<<endl;
+ else
+    mapa->mostrar_casillero(fila,columna);
 }
 
 void Menu::mostrar_inventario(){
