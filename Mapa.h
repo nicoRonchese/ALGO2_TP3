@@ -80,15 +80,15 @@ class Mapa{
 
     //PRE: fila y columna deben estar dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: suma 1 a la cantidad de esdificios construidos de ese tipo y lo coloca en matriz
-    void construir_edificio(string nombre, int fila,int columna, int turno);
+    bool construir_edificio(string nombre, int fila,int columna, int turno);
 
     //PRE: fila y columna deben estra dentro del rango de la matriz
     //POS: devuelve el nombre del edificio demolido
     string demoler_edificio(int fila, int columna, int turno);
 
-    void atacar_edificio(int fila, int columna, int turno);
+    bool atacar_edificio(int fila, int columna, int turno);
 
-    void reparar_edificio(int fila, int columna, int turno);
+    bool reparar_edificio(int fila, int columna, int turno);
 
     //PRE: debe recibir un puntero a un dato tipo Datos_materiales
     //POS: "recolecta" los recursos que hayan generado los edificios construidos y se los suma a materiales
