@@ -21,6 +21,7 @@ class CasilleroConstruible : public Casillero {
     bool comprobar_vacio();
     bool comprobar_propietario(int jugador);
     string demoler_edificio();
+    void atacar_edificio();
     void reparar_edificio();
     void recoleccion(DatosMateriales* materiales);
     string devolver_elemento_colocable();
