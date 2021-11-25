@@ -32,16 +32,6 @@ void Objetivos::mostrar_victoria(int turno){
   cout<<"Obelisco fue construido y la patria se restauro"<<endl;
 }
 
-
-bool Objetivos::comprobar_objetivo(int tipo_objetivo){
- bool objetivo_disponible = false;
- for (int objetivo=0; objetivo<3; objetivo++){
-   if (objetivos[objetivo]->tipo_objetivo == tipo_objetivo)
-     objetivo_disponible = true;
- }
- return objetivo_disponible;
-}
-
 bool Objetivos::comprobar_objetivos_cumplidos(){
  int objetivos_cumplidos = 0;
  if (obelisco_construido)
@@ -228,7 +218,7 @@ void Objetivos::energetico(int energia, int ubicacion_objetivo){
 void Objetivos::letrado(int cantidad_escuelas, int ubicacion_objetivo){
     if (objetivos[ubicacion_objetivo]->cantidad < cantidad_escuelas)
      objetivos[ubicacion_objetivo]->cantidad = cantidad_escuelas;
-    if (objetivos[ubicacion_objetivo]->cantidad >= *maximo_escuelas)
+    if (objetivos[ubicacion_objetivo]->cantidad >= maximo_escuelas)
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
 
