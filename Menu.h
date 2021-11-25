@@ -78,7 +78,11 @@ class Menu{
  
      //PRE:
      //POS:
-     void cambiar_turno();
+     void menu_inicial();
+
+     //PRE:
+     //POS:
+     void menu_juego();
  
      //PRE: debe recibir un int
      //POS: segun el numero realizara una tarea
@@ -95,12 +99,10 @@ class Menu{
      //PRE:
      //POS:muestra en terminal el menu de juego
      void mostrar_menu_juego();
-
-     //PRE: debe recibir un tipo de dato edificio
-     //POS: devuelve un valor booleano que representa si se puede o no construir el edificio,
-     // ademas de mostrar un mensaje en caso de que no se pueda
-     bool comprobar_construccion(//edificio edificio
-                                 );
+ 
+     //PRE:
+     //POS:
+     void cambiar_turno();
 
      //PRE:
      //POS: muestra quien tiene el turno
@@ -134,6 +136,12 @@ class Menu{
      //PRE:
      //POS: comienza el juego
      void comenzar_partida();
+ 
+     //PRE: debe recibir un tipo de dato edificio
+     //POS: devuelve un valor booleano que representa si se puede o no construir el edificio,
+     // ademas de mostrar un mensaje en caso de que no se pueda
+     bool comprobar_construccion(//edificio edificio
+                                 );
 
      //PRE:
      //POS: si los datos  de mapa y datos_materiales tanto como de los ingresados por el usuario lo permiten,
