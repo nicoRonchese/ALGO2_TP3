@@ -41,12 +41,16 @@ void Menu::crear_datos_jugadores(){
 }
 
 void Menu::empezar_menu(){
+ if (mapa->ubicar_edificios_archivo())
+  comenzar_partida();
+ else
+  menu_inicial();
+}
+
+void Menu::menu_inicial(){
  int opcion = 0;
  string basura,resp;
- if (mapa->ubicar_edificios_archivo())
-    comenzar_partida();
- else  {
-  while (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
+ while (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
     mostrar_menu_inicial();
     cout <<"Ingrese una opcion: ";
     cin>>resp;
@@ -62,6 +66,33 @@ void Menu::empezar_menu(){
      system(CLR_SCREEN);
     }
   }
+}
+
+void Menu::menu_juego(){
+ int opcion = 0;
+ string basura,resp;
+ while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
+    mostrar_turno();
+    mostrar_energia();
+    mostrar_menu_juego();
+    cout <<"Ingrese una opcion: ";
+    cin>>resp;
+    opcion = ingrese_numero(resp);
+    cout<<endl;
+    procesar_opcion_juego(opcion);
+    objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
+    objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
+    chequear_energia();
+    if (objetivos[turno]->comprobar_objetivos_cumplidos()){
+        system(CLR_SCREEN);
+        objetivos[turno]->mostrar_victoria(turno);
+    }
+    else if (opcion!=GUARDAR_SALIR){
+        cout<<endl;
+        cout << "Presione una letra y enter para continuar: ";
+        cin >> basura;
+        system(CLR_SCREEN);
+    }
  }
 }
 
