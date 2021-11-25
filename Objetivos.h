@@ -25,13 +25,15 @@ struct Objetivo{
 class Objetivos{
  private:
   Objetivo** objetivos;
-  int* maximo_escuelas;
+  int maximo_escuelas;
   bool obelisco_construido;
 
  public:
   Objetivos(int maximo_escuelas);
 
   ~Objetivos();
+    
+  void sorteo_objetivos();
   
   void construccion_obelisco();
 
