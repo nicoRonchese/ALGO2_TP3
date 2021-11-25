@@ -1,10 +1,13 @@
 #include "Objetivos.h"
 
 Objetivos::Objetivos(int maximo_escuelas){
- //sorteo de objetivos
  this->obelisco_construido = false;
- this->maximo_escuelas = nullptr;
+ this->maximo_escuelas = maximo_escuelas;
  this->objetivos = new Objetivo*[3];
+ sorteo_objetivos();
+}
+
+void Objetivos::sorteo_objetivos(){
  int objetivos_preparados[3] = {6,8,9};
  for (int objetivo = 0; objetivo < 3; objetivo++){
    objetivos[objetivo] = new Objetivo;
@@ -14,18 +17,11 @@ Objetivos::Objetivos(int maximo_escuelas){
     objetivos[objetivo]->cantidad = 50;
    else
     objetivos[objetivo]->cantidad = 0;
-   if (objetivos[objetivo]->tipo_objetivo == LETRADO){
-    this->maximo_escuelas = new int;
-    *(this->maximo_escuelas) = maximo_escuelas;
-   }
  }
 }
 
 void Objetivos::construccion_obelisco(){
  obelisco_construido = true;
- for (int objetivo=0; objetivo<3; objetivo++){
-   objetivos[objetivo]->cumplido = true;
- }
 }
 
 void Objetivos::mostrar_victoria(int turno){
@@ -48,9 +44,13 @@ bool Objetivos::comprobar_objetivo(int tipo_objetivo){
 
 bool Objetivos::comprobar_objetivos_cumplidos(){
  int objetivos_cumplidos = 0;
- for (int objetivo=0; objetivo<3; objetivo++){
+ if (obelisco_construido)
+  objetivos_cumplidos = 3;
+ else{
+  for (int objetivo=0; objetivo<3; objetivo++){
    if (objetivos[objetivo]->cumplido)
     objetivos_cumplidos++;
+  }
  }
  return (objetivos_cumplidos == 3);
 }
