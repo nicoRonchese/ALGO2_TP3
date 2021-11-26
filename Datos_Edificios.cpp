@@ -2,16 +2,18 @@
 
 Datos_edificios::Datos_edificios(){
     cantidad_edificios = 0;
+    diccionario = NULL;
+    leer_edificios();
+}
+
+void Datos_edificios::leer_edificios(){
     ifstream archivo(PATH_EDIFICIOS);
     edificio aux;
-    nodo *nuevo_nodo = new nodo();
     string llave,datos[6];
-    diccionario = NULL;
-    if(archivo.fail()){
+    if(archivo.fail())
      cout << "Error abriendo el fichero " << PATH_EDIFICIOS << endl;
-    }
     else{
-    while(archivo>>datos[0]){
+     while(archivo>>datos[0]){
         archivo >> datos[1];
         if (isdigit(datos[1][0])!=0)
         {
@@ -35,17 +37,21 @@ Datos_edificios::Datos_edificios(){
             aux.cantidad_metal = stoi(datos[4]);
             aux.maxima_cantidad_permitida = stoi(datos[5]);
         }
-        nodo *nuevo_nodo = new nodo();
         aux.cantidad_construida=0;
         aux.produccion = datos_produccion(llave);
-        nuevo_nodo->llave = llave;
-	    nuevo_nodo->datos = aux;
-	    nuevo_nodo->der = NULL;
-	    nuevo_nodo->izq = NULL;
-        agregar_nodo(diccionario,nuevo_nodo);
+        agregar_edificio(llave, aux);
+     }
     }
     archivo.close();
- }
+}
+
+void Datos_edificios::agregar_edificio(string llave, edificio datos){
+    nodo *nuevo_nodo = new nodo();
+    nuevo_nodo->llave = llave;
+    nuevo_nodo->datos = datos;
+    nuevo_nodo->der = NULL;
+    nuevo_nodo->izq = NULL;
+    agregar_nodo(diccionario,nuevo_nodo);
 }
 
 void Datos_edificios::agregar_nodo(nodo*&origen,nodo *ab){
@@ -102,7 +108,7 @@ void Datos_edificios::listar_edificios(edificio dato, string llave){
     cout<< " - Piedra: " << dato.cantidad_piedra;
     cout<< " - Madera: " << dato.cantidad_madera;
     cout<< " - Metal: " << dato.cantidad_metal<<endl;
-    cout<<"Se pueden construir " <<  dato.maxima_cantidad_permitida - dato.cantidad_construida << " "<< llave<< endl << endl;
+    cout<< "Maximo construible: " <<  dato.maxima_cantidad_permitida << endl << endl;
 
 }
 
@@ -141,23 +147,23 @@ edificio Datos_edificios::buscar_edificio(string nombre){
 
 string Datos_edificios::datos_produccion(string nombre){
     string produccion;
-    if ("aserradero"==nombre){
-        produccion = "Produce 25 de madera";
+    if (ASERRADERO==nombre){
+        produccion = PRODUCCION_ASERRADERO;
     }
-    else if ("mina"==nombre){
-        produccion = "Produce 15 de piedra";
+    else if (MINA==nombre){
+        produccion = PRODUCCION_MINA;
     }
-    else if ("fabrica"==nombre){
-        produccion = "Produce 40 de metal";
+    else if (FABRICA==nombre){
+        produccion = PRODUCCION_FABRICA;
     }
-    else if ("Escuela"==nombre){
-        produccion = "Produce 25 andycoins";
+    else if (ESCUELA==nombre){
+        produccion = PRODUCCION_ESCUELA;
     }
-    else if ("Planta eléctrica"==nombre){
-        produccion = "Produce 15 de energia";
+    else if (PLANTA_ELECTRICA==nombre){
+        produccion = PRODUCCION_PLANTA_ELECTRICA;
     }
-    else if ("Mina oro:"==nombre){
-        produccion = "Produce 50 andycoins";
+    else if (MINA_ORO==nombre){
+        produccion = PRODUCCION_MINA_ORO;
     }
     return produccion;
   }
