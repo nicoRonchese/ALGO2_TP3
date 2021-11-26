@@ -3,9 +3,16 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "Edificio Colocable.h"
 using namespace std;
 
 const string PATH_EDIFICIOS = "edificios.txt";
+const string PRODUCCION_ASERRADERO = "Produce 25 de madera";
+const string PRODUCCION_MINA = "Produce 15 de piedra";
+const string PRODUCCION_FABRICA = "Produce 40 de metal";
+const string PRODUCCION_ESCUELA = "Produce 25 andycoins";
+const string PRODUCCION_PLANTA_ELECTRICA = "Produce 15 de energia";
+const string PRODUCCION_MINA_ORO = "Produce 50 andycoins";
 
 struct edificio
 {
@@ -22,7 +29,7 @@ struct nodo
     string llave;
     edificio datos;
     nodo *der;
-	nodo *izq;
+    nodo *izq;
 };
 
 
@@ -51,14 +58,10 @@ public:
     //PRE:
     //POS:Muestra en la terminal los nombres de los edificios disponibles
     void mostrar_edificios();
-
-    void recursion_mostrar_edificios(nodo *origen);
     
     //PRE:
     //POS: suma o resta 1 a cantidad_construida de el edificio que nombre_edificio sea igual a nombre 
     void edificio_construido_o_demolido(string nombre,int n);
-    
-    void recursion_edificio_construido_o_demolido(nodo* ab,string nombre,int n);
     
     //PRE:
     //POS: muestra en terminal todos los edificios que se encuentren el el vector dinamico edificios
@@ -67,8 +70,6 @@ public:
     //PRE:
     //POS:devuelve un edificio con los datos del edificio cuyo nombre_edificio sea igual a nombre
     edificio buscar_edificio(string nombre);
-
-    edificio recursion_buscar_edificio(nodo *ab, string n);
     
     //PRE:
     //POS: devuelve un booleano cuyo valor dependera si el nombre_edificio de algun edififcio concide con nombre
@@ -77,6 +78,16 @@ public:
 private:
     //Métodos privados
     
+    void recursion_mostrar_edificios(nodo *origen);
+
+    void recursion_edificio_construido_o_demolido(nodo* ab,string nombre,int n);
+
+    edificio recursion_buscar_edificio(nodo *ab, string n);
+
+    void leer_edificios();
+
+    void agregar_edificio(string llave, edificio datos);
+	
     //PRE:
     //POS:muestra en la terminal cuanto produce ciertos edificios pero solo si se encuentran en el vector
     string datos_produccion(string nombre);
