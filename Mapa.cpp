@@ -288,12 +288,14 @@ bool Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
   return construccion_completada;
 }
 
-string Mapa::demoler_edificio(int fila, int columna, int turno){
+bool Mapa::demoler_edificio(int fila, int columna, int turno){
  string edificio;
- if (comprobar_coordenadas_demolicion(fila, columna, turno))
+ bool demolicion_completada = false;
+ if (comprobar_coordenadas_demolicion(fila, columna, turno)){
    edificio = Matriz[fila][columna]->demoler_edificio();
- //datos_edificios->edificio_demolido(edificio);
- return (edificio);
+   demolicion_completada = true;
+ }
+ return demolicion_completada;
 }
 
 bool Mapa::atacar_edificio(int fila, int columna, int turno){
@@ -305,13 +307,8 @@ bool Mapa::atacar_edificio(int fila, int columna, int turno){
   return ataque_completado;
 }
 
-bool Mapa::reparar_edificio(int fila, int columna, int turno){
-  bool reparacion_completada = false;
-  if (comprobar_coordenadas_reparacion(fila, columna, turno)){
+void Mapa::reparar_edificio(int fila, int columna){
     Matriz[fila][columna]->reparar_edificio();
-    reparacion_completada = true;
-  }
-  return reparacion_completada;
 }
 
 void Mapa::guardar_construcciones(){
