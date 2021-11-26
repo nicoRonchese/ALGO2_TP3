@@ -1,0 +1,13 @@
+aserradero 30 100 50 2 
+
+fabrica 100 100 250 4 
+
+escuela 250 200 45 1 
+
+obelisco 125 140 0 2 
+
+mina 200 150 60 4
+
+planta electrica 300 20 100 2
+
+circo 20 10 5 1

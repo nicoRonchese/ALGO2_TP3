@@ -187,24 +187,44 @@ void Mapa::agregar_transitables(int fila, int columna){
     cantidad_transitables++;
 }
 
+void Mapa::eliminar_transitables(int fila, int columna ){
+   int** transitables_aux = new int*[(cantidad_transitables - 1)];
+   int aux=0;
+
+    for(int i = 0; i < (cantidad_transitables-1); i++){
+      transitables_aux[i] = transitables[i+aux];
+      if ((transitables[i][0]==fila)&&(transitables[i][1]==columna))  
+        aux = 1;
+    }
+    if(cantidad_transitables != 0){
+        delete [] transitables;
+    }
+    transitables = transitables_aux;
+    cantidad_transitables--;
+}
+
 void Mapa::lluvia_materiales(){
   srand((unsigned) time(NULL));
-  int piedra,madera,metal,total;
+  int piedra,madera,metal,total,andycoins;
   piedra = rand()%2+1;
   madera = rand()%2;
   metal =rand()%3+2;
-  total = metal+madera+piedra;
+  andycoins = rand()%2;
+  total = metal+madera+piedra+andycoins;
   while((total !=0)&&(cantidad_transitables!=cantidad_transitables_ocupados))
   {
     int i = rand()%cantidad_transitables;
     if ( Matriz[transitables[i][0]][transitables[i][1]]->comprobar_vacio())
     {
-      if ((metal+madera < total))
+      if ((metal+madera+andycoins < total))
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_PIEDRA);
-      else if (metal < total)
+      else if (metal+andycoins < total)
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_MADERA);
-      else
+      else if (andycoins < total)
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_METAL);
+      else
+        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_ANDYCOIN);
+      eliminar_transitables(transitables[i][0],transitables[i][1]);
       cantidad_transitables_ocupados++;
       total--;
     }
@@ -392,6 +412,7 @@ void Mapa::recolectar_material_tirado(int fila, int columna, int turno, DatosMat
     columna--;
     if ((Matriz[fila][columna]->devolver_tipo_casillero()==TRANSITABLE) && (!Matriz[fila][columna]->comprobar_vacio()))
             Matriz[fila][columna]->recolectar_material(materiales, turno);
+            agregar_transitables(fila,columna);// a terimanr
 }
 
 Mapa::~Mapa(){

@@ -139,6 +139,8 @@ class Mapa{
     //POS: guarda en un vector dinamico las coordenadas de los casilleros transitables
     void agregar_transitables(int fila,int columna);
 
+    void eliminar_transitables(int fila, int columna);
+
     void guardar_materiales(ofstream &archivo);
 
     void guardar_jugador(ofstream &archivo, int jugador);
