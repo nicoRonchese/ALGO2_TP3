@@ -118,6 +118,8 @@ class Menu{
      //POS: controla que la energia no pase el maximo y de cambiar de turno si se acaba
      void chequear_energia();
 
+     bool consultar_energia(int costo_energia);
+ 
      //PRE:
      //POS:
      void modificar_edificio();
