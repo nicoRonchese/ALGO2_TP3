@@ -4,6 +4,7 @@
 #include <string.h>
 #include "Mapa.h"
 #include "DatosMateriales.h"
+#include "Datos_Edificios.h"
 #include "Objetivos.h"
 
 using namespace std;
@@ -47,6 +48,7 @@ class Menu{
 
      Mapa* mapa;
      DatosMateriales* datosMateriales;
+     Datos_edificios* datosEdificios;
      Objetivos** objetivos;
      int turno;
      int cantidad_jugadores;
