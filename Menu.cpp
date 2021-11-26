@@ -1,6 +1,7 @@
 
 #include "Menu.h"
 #include "DatosMateriales.cpp"
+#include "Datos_Edificios.cpp"
 #include "Objetivos.cpp"
 #include "Mapa.cpp"
 
