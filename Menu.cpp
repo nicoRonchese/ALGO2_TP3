@@ -6,6 +6,7 @@
 
 Menu::Menu(){
  this->mapa = new Mapa;
+ this->datosEdificios = new Datos_edificios;
  this->cantidad_jugadores = CANTIDAD_JUGADORES;
 }
 
@@ -33,7 +34,7 @@ void Menu::crear_datos_jugadores(){
  this->datosMateriales = new DatosMateriales(cantidad_jugadores);
  this->objetivos = new Objetivos*[cantidad_jugadores];
  for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
-    objetivos[jugador] = new Objetivos(5);
+    objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
  this->energia = new int[cantidad_jugadores];
  for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
     energia[jugador] = ENERGIA_INICIAL;
@@ -151,7 +152,7 @@ void Menu::modificar_edificio(){
 }
 
 void Menu::listar_edificios(){
- //mapa->listar_edificios();
+ datosEdificios->mostrar_edificios();
 }
 
 void Menu::mostrar_mapa(){
@@ -467,8 +468,8 @@ void Menu::finalizar_turno(){
 
 void Menu::guardar_salir(){
  datosMateriales->guardar_materiales();
- //mapa->guardar_construcciones();
- //mapa->guardar_edificios();
+ mapa->guardar_construcciones();
+ //datosEdificios->guardar_edificios();
 }
 
 Menu::~Menu(){
