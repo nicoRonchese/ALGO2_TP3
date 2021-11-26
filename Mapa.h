@@ -88,11 +88,11 @@ class Mapa{
 
     //PRE: fila y columna deben estra dentro del rango de la matriz
     //POS: devuelve el nombre del edificio demolido
-    string demoler_edificio(int fila, int columna, int turno);
+    bool demoler_edificio(int fila, int columna, int turno);
 
     bool atacar_edificio(int fila, int columna, int turno);
 
-    bool reparar_edificio(int fila, int columna, int turno);
+    void reparar_edificio(int fila, int columna);
 
     //PRE: debe recibir un puntero a un dato tipo Datos_materiales
     //POS: "recolecta" los recursos que hayan generado los edificios construidos y se los suma a materiales
@@ -105,14 +105,6 @@ class Mapa{
     //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
     //POS: guarda todos las ubicaciones de los archivos en el archivo
     void guardar_construcciones();
-
-    //PRE: fila y columna deben estra dentro del rango de la matriz y la string debe ser el nombre de un edificio
-    //POS: devuelve un booleano que representa si se puede construir en esa coordenada
-    bool comprobar_coordenadas_construccion(int fila,int columna);
-
-    bool comprobar_coordenadas_demolicion(int fila,int columna, int turno);
-
-    bool comprobar_coordenadas_ataque(int fila,int columna, int turno);
 
     bool comprobar_coordenadas_reparacion(int fila,int columna, int turno);
 
@@ -140,6 +132,14 @@ class Mapa{
     void agregar_transitables(int fila,int columna);
 
     void eliminar_transitables(int fila, int columna);
+ 
+    //PRE: fila y columna deben estra dentro del rango de la matriz y la string debe ser el nombre de un edificio
+    //POS: devuelve un booleano que representa si se puede construir en esa coordenada
+    bool comprobar_coordenadas_construccion(int fila,int columna);
+
+    bool comprobar_coordenadas_demolicion(int fila,int columna, int turno);
+
+    bool comprobar_coordenadas_ataque(int fila,int columna, int turno);
 
     void guardar_materiales(ofstream &archivo);
 
