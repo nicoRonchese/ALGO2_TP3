@@ -231,6 +231,12 @@ void Menu::chequear_energia(){
   energia[turno] = ENERGIA_MAXIMA;
 }
 
+bool Menu::consultar_energia(int costo_energia){
+  if (energia[turno] < costo_energia)
+    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
+  return (energia[turno] >= costo_energia);
+}
+
 void Menu::procesar_opcion_juego(int opcion){
     switch (opcion) {
         case CONSTRUIR_EDIFICIO:
@@ -277,17 +283,17 @@ void Menu::procesar_opcion_juego(int opcion){
     }
 }
 
+
 void Menu::construir_edificio(){
- if (energia[turno] >= COSTO_CONSTRUIR){
- string nombre, nombre_electrica;
- //edificio edificio;
- cin.get(); // Colocamos una pausa para que se ejecute correctamente el codigo
- cout << "Edificio: ";
- getline(cin,nombre);
- nombre = minusculizar(nombre);
- //if (mapa->comprobar_edificio(nombre)){
-   //edificio = mapa->buscar_edificio(nombre);
-   //if (comprobar_construccion(edificio)){
+ if (consultar_energia(COSTO_CONSTRUIR)){
+  string nombre;
+  //edificio edificio;
+  cin.get(); // Colocamos una pausa para que se ejecute correctamente el codigo
+  cout << "Edificio: ";
+  getline(cin,nombre);
+  nombre = minusculizar(nombre);
+  if (datosEdificios->comprobar_edificio(nombre)){
+    //if (comprobar_construccion(nombre))
     string fila_string,columna_string;
     int fila,columna;
     cout<<"Fila: ";
@@ -296,29 +302,23 @@ void Menu::construir_edificio(){
     cout<<"Columna: ";
     cin>>columna_string;
     columna = ingrese_numero(columna_string);
-    //if (mapa->comprobar_coordenadas_construccion(fila,columna)){
-        //mapa->construir_edificio(nombre,fila,columna);
-        //datosMateriales->restar_materiales_usados(edificio);
-        //cout<<"Edificio construido correctamente"<<endl;
-        //if (mapa->construir_edificio(fila, columna))
-          energia[turno] -= COSTO_CONSTRUIR;
- }
- else
-    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
-
-    //}
-   //}
- //}
- //else
-    //cout<<"Edificio no encontrado"<<endl;
+    fila--;
+    columna--;
+    if (mapa->construir_edificio(nombre,fila,columna,turno)){
+        //datosMateriales->construccion_costo_materiales(datosEdificios->buscar_edificio(nombre));
+        energia[turno] -= COSTO_CONSTRUIR;
+    }
+   }
+  }
 }
 
-bool Menu::comprobar_construccion(//edificio edificio
+bool Menu::comprobar_construccion(//string nombre
                                   ){
  bool chequeo = false;
- //if (edificio.maxima_cantidad_permitida-edificio.cantidad_construida==0)
+ //edificio edificio = datosEdificios->buscar_edificio(nombre);
+ //if (maxima_cantidad_permitida==cantidad_construida;)
     //cout<<"Maximo construido"<<endl;
- //else if (!datosMateriales->comprobar_materiales_necesarios(edificio))
+ //else if (!datosMateriales->comprobar_materiales_construccion(edificio))
     //cout<<"Materiales insuficientes"<<endl;
  //else
     //chequeo = true;
@@ -330,7 +330,7 @@ void Menu::listar_edificios_construidos(){
 }
 
 void Menu::demoler_edificio(){
- if (energia[turno] >= COSTO_DEMOLER){
+ if (consultar_energia(COSTO_DEMOLER)){
   string fila_string,columna_string;
   int fila,columna;
   cout<<"Fila: ";
@@ -339,27 +339,17 @@ void Menu::demoler_edificio(){
   cout<<"Columna: ";
   cin>>columna_string;
   columna = ingrese_numero(columna_string);
- //if (!mapa->consultar_coordenada(fila,columna))
-    //cout<<"Error: Coordenada fuera del mapa"<<endl;
- //else if (mapa->consultar_casillero(fila,columna)!=CONSTRUIBLE)
-    //cout<<"No es un casillero construible por lo que no puede haber un edificio"<<endl;
- //else if (mapa->consultar_vacio(fila,columna))
-    //cout<<"No hay edificio construido en el casillero"<<endl;
- //else{
-    //string nombre_edificio = mapa->demoler_edificio(fila,columna);
-    //edificio edificio = mapa->buscar_edificio(nombre_edificio);
-    //datosMateriales->sumar_materiales_demolidos(edificio);
-    //cout<<"Demolicion de "<<nombre_edificio<<" realizada correctamente"<<endl;
-    //if (mapa->demoler_construccion(fila, columna))
-     energia[turno] -= COSTO_DEMOLER;
- //}
+  fila--;
+  columna--;
+  if (mapa->demoler_edificio(fila, columna, turno))
+   //edificio_demolido = datosEdificios->buscar_edificio(mapa->buscar_edificio(fila, columna));
+   //datosMateriales->recoleccion_materiales_demolidos(edificio, turno);
+   energia[turno] -= COSTO_DEMOLER;
  }
- else
-   cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::atacar_construccion(){
- if (energia[turno] >= COSTO_ATACAR){
+ if (consultar_energia(COSTO_ATACAR)){
     if (datosMateriales->devolver_cantidad(turno, BOMBA)>=1){
      string fila_string,columna_string;
      int fila,columna;
@@ -377,12 +367,10 @@ void Menu::atacar_construccion(){
     else
      cout<<"No tienes bombas, no puede atacar"<<endl;
  }
- else
-  cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::reparar_construccion(){
- if (energia[turno] >= COSTO_REPARAR){
+ if (consultar_energia(COSTO_REPARAR)){
      string fila_string,columna_string;
      int fila,columna;
      cout<<"Fila: ";
@@ -393,15 +381,19 @@ void Menu::reparar_construccion(){
      columna = ingrese_numero(columna_string);
      fila--;
      columna--;
-     if (mapa->reparar_edificio(fila, columna, turno))
-      energia[turno] -= COSTO_REPARAR;
+     if (mapa->comprobar_coordenadas_reparacion(fila, columna, turno)){
+      //edificio_demolido = datosEdificios->buscar_edificio(mapa->buscar_edificio(fila, columna));
+      //if (datosMateriales->reparo_costo_materiales(edificio, turno))
+         mapa->reparar_edificio(fila, columna);
+         energia[turno] -= COSTO_REPARAR;
+      //else
+        //cout<<"No tienes los materiales suficientes para reparar este edificio"<<endl;
+     }
    }
-   else
-    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::comprar_bombas(){
- if (energia[turno] >= COSTO_COMPRAR){
+ if (consultar_energia(COSTO_COMPRAR)){
   string cantidad_string;
   int cantidad;
   cout<<"Cantidad de bombas a comprar: ";
@@ -412,8 +404,6 @@ void Menu::comprar_bombas(){
    objetivos[turno]->actualizar_objetivo(EXTREMISTA, cantidad);
   }
  }
- else
-    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::consultar_coordenada(){
@@ -442,12 +432,10 @@ void Menu::mostrar_objetivos(){
 }
 
 void Menu::recolectar_recursos(){
- if (energia[turno] >= COSTO_RECOLECTAR){
+ if (consultar_energia(COSTO_RECOLECTAR)){
   //if (mapa->recolectar_recursos(fila, columna))
      energia[turno] -= COSTO_RECOLECTAR;
  }
- else
-  cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
 }
 
 void Menu::moverse_coordenada(){
@@ -474,7 +462,8 @@ void Menu::guardar_salir(){
 }
 
 Menu::~Menu(){
- //delete mapa;
+ delete mapa;
+ delete datosEdificios;
  delete datosMateriales;
  delete [] energia;
 }
