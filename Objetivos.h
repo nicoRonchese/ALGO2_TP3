@@ -2,6 +2,8 @@
 #define OBJETIVOS_H_INCLUDED
 #include <iostream>
 #include <string.h>
+#include <random>
+#include <ctime>
 
 using namespace std;
 
