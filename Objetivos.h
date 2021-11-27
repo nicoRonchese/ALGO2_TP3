@@ -15,6 +15,8 @@ const int CANSADO = 6;
 const int CONSTRUCTOR = 7;
 const int ARMADO = 8;
 const int EXTREMISTA = 9;
+const int TOTAL_OBJETIVOS = 9;
+const int TOTAL_OBJETIVOS_JUGADOR = 3;
 
 struct Objetivo{
     int tipo_objetivo;
@@ -90,6 +92,11 @@ class Objetivos{
   void armado(int bombas_inventario, int ubicacion_objetivo);
 
   void extremista(int bombas_compradas, int ubicacion_objetivo);
+
+  private:
+  void sortear_objetivos(int* objetivos_preparados, int total_objetivos_jugador);
+
+  bool hay_objetivo_repetido(int* objetivos_preparados, int objetivo_actual);
 };
 
 #endif // OBJETIVOS_H_INCLUDED

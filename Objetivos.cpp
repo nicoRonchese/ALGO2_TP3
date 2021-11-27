@@ -1,4 +1,5 @@
 #include "Objetivos.h"
+#include "time.h"
 
 Objetivos::Objetivos(int maximo_escuelas){
  this->obelisco_construido = false;
@@ -8,7 +9,8 @@ Objetivos::Objetivos(int maximo_escuelas){
 }
 
 void Objetivos::sorteo_objetivos(){
- int objetivos_preparados[3] = {6,8,9};
+ int objetivos_preparados[TOTAL_OBJETIVOS_JUGADOR];
+ sortear_objetivos(objetivos_preparados, TOTAL_OBJETIVOS_JUGADOR);
  for (int objetivo = 0; objetivo < 3; objetivo++){
    objetivos[objetivo] = new Objetivo;
    objetivos[objetivo]->tipo_objetivo = objetivos_preparados[objetivo];
@@ -254,6 +256,31 @@ void Objetivos::extremista(int bombas_compradas, int ubicacion_objetivo){
     objetivos[ubicacion_objetivo]->cantidad += bombas_compradas;
     if (objetivos[ubicacion_objetivo]->cantidad >= 500)
      objetivos[ubicacion_objetivo]->cumplido = true;
+}
+
+void Objetivos::sortear_objetivos(int* objetivos_preparados, int total_objetivos_jugador){
+    for(int contador = 0; contador < total_objetivos_jugador; contador++){
+        objetivos_preparados[contador] = rand() % TOTAL_OBJETIVOS + 1;
+        if(contador > 0){
+            while(hay_objetivo_repetido(objetivos_preparados, contador)){
+                objetivos_preparados[contador] = rand() % TOTAL_OBJETIVOS + 1;
+            }
+        }
+    }
+}
+
+bool Objetivos::hay_objetivo_repetido(int* objetivos_preparados, int objetivo_actual){
+    bool objetivo_repetido = false;
+    int contador = 0;
+
+    while((contador < objetivo_actual) && !(objetivo_repetido)){
+        if(objetivos_preparados[contador] == objetivos_preparados[objetivo_actual]){
+            objetivo_repetido = true;
+        }
+        contador++;
+    }
+
+    return objetivo_repetido;
 }
 
 Objetivos::~Objetivos(){
