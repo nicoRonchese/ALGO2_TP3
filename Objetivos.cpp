@@ -1,5 +1,4 @@
 #include "Objetivos.h"
-#include "time.h"
 
 Objetivos::Objetivos(int maximo_escuelas){
  this->obelisco_construido = false;
@@ -113,7 +112,7 @@ void Objetivos::mostrar_bombardero(int ubicacion_objetivo){
 }
 
 void Objetivos::mostrar_energetico(int ubicacion_objetivo){
- cout<<"Energético: haber terminado un turno con 100 puntos de energía."<<endl;
+ cout<<"Energetico: haber terminado un turno con 100 puntos de energia."<<endl;
  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100)"<<endl<<endl;
 }
 
@@ -128,7 +127,7 @@ void Objetivos::mostrar_minero(int ubicacion_objetivo){
 }
 
 void Objetivos::mostrar_cansado(int ubicacion_objetivo){
- cout<<"Cansado: terminar un turno con 0 de energía."<<endl;
+ cout<<"Cansado: terminar un turno con 0 de energia."<<endl;
  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 0)"<<endl<<endl;
 }
 
