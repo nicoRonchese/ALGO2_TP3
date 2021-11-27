@@ -5,8 +5,12 @@
 using namespace std;
 const int CANTIDAD = 1;
 
+const string SIGNO_MADERA = "W";
+const string SIGNO_METAL = "I";
+const string SIGNO_PIEDRA = "S";
+
 class MaterialColocable{
- private:
+ protected:
     //Atributos
 
     string nombre;
