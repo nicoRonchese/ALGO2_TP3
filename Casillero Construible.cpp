@@ -1,6 +1,10 @@
 #include "Casillero Construible.h"
 #include "Escuela.cpp"
 #include "Fabrica.cpp"
+#include "Aserradero.h"
+#include "Mina.h"
+#include "MinaOro.h"
+#include "PlantaElectrica.h"
 #include "Edificio Colocable.cpp"
 
 
@@ -11,20 +15,22 @@ CasilleroConstruible::CasilleroConstruible(string tipo_terreno) : Casillero(tipo
 }
 
 void CasilleroConstruible:: colocar_edificio(string nombre, int jugador){
- if (nombre==MINA)
-    this->edificio = new Escuela(jugador);
- else if (nombre==ASERRADERO)
-    this->edificio = new Escuela(jugador);
- else if (nombre==FABRICA)
+ if (nombre == MINA)
+    this->edificio = new Mina(jugador);
+ else if (nombre == ASERRADERO)
+    this->edificio = new Aserradero(jugador);
+ else if (nombre == FABRICA)
     this->edificio = new Fabrica(jugador);
- else if (nombre==ESCUELA)
+ else if (nombre == ESCUELA)
     this->edificio = new Escuela(jugador);
- else if (nombre==OBELISCO)
+ else if (nombre == OBELISCO)
     this->edificio = new Escuela(jugador);
- else if (nombre==PLANTA_ELECTRICA)
-    this->edificio = new Escuela(jugador);
+ else if (nombre == PLANTA_ELECTRICA)
+    this->edificio = new PlantaElectrica(jugador);
+ else if(nombre == MINA_ORO)
+    this->edificio = new MinaOro(jugador);
  else
-    cout<<"No es un edificio colocable por lo que no se va a encontrar en el mapa"<<endl;
+    cout<< "No es un edificio colocable por lo que no se va a encontrar en el mapa" << endl;
 }
 
 bool CasilleroConstruible:: comprobar_vacio(){
