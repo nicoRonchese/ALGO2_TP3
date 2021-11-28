@@ -5,6 +5,7 @@
 class Aserradero : public EdificioColocable{
 
  public:
+    //Métodos
     /*
     Constructor
     * Pre: Recibe un jugador valido.
