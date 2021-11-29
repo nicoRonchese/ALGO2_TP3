@@ -1,10 +1,10 @@
 #include "Casillero Construible.h"
 #include "Escuela.cpp"
 #include "Fabrica.cpp"
-#include "Aserradero.h"
-#include "Mina.h"
-#include "MinaOro.h"
-#include "PlantaElectrica.h"
+#include "Aserradero.cpp"
+#include "Mina.cpp"
+#include "MinaOro.cpp"
+#include "PlantaElectrica.cpp"
 #include "Edificio Colocable.cpp"
 
 
