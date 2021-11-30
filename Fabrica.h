@@ -10,7 +10,7 @@ class Fabrica : public EdificioColocable{
      Fabrica(int jugador);
      ~Fabrica();
      void mostrar();
-     void recolectar();
+     void recolectar(DatosMateriales* materiales);
 
 };
 

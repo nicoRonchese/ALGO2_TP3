@@ -11,6 +11,6 @@ void Escuela::mostrar(){
  cout << "Tengo "<<vida<<" de vida y mi propietario es jugador "<<propietario+1 << endl;
 }
 
-void Escuela::recolectar(){}
+void Escuela::recolectar(DatosMateriales* materiales){}
 
 Escuela::~Escuela(){}

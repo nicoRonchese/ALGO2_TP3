@@ -9,7 +9,7 @@ class Escuela : public EdificioColocable{
      Escuela(int jugador);
      ~Escuela();
      void mostrar();
-     void recolectar();
+     void recolectar(DatosMateriales* materiales);
 };
 
 

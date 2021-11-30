@@ -1,4 +1,4 @@
-aserradero 30 100 50 2 
+aserradero 30 100 50 1 
 
 fabrica 100 100 250 4 
 

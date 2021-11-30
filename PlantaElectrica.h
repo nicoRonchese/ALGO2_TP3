@@ -23,7 +23,7 @@ class PlantaElectrica : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes a la planta electrica.
     */
-    void recolectar();
+    void recolectar(DatosMateriales* materiales);
 
     /*
     Destructor

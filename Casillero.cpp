@@ -32,7 +32,7 @@ void Casillero :: atacar_edificio(){}
 void Casillero :: reparar_edificio(){}
 
 string Casillero :: devolver_elemento_colocable(){
- return "";
+ return "escuela";
 }
 
 void Casillero :: recoleccion(DatosMateriales* materiales, int jugador){}

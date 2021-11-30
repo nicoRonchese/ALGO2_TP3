@@ -79,7 +79,7 @@ void Datos_edificios::recursion_mostrar_edificios(nodo *origen){
         listar_edificios(origen->datos,origen->llave);
 		recursion_mostrar_edificios(origen->der);
 		recursion_mostrar_edificios(origen->izq);
-	}	
+	}
 }
 
 void Datos_edificios::edificio_construido_o_demolido(string nombre, int n){

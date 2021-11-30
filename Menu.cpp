@@ -293,36 +293,39 @@ void Menu::construir_edificio(){
   getline(cin,nombre);
   nombre = minusculizar(nombre);
   if (datosEdificios->comprobar_edificio(nombre)){
-    //if (comprobar_construccion(nombre))
-    string fila_string,columna_string;
-    int fila,columna;
-    cout<<"Fila: ";
-    cin>>fila_string;
-    fila = ingrese_numero(fila_string);
-    cout<<"Columna: ";
-    cin>>columna_string;
-    columna = ingrese_numero(columna_string);
-    fila--;
-    columna--;
-    if (mapa->construir_edificio(nombre,fila,columna,turno)){
-        //datosMateriales->construccion_costo_materiales(datosEdificios->buscar_edificio(nombre));
+    if (comprobar_construccion(nombre)){
+     string fila_string,columna_string;
+     int fila,columna;
+     cout<<"Fila: ";
+     cin>>fila_string;
+     fila = ingrese_numero(fila_string);
+     cout<<"Columna: ";
+     cin>>columna_string;
+     columna = ingrese_numero(columna_string);
+     fila--;
+     columna--;
+     if (mapa->construir_edificio(nombre,fila,columna,turno)){
+        datosMateriales->restar_construccion_materiales(datosEdificios->buscar_edificio(nombre), turno);
+        datosEdificios->edificio_construido_o_demolido(nombre, 1);
         energia[turno] -= COSTO_CONSTRUIR;
+        if (nombre == ESCUELA)
+         objetivos[turno]->actualizar_objetivo(LETRADO, 1);
+     }
     }
    }
   }
 }
 
-bool Menu::comprobar_construccion(//string nombre
-                                  ){
- bool chequeo = false;
- //edificio edificio = datosEdificios->buscar_edificio(nombre);
- //if (maxima_cantidad_permitida==cantidad_construida;)
-    //cout<<"Maximo construido"<<endl;
- //else if (!datosMateriales->comprobar_materiales_construccion(edificio))
-    //cout<<"Materiales insuficientes"<<endl;
- //else
-    //chequeo = true;
- return chequeo;
+bool Menu::comprobar_construccion(string nombre){
+ bool edificio_construible = false;
+ edificio edificio_a_construir = datosEdificios->buscar_edificio(nombre);
+ if (edificio_a_construir.maxima_cantidad_permitida==edificio_a_construir.cantidad_construida)
+    cout<<"Maximo construido"<<endl;
+ else if (!datosMateriales->comprobar_materiales_construccion(edificio_a_construir, turno))
+    cout<<"Materiales insuficientes"<<endl;
+ else
+    edificio_construible = true;
+ return edificio_construible;
 }
 
 void Menu::listar_edificios_construidos(){
@@ -330,6 +333,7 @@ void Menu::listar_edificios_construidos(){
 }
 
 void Menu::demoler_edificio(){
+ string edificio_demolido;
  if (consultar_energia(COSTO_DEMOLER)){
   string fila_string,columna_string;
   int fila,columna;
@@ -341,10 +345,12 @@ void Menu::demoler_edificio(){
   columna = ingrese_numero(columna_string);
   fila--;
   columna--;
-  if (mapa->demoler_edificio(fila, columna, turno))
-   //edificio_demolido = datosEdificios->buscar_edificio(mapa->buscar_edificio(fila, columna));
-   //datosMateriales->recoleccion_materiales_demolidos(edificio, turno);
+  if (mapa->comprobar_coordenadas_demolicion(fila, columna, turno)){
+   edificio_demolido = mapa->demoler_edificio(fila, columna);
+   datosMateriales->sumar_demolicion_materiales(datosEdificios->buscar_edificio(edificio_demolido), turno);
+   datosEdificios->edificio_construido_o_demolido(edificio_demolido, -1);
    energia[turno] -= COSTO_DEMOLER;
+  }
  }
 }
 
@@ -361,8 +367,10 @@ void Menu::atacar_construccion(){
      columna = ingrese_numero(columna_string);
      fila--;
      columna--;
-     if (mapa->atacar_edificio(fila, columna, turno))
+     if (mapa->atacar_edificio(fila, columna, turno)){
       energia[turno] -= COSTO_ATACAR;
+      objetivos[turno]->actualizar_objetivo(BOMBARDERO, 1);
+     }
     }
     else
      cout<<"No tienes bombas, no puede atacar"<<endl;
@@ -382,12 +390,11 @@ void Menu::reparar_construccion(){
      fila--;
      columna--;
      if (mapa->comprobar_coordenadas_reparacion(fila, columna, turno)){
-      //edificio_demolido = datosEdificios->buscar_edificio(mapa->buscar_edificio(fila, columna));
-      //if (datosMateriales->reparo_costo_materiales(edificio, turno))
+      edificio edificio_a_reparar = datosEdificios->buscar_edificio(mapa->devolver_elemento_en_casillero(fila, columna));
+      if (datosMateriales->reparacion_edificio(edificio_a_reparar, turno)){
          mapa->reparar_edificio(fila, columna);
          energia[turno] -= COSTO_REPARAR;
-      //else
-        //cout<<"No tienes los materiales suficientes para reparar este edificio"<<endl;
+      }
      }
    }
 }

@@ -3,6 +3,7 @@
 #include "Escuela.h"
 #include "Fabrica.h"
 #include "Casillero.h"
+#include "DatosMateriales.h"
 
 class CasilleroConstruible : public Casillero {
   private:

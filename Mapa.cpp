@@ -163,11 +163,15 @@ void Mapa::mostrar_mapa(){
 }
 
 void Mapa::mostrar_casillero(int fila, int columna){
-  Matriz[(fila)][(columna)]->mostrar();
+  Matriz[fila][columna]->mostrar();
 }
 
 bool Mapa::consultar_coordenada(int fila,int columna){
  return (fila<filas_matriz && fila>=0 && columna<columnas_matriz && columna>=0);
+}
+
+string Mapa::devolver_elemento_en_casillero(int fila, int columna){
+ return (Matriz[fila][columna]->devolver_elemento_colocable());
 }
 
 void Mapa::agregar_transitables(int fila, int columna){
@@ -193,7 +197,7 @@ void Mapa::eliminar_transitables(int fila, int columna ){
 
     for(int i = 0; i < (cantidad_transitables-1); i++){
       transitables_aux[i] = transitables[i+aux];
-      if ((transitables[i][0]==fila)&&(transitables[i][1]==columna))  
+      if ((transitables[i][0]==fila)&&(transitables[i][1]==columna))
         aux = 1;
     }
     if(cantidad_transitables != 0){
@@ -288,14 +292,10 @@ bool Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
   return construccion_completada;
 }
 
-bool Mapa::demoler_edificio(int fila, int columna, int turno){
+string Mapa::demoler_edificio(int fila, int columna){
  string edificio;
- bool demolicion_completada = false;
- if (comprobar_coordenadas_demolicion(fila, columna, turno)){
-   edificio = Matriz[fila][columna]->demoler_edificio();
-   demolicion_completada = true;
- }
- return demolicion_completada;
+ edificio = Matriz[fila][columna]->demoler_edificio();
+ return edificio;
 }
 
 bool Mapa::atacar_edificio(int fila, int columna, int turno){

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "Menu.h"
+#include "Datos_Edificios.h"
 //#include "Datos Edificios.h"
 //#include "Material Colocable.h"
 
@@ -51,7 +52,7 @@ class DatosMateriales{
     //PRE:
     //POS:
     int devolver_cantidad(int jugador, int material);
-    
+
     //PRE:
     //POS:Muestra la informacion de los materiales
     void mostrar_materiales(int jugador);
@@ -66,13 +67,7 @@ class DatosMateriales{
 
     //PRE:Recibir un edificio
     //POS:Devuelve si hay los materiales necesarios para la construccion o no
-    bool comprobar_materiales_necesarios(//edificio edificio
-                                         );
-
-    //PRE:Recibir un edificio
-    //POS:Suma los materiales demolidos correspondientes
-    void sumar_materiales_demolidos(//edificio edificio
-                                    );
+    bool comprobar_materiales_construccion(edificio edificio, int jugador);
 
     //PRE:Recibir una posicion dentro del tamaño del vector y una cantidad
     //POS:Suma la cantidad ingresada al material que se encuentre en esa posicion
@@ -80,12 +75,17 @@ class DatosMateriales{
 
     //PRE:Recibir un edificio
     //POS:Resta los materiales usados para la construccion
-    void restar_materiales_usados(//edificio construido
-                                  );
+    void restar_construccion_materiales(edificio construido, int jugador);
+
+     //PRE:Recibir un edificio
+    //POS:Suma los materiales demolidos correspondientes
+    void sumar_demolicion_materiales(edificio edificio, int jugador);
+
+    bool reparacion_edificio(edificio edificio, int jugador);
 
    private:
     //Métodos privados
-    
+
     //PRE:
     //POS:
     void leer_archivo_inicial();
@@ -105,6 +105,8 @@ class DatosMateriales{
     //PRE:
     //POS: Ordena el vector de materiales
     void ordenar_materiales();
+
+    void restar_reparacion_materiales(edificio edificio, int jugador);
 
 };
 

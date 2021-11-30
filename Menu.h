@@ -77,7 +77,7 @@ class Menu{
      //PRE:
      //POS:
      void crear_datos_jugadores();
- 
+
      //PRE:
      //POS:
      void menu_inicial();
@@ -85,7 +85,7 @@ class Menu{
      //PRE:
      //POS:
      void menu_juego();
- 
+
      //PRE: debe recibir un int
      //POS: segun el numero realizara una tarea
      void procesar_opcion_inicial(int opcion);
@@ -101,7 +101,7 @@ class Menu{
      //PRE:
      //POS:muestra en terminal el menu de juego
      void mostrar_menu_juego();
- 
+
      //PRE:
      //POS:
      void cambiar_turno();
@@ -119,7 +119,7 @@ class Menu{
      void chequear_energia();
 
      bool consultar_energia(int costo_energia);
- 
+
      //PRE:
      //POS:
      void modificar_edificio();
@@ -136,16 +136,15 @@ class Menu{
      //PRE:
      //POS:
      void cambiar_cantidad_jugadores();
- 
+
      //PRE:
      //POS: comienza el juego
      void comenzar_partida();
- 
+
      //PRE: debe recibir un tipo de dato edificio
      //POS: devuelve un valor booleano que representa si se puede o no construir el edificio,
      // ademas de mostrar un mensaje en caso de que no se pueda
-     bool comprobar_construccion(//edificio edificio
-                                 );
+     bool comprobar_construccion(string nombre);
 
      //PRE:
      //POS: si los datos  de mapa y datos_materiales tanto como de los ingresados por el usuario lo permiten,

@@ -23,7 +23,7 @@ class Aserradero : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes al aserradero,
     */
-    void recolectar();
+    void recolectar(DatosMateriales* materiales);
 
     /*
     Destructor

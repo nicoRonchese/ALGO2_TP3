@@ -11,7 +11,7 @@ void PlantaElectrica::mostrar(){
  cout << "Tengo " << vida << " de vida y mi propietario es el jugador " << propietario + 1 << endl;
 }
 
-void PlantaElectrica::recolectar(){
+void PlantaElectrica::recolectar(DatosMateriales* materiales){
     cout << "una Planta electrica produjo 15 de energia" << endl;
 }
 

@@ -216,9 +216,8 @@ void Objetivos::energetico(int energia, int ubicacion_objetivo){
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
 
-void Objetivos::letrado(int cantidad_escuelas, int ubicacion_objetivo){
-    if (objetivos[ubicacion_objetivo]->cantidad < cantidad_escuelas)
-     objetivos[ubicacion_objetivo]->cantidad = cantidad_escuelas;
+void Objetivos::letrado(int escuela_construida, int ubicacion_objetivo){
+    objetivos[ubicacion_objetivo]->cantidad += escuela_construida;
     if (objetivos[ubicacion_objetivo]->cantidad >= maximo_escuelas)
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
@@ -237,9 +236,8 @@ void Objetivos::cansado(int energia, int ubicacion_objetivo){
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
 
-void Objetivos::constructor(int cantidad_edificios, int ubicacion_objetivo){
-    if (objetivos[ubicacion_objetivo]->cantidad < cantidad_edificios)
-     objetivos[ubicacion_objetivo]->cantidad = cantidad_edificios;
+void Objetivos::constructor(int edificio_construido, int ubicacion_objetivo){
+    objetivos[ubicacion_objetivo]->cantidad += edificio_construido;
     if (objetivos[ubicacion_objetivo]->cantidad == 6)
      objetivos[ubicacion_objetivo]->cumplido = true;
 }

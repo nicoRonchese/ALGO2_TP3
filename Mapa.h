@@ -52,9 +52,9 @@ class Mapa{
     //POS: devuelve un booleano cuyo valor dependera si existe ese edificio
     bool comprobar_edificio(string edificio);
 
-    //PRE: la string que se le pasa representa al nombre del edificio
-    //POS: devuelve el edificio si es que este existe
-    void buscar_edificio(string nombre);
+    //PRE:
+    //POS:
+    string devolver_elemento_en_casillero(int fila, int columna);
 
     //PRE: fila y columna deben estar dentro de los limites de la matriz
     //POS: muestra en terminal que tipo de casillero es
@@ -88,7 +88,7 @@ class Mapa{
 
     //PRE: fila y columna deben estra dentro del rango de la matriz
     //POS: devuelve el nombre del edificio demolido
-    bool demoler_edificio(int fila, int columna, int turno);
+    string demoler_edificio(int fila, int columna);
 
     bool atacar_edificio(int fila, int columna, int turno);
 
@@ -105,6 +105,8 @@ class Mapa{
     //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
     //POS: guarda todos las ubicaciones de los archivos en el archivo
     void guardar_construcciones();
+
+    bool comprobar_coordenadas_demolicion(int fila,int columna, int turno);
 
     bool comprobar_coordenadas_reparacion(int fila,int columna, int turno);
 
@@ -132,12 +134,10 @@ class Mapa{
     void agregar_transitables(int fila,int columna);
 
     void eliminar_transitables(int fila, int columna);
- 
+
     //PRE: fila y columna deben estra dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: devuelve un booleano que representa si se puede construir en esa coordenada
     bool comprobar_coordenadas_construccion(int fila,int columna);
-
-    bool comprobar_coordenadas_demolicion(int fila,int columna, int turno);
 
     bool comprobar_coordenadas_ataque(int fila,int columna, int turno);
 

@@ -61,7 +61,7 @@ void CasilleroConstruible:: mostrar_en_mapa(){
 }
 
 void CasilleroConstruible::recoleccion(DatosMateriales* materiales){
-   edificio->recolectar(materiales);
+   edificio->recolectar();
 }
 
 
@@ -89,7 +89,7 @@ void CasilleroConstruible::reparar_edificio(){
 }
 
 string CasilleroConstruible::devolver_elemento_colocable(){
-  return edificio->nombre_edificio();
+  return (edificio->nombre_edificio());
 }
 
 CasilleroConstruible::~CasilleroConstruible(){

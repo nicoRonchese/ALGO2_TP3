@@ -24,7 +24,7 @@ class MinaOro : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes a la mina de oro.
     */
-    void recolectar();
+    void recolectar(DatosMateriales* materiales);
 
     /*
     Destructor

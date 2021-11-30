@@ -2,6 +2,8 @@
 #define EDIFICIO_COLOCABLE_H_INCLUDED
 #include <string>
 #include <iostream>
+#include "DatosMateriales.h"
+
 
 using namespace std;
 
@@ -67,7 +69,7 @@ class EdificioColocable{
 
      //PRE: debe recibir un puntero a Datos_materiales con al menos piedra,metal y madera
      //POS: segun el edificio recolecta los materiales que se producen
-     virtual void recolectar(DatosMateriales* materiales);
+     void recolectar();
 
 };
 

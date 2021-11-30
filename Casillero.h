@@ -63,7 +63,7 @@ class Casillero{
     //PRE:
     //POS: borra el edificio y devuelve el nombre del edificio que borro
     virtual string demoler_edificio();
- 
+
     virtual void atacar_edificio();
 
     virtual void reparar_edificio();
