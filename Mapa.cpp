@@ -429,5 +429,31 @@ Mapa::~Mapa(){
 
 }
 
+void Mapa::completar_cantidad_edificios(cantidad_edificios_construidos** edificios_construidos){
+     for (int fila=0; fila<filas_matriz; fila++){
+      for (int columna=0; columna<columnas_matriz; columna++){
+        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio())){
+           sumar_edificio(edificios_construidos, Matriz[fila][columna]->devolver_propietario(), Matriz[fila][columna]->devolver_elemento_colocable());
+        }
+      }
+     }
+}
+
+void Mapa::sumar_edificio(cantidad_edificios_construidos** edificios_construidos, int jugador, string tipo_edificio){
+ if (tipo_edificio==ESCUELA)
+    edificios_construidos[jugador]->cantidad_escuelas++;
+ if (tipo_edificio==FABRICA)
+    edificios_construidos[jugador]->cantidad_fabricas++;
+ if (tipo_edificio==MINA)
+    edificios_construidos[jugador]->cantidad_minas++;
+ if (tipo_edificio==MINA_ORO)
+    edificios_construidos[jugador]->cantidad_minas_oro++;
+ if (tipo_edificio==PLANTA_ELECTRICA)
+    edificios_construidos[jugador]->cantidad_plantas_electricas++;
+ if (tipo_edificio==ASERRADERO)
+    edificios_construidos[jugador]->cantidad_aserraderos++;
+}
+
+
 
 

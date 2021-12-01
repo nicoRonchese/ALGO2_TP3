@@ -16,6 +16,25 @@ using namespace std;
 const string PATH_MAPA = "mapa.txt";
 const string PATH_UBICACIONES = "ubicaciones.txt";
 
+struct objetivo_constructor{
+ bool escuela = false;
+ bool aserradero = false;
+ bool mina = false;
+ bool mina_oro = false;
+ bool fabrica = false;
+ bool planta_electrica = false;
+};
+
+struct cantidad_edificios_construidos{
+  int cantidad_aserraderos = 0;
+  int cantidad_fabricas = 0;
+  int cantidad_minas = 0;
+  int cantidad_minas_oro = 0;
+  int cantidad_escuelas = 0;
+  int cantidad_plantas_electricas = 0;
+  objetivo_constructor constructor;
+};
+
 class Mapa{
  protected:
     //Atributos
@@ -43,6 +62,8 @@ class Mapa{
     //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
     //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
     bool ubicar_edificios_archivo();
+
+    void completar_cantidad_edificios(cantidad_edificios_construidos** edificios_construidos);
 
     //PRE:
     //POS: muestra en la terminal una matriz que representa al mapa del juego
@@ -144,6 +165,8 @@ class Mapa{
     void guardar_materiales(ofstream &archivo);
 
     void guardar_jugador(ofstream &archivo, int jugador);
+
+    void sumar_edificio(cantidad_edificios_construidos** edificios_construidos, int jugador, string tipo_edificio);
 
     //PRE:
     //POS: elimina el espacio final de la palabra
