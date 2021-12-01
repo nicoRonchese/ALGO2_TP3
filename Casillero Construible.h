@@ -25,6 +25,7 @@ class CasilleroConstruible : public Casillero {
     void atacar_edificio();
     void reparar_edificio();
     void recoleccion(DatosMateriales* materiales);
+    int devolver_propietario();
     string devolver_elemento_colocable();
 
 };

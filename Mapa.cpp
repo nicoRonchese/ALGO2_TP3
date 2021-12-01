@@ -96,7 +96,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
       getline(archivo, basura, '\n');
       fila = stoi(fila_objeto) - 1;
       columna = stoi(columna_objeto) - 1;
-      //Matriz[fila][columna]->colocar_jugador(JUGADOR_UNO);
+      Matriz[fila][columna]->colocar_jugador(JUGADOR_UNO);
       getline(archivo, objeto, '(');
       objeto = quitar_espacio_final(objeto);
       while (objeto != "2"){
@@ -122,7 +122,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
          getline(archivo, basura, '\n');
          fila = stoi(fila_objeto) - 1;
          columna = stoi(columna_objeto) - 1;
-         //Matriz[fila][columna]->colocar_jugador(JUGADOR_DOS);
+         Matriz[fila][columna]->colocar_jugador(JUGADOR_DOS);
          getline(archivo, objeto, '(');
          objeto = quitar_espacio_final(objeto);
          while (!archivo.eof()){
@@ -205,6 +205,10 @@ void Mapa::eliminar_transitables(int fila, int columna ){
     }
     transitables = transitables_aux;
     cantidad_transitables--;
+}
+
+void Mapa::colocar_jugador(int fila, int columna, int jugador){
+ Matriz[fila][columna]->colocar_jugador(jugador);
 }
 
 void Mapa::lluvia_materiales(){

@@ -49,6 +49,7 @@ class Menu{
      Mapa* mapa;
      DatosMateriales* datosMateriales;
      Datos_edificios* datosEdificios;
+     cantidad_edificios_construidos** edificios_construidos;
      Objetivos** objetivos;
      int turno;
      int cantidad_jugadores;
@@ -102,6 +103,8 @@ class Menu{
      //POS:muestra en terminal el menu de juego
      void mostrar_menu_juego();
 
+     void colocar_jugadores();
+
      //PRE:
      //POS:
      void cambiar_turno();
@@ -146,10 +149,20 @@ class Menu{
      // ademas de mostrar un mensaje en caso de que no se pueda
      bool comprobar_construccion(string nombre);
 
+     int devolver_cantidad_construida(string nombre);
+
+     void sumar_edificio(string nombre);
+
+     void restar_edificio(string nombre);
+
      //PRE:
      //POS: si los datos  de mapa y datos_materiales tanto como de los ingresados por el usuario lo permiten,
      // se "construye" un edificio y  se modifican mapa y datos_materiales
      void construir_edificio();
+
+     int tipos_minas_construidas();
+
+     int tipos_edificios_construidos(string nombre);
 
      //PRE:
      //POS: muestra en terminal los edificios construidos, si hay edificios construidos

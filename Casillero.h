@@ -18,6 +18,7 @@ class Casillero{
  protected:
     //Atributo
 
+    string* jugador_colocado;
     string tipo_casillero;
     string tipo_terreno;
 
@@ -33,6 +34,12 @@ class Casillero{
     //PRE:
     //POS: libera la memoria tomada por edificios o materiales
     virtual ~Casillero();
+
+    void colocar_jugador(int jugador);
+
+    void sacar_jugador();
+
+    bool comprobar_jugador_colocado();
 
     //PRE:
     //POS: muestra en terminal un mensaje indicando que tque tipo  de casillero es
@@ -75,6 +82,8 @@ class Casillero{
     //PRE:
     //POS: devuelve el nombre de los edificios en casilleros construibles
     virtual string devolver_elemento_colocable();
+
+    virtual int devolver_propietario();
 
     //PRE: materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el
     //POS: segun el material en el casillero agregan un tipo de material o no

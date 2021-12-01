@@ -33,12 +33,15 @@ int Menu::ingrese_numero(string numero){
 
 void Menu::crear_datos_jugadores(){
  this->datosMateriales = new DatosMateriales(cantidad_jugadores);
+ this->edificios_construidos = new cantidad_edificios_construidos*[cantidad_jugadores];
  this->objetivos = new Objetivos*[cantidad_jugadores];
- for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
-    objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
  this->energia = new int[cantidad_jugadores];
- for (int jugador = 0; jugador < cantidad_jugadores; jugador++)
+ for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+    objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
+    edificios_construidos[jugador] = new cantidad_edificios_construidos;
     energia[jugador] = ENERGIA_INICIAL;
+ }
+ mapa->completar_cantidad_edificios(edificios_construidos);
  this->turno = JUGADOR_UNO;
 }
 
@@ -47,6 +50,24 @@ void Menu::empezar_menu(){
   comenzar_partida();
  else
   menu_inicial();
+}
+
+void Menu::colocar_jugadores(){
+ for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+     cout<<"Jugador "<<jugador+1<<":"<<endl;
+     string fila_string,columna_string;
+     int fila,columna;
+     cout<<"Fila: ";
+     cin>>fila_string;
+     fila = ingrese_numero(fila_string);
+     cout<<"Columna: ";
+     cin>>columna_string;
+     columna = ingrese_numero(columna_string);
+     fila--;
+     columna--;
+     mapa->colocar_jugador(fila, columna, jugador);
+     cout<<endl;
+ }
 }
 
 void Menu::menu_inicial(){
@@ -58,8 +79,10 @@ void Menu::menu_inicial(){
     cin>>resp;
     opcion = ingrese_numero(resp);
     cout<<endl;
-    if (opcion==COMENZAR_PARTIDA)
+    if (opcion==COMENZAR_PARTIDA){
+     colocar_jugadores();
      system(CLR_SCREEN);
+    }
     procesar_opcion_inicial(opcion);
     if (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
      cout<<endl;
@@ -283,6 +306,53 @@ void Menu::procesar_opcion_juego(int opcion){
     }
 }
 
+int Menu::devolver_cantidad_construida(string nombre){
+ int cantidad_construida;
+ if (nombre==ESCUELA)
+    cantidad_construida = edificios_construidos[turno]->cantidad_escuelas;
+ if (nombre==FABRICA)
+    cantidad_construida = edificios_construidos[turno]->cantidad_fabricas;
+ if (nombre==MINA)
+    cantidad_construida = edificios_construidos[turno]->cantidad_minas;
+ if (nombre==MINA_ORO)
+    cantidad_construida = edificios_construidos[turno]->cantidad_minas_oro;
+ if (nombre==PLANTA_ELECTRICA)
+    cantidad_construida = edificios_construidos[turno]->cantidad_plantas_electricas;
+ if (nombre==ASERRADERO)
+    cantidad_construida = edificios_construidos[turno]->cantidad_aserraderos;
+ return cantidad_construida;
+}
+
+void Menu::sumar_edificio(string nombre){
+ if (nombre==ESCUELA)
+    edificios_construidos[turno]->cantidad_escuelas++;
+ if (nombre==FABRICA)
+    edificios_construidos[turno]->cantidad_fabricas++;
+ if (nombre==MINA)
+    edificios_construidos[turno]->cantidad_minas++;
+ if (nombre==MINA_ORO)
+    edificios_construidos[turno]->cantidad_minas_oro++;
+ if (nombre==PLANTA_ELECTRICA)
+    edificios_construidos[turno]->cantidad_plantas_electricas++;
+ if (nombre==ASERRADERO)
+    edificios_construidos[turno]->cantidad_aserraderos++;
+}
+
+void Menu::restar_edificio(string nombre){
+ if (nombre==ESCUELA)
+    edificios_construidos[turno]->cantidad_escuelas--;
+ if (nombre==FABRICA)
+    edificios_construidos[turno]->cantidad_fabricas--;
+ if (nombre==MINA)
+    edificios_construidos[turno]->cantidad_minas--;
+ if (nombre==MINA_ORO)
+    edificios_construidos[turno]->cantidad_minas_oro--;
+ if (nombre==PLANTA_ELECTRICA)
+    edificios_construidos[turno]->cantidad_plantas_electricas--;
+ if (nombre==ASERRADERO)
+    edificios_construidos[turno]->cantidad_aserraderos--;
+}
+
 
 void Menu::construir_edificio(){
  if (consultar_energia(COSTO_CONSTRUIR)){
@@ -306,10 +376,14 @@ void Menu::construir_edificio(){
      columna--;
      if (mapa->construir_edificio(nombre,fila,columna,turno)){
         datosMateriales->restar_construccion_materiales(datosEdificios->buscar_edificio(nombre), turno);
-        datosEdificios->edificio_construido_o_demolido(nombre, 1);
+        sumar_edificio(nombre);
+        cout<<nombre<<" construido/a correctamente"<<endl;
         energia[turno] -= COSTO_CONSTRUIR;
+        objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, tipos_edificios_construidos(nombre));
         if (nombre == ESCUELA)
-         objetivos[turno]->actualizar_objetivo(LETRADO, 1);
+         objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->cantidad_escuelas);
+        if (nombre == MINA || nombre == MINA_ORO)
+         objetivos[turno]->actualizar_objetivo(MINERO, tipos_minas_construidas());
      }
     }
    }
@@ -319,7 +393,7 @@ void Menu::construir_edificio(){
 bool Menu::comprobar_construccion(string nombre){
  bool edificio_construible = false;
  edificio edificio_a_construir = datosEdificios->buscar_edificio(nombre);
- if (edificio_a_construir.maxima_cantidad_permitida==edificio_a_construir.cantidad_construida)
+ if (edificio_a_construir.maxima_cantidad_permitida==devolver_cantidad_construida(nombre))
     cout<<"Maximo construido"<<endl;
  else if (!datosMateriales->comprobar_materiales_construccion(edificio_a_construir, turno))
     cout<<"Materiales insuficientes"<<endl;
@@ -327,6 +401,45 @@ bool Menu::comprobar_construccion(string nombre){
     edificio_construible = true;
  return edificio_construible;
 }
+
+int Menu::tipos_minas_construidas(){
+ int tipos_minas_construidas = 0;
+ if (edificios_construidos[turno]->cantidad_minas>0)
+    tipos_minas_construidas++;
+ if (edificios_construidos[turno]->cantidad_minas_oro>0)
+    tipos_minas_construidas++;
+ return tipos_minas_construidas;
+}
+
+int Menu::tipos_edificios_construidos(string nombre){
+ int tipos_construidos;
+ if (nombre==ESCUELA)
+   edificios_construidos[turno]->constructor.escuela = true;
+ if (edificios_construidos[turno]->constructor.escuela)
+   tipos_construidos++;
+ if (nombre==FABRICA)
+   edificios_construidos[turno]->constructor.fabrica = true;
+ if (edificios_construidos[turno]->constructor.fabrica)
+   tipos_construidos++;
+ if (nombre==MINA)
+   edificios_construidos[turno]->constructor.mina = true;
+ if (edificios_construidos[turno]->constructor.mina)
+   tipos_construidos++;
+ if (nombre==MINA_ORO)
+   edificios_construidos[turno]->constructor.mina_oro = true;
+ if (edificios_construidos[turno]->constructor.mina_oro)
+   tipos_construidos++;
+ if (nombre==PLANTA_ELECTRICA)
+   edificios_construidos[turno]->constructor.planta_electrica = true;
+ if (edificios_construidos[turno]->constructor.planta_electrica)
+   tipos_construidos++;
+ if (nombre==ASERRADERO)
+   edificios_construidos[turno]->constructor.aserradero = true;
+ if (edificios_construidos[turno]->constructor.aserradero)
+   tipos_construidos++;
+ return tipos_construidos;
+}
+
 
 void Menu::listar_edificios_construidos(){
  mapa->mostrar_construcciones(turno);
@@ -348,7 +461,8 @@ void Menu::demoler_edificio(){
   if (mapa->comprobar_coordenadas_demolicion(fila, columna, turno)){
    edificio_demolido = mapa->demoler_edificio(fila, columna);
    datosMateriales->sumar_demolicion_materiales(datosEdificios->buscar_edificio(edificio_demolido), turno);
-   datosEdificios->edificio_construido_o_demolido(edificio_demolido, -1);
+   restar_edificio(edificio_demolido);
+   cout<<edificio_demolido<<" demolido/a correctamente"<<endl;
    energia[turno] -= COSTO_DEMOLER;
   }
  }
@@ -390,9 +504,11 @@ void Menu::reparar_construccion(){
      fila--;
      columna--;
      if (mapa->comprobar_coordenadas_reparacion(fila, columna, turno)){
-      edificio edificio_a_reparar = datosEdificios->buscar_edificio(mapa->devolver_elemento_en_casillero(fila, columna));
+      string nombre_edificio = mapa->devolver_elemento_en_casillero(fila, columna);
+      edificio edificio_a_reparar = datosEdificios->buscar_edificio(nombre_edificio);
       if (datosMateriales->reparacion_edificio(edificio_a_reparar, turno)){
          mapa->reparar_edificio(fila, columna);
+         cout<<nombre_edificio<<" reparado/a correctamente"<<endl;
          energia[turno] -= COSTO_REPARAR;
       }
      }
@@ -474,6 +590,8 @@ Menu::~Menu(){
  delete datosMateriales;
  delete [] energia;
 }
+
+
 
 
 

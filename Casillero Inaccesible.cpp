@@ -10,7 +10,11 @@ void CasilleroInaccesible:: mostrar(){
 }
 
 void CasilleroInaccesible:: mostrar_en_mapa(){
-  cout<<tipo_casillero<<endl;
+  if (comprobar_jugador_colocado())
+    cout<<*jugador_colocado;
+  else
+    cout<<"V";
+
 }
 
 

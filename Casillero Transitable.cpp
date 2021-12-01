@@ -28,7 +28,9 @@ void CasilleroTransitable:: mostrar(){
 }
 void CasilleroTransitable:: mostrar_en_mapa(){
   if (comprobar_vacio())
-   cout<<tipo_terreno<<endl;
+    cout<<"V";
+  if (comprobar_jugador_colocado())
+    cout<<*jugador_colocado;
   else
     material->mostrar_en_mapa();
 }

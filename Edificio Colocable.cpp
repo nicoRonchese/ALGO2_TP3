@@ -6,6 +6,10 @@ EdificioColocable::EdificioColocable(int jugador){
 
 void EdificioColocable::mostrar(){}
 
+int EdificioColocable::propietario_edificio(){
+ return propietario;
+}
+
 string EdificioColocable::nombre_edificio(){
  return nombre;
 }

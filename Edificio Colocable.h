@@ -55,6 +55,8 @@ class EdificioColocable{
      //POS: muestra en terminal el simbolo que representa ese edificio
      void mostrar_en_mapa();
 
+     int propietario_edificio();
+
      //PRE:
      //POS: devuelve en forma de string el nombre del edificio
      string nombre_edificio();

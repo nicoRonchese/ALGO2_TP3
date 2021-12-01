@@ -1,7 +1,23 @@
 #include "Casillero.h"
 
 
-Casillero :: Casillero(string tipo_terreno) {}
+Casillero :: Casillero(string tipo_terreno) {
+ jugador_colocado = nullptr;
+}
+
+void Casillero :: colocar_jugador(int jugador){
+ jugador_colocado = new string;
+ *jugador_colocado = to_string(jugador+1);
+}
+
+void Casillero :: sacar_jugador(){
+ delete jugador_colocado;
+ jugador_colocado = nullptr;
+}
+
+bool Casillero :: comprobar_jugador_colocado(){
+ return (jugador_colocado != nullptr);
+}
 
 void Casillero :: mostrar(){}
 
@@ -32,7 +48,11 @@ void Casillero :: atacar_edificio(){}
 void Casillero :: reparar_edificio(){}
 
 string Casillero :: devolver_elemento_colocable(){
- return "escuela";
+ return "";
+}
+
+int Casillero :: devolver_propietario(){
+ return 0;
 }
 
 void Casillero :: recoleccion(DatosMateriales* materiales, int jugador){}

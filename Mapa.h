@@ -89,6 +89,8 @@ class Mapa{
     //POS: devuelve un booleano que representa si existe o no esa coordenada dentro del rango
     bool consultar_coordenada(int fila, int columna);
 
+    void colocar_jugador(int fila, int columna, int jugador);
+
     //PRE:
     //POS: cambia el valor de algunos de los casilleros transitables dentro de matriz de forma aleatoria
     void lluvia_materiales();

@@ -55,7 +55,9 @@ void CasilleroConstruible:: mostrar(){
 
 void CasilleroConstruible:: mostrar_en_mapa(){
    if (comprobar_vacio())
-    cout<<tipo_terreno<<" ";
+    cout<<"V"; //vacio?
+   if (comprobar_jugador_colocado())
+    cout<<*jugador_colocado;
    else
     edificio->mostrar_en_mapa();
 }
@@ -86,6 +88,10 @@ void CasilleroConstruible::atacar_edificio(){
 
 void CasilleroConstruible::reparar_edificio(){
  edificio->reparar_edificio();
+}
+
+int CasilleroConstruible::devolver_propietario(){
+ return (edificio->propietario_edificio());
 }
 
 string CasilleroConstruible::devolver_elemento_colocable(){
