@@ -81,6 +81,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
      fila = stoi(fila_objeto) - 1;
      columna = stoi(columna_objeto) - 1;
      Matriz[fila][columna]->colocar_material(objeto);
+     elimininar_transitables(fila,columna);
      getline(archivo, objeto, '(');
      objeto = quitar_espacio_final(objeto);
     }
@@ -191,14 +192,14 @@ void Mapa::agregar_transitables(int fila, int columna){
     cantidad_transitables++;
 }
 
-void Mapa::eliminar_transitables(int fila, int columna ){
-   int** transitables_aux = new int*[(cantidad_transitables - 1)];
-   int aux=0;
+void Mapa::eliminar_transitables(int fila, int columna){
+    int** transitables_aux = new int*[(cantidad_transitables - 1)];
+    int aux=0;
 
     for(int i = 0; i < (cantidad_transitables-1); i++){
-      transitables_aux[i] = transitables[i+aux];
       if ((transitables[i][0]==fila)&&(transitables[i][1]==columna))
         aux = 1;
+      transitables_aux[i] = transitables[i+aux];
     }
     if(cantidad_transitables != 0){
         delete [] transitables;
@@ -219,28 +220,20 @@ void Mapa::lluvia_materiales(){
   metal =rand()%3+2;
   andycoins = rand()%2;
   total = metal+madera+piedra+andycoins;
-  while((total !=0)&&(cantidad_transitables!=cantidad_transitables_ocupados))
+  while((total != 0)&&(cantidad_transitables != 0))
   {
     int i = rand()%cantidad_transitables;
-    if ( Matriz[transitables[i][0]][transitables[i][1]]->comprobar_vacio())
-    {
-      if ((metal+madera+andycoins < total))
+    if ((metal+madera+andycoins < total))
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_PIEDRA);
-      else if (metal+andycoins < total)
+    else if (metal+andycoins < total)
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_MADERA);
-      else if (andycoins < total)
+    else if (andycoins < total)
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_METAL);
-      else
+    else
         Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_ANDYCOIN);
-      eliminar_transitables(transitables[i][0],transitables[i][1]);
-      cantidad_transitables_ocupados++;
-      total--;
-    }
-  }
-  if (cantidad_transitables==cantidad_transitables_ocupados)
-    cout<<"No se produjo la lluvia de recursos porque no tenian lugar donde caer"<<endl;
-  else
-    cout<<"Estan lloviendo materiales!!"<<endl;
+    eliminar_transitables(transitables[i][0], transitables[i][1]);
+    total--;
+   }
 }
 
 string Mapa::consultar_casillero(int fila, int columna){
