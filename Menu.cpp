@@ -195,6 +195,7 @@ void Menu::cambiar_cantidad_jugadores(){
 void Menu::cambiar_turno(){
  turno++;
  if (turno == cantidad_jugadores)
+    lluvia_recursos();
     turno = JUGADOR_UNO;
 }
 
@@ -234,7 +235,7 @@ void Menu::comenzar_partida(){
 }
 
 void Menu::lluvia_recursos(){
- //mapa->lluvia_materiales();
+ mapa->lluvia_materiales();
 }
 
 void Menu::mostrar_turno(){
