@@ -36,25 +36,19 @@ void CasilleroTransitable:: mostrar_en_mapa(){
 }
 
 void CasilleroTransitable:: colocar_material(string nombre){
- if (nombre==NOMBRE_PIEDRA){
-    material = new MaterialColocable;
- }
- else if (nombre==NOMBRE_MADERA){
-    material = new MaterialColocable;
- }
- else if (nombre==NOMBRE_METAL){
-    material = new MaterialColocable;
- }
+ material = new MaterialColocable(nombre);
 }
 
 void CasilleroTransitable:: recolectar_material(DatosMateriales* materiales){
  if (this->material->mostrar_material()==NOMBRE_MADERA)
-    materiales->sumar_materiales(MADERA,CANTIDAD);
+    materiales->sumar_materiales(MADERA,CANTIDAD_MADERA);
  if (this->material->mostrar_material()==NOMBRE_PIEDRA)
-    materiales->sumar_materiales(PIEDRA,CANTIDAD);
+    materiales->sumar_materiales(PIEDRA,CANTIDAD_PIEDRA);
  if (this->material->mostrar_material()==NOMBRE_METAL)
-    materiales->sumar_materiales(METAL,CANTIDAD);
- cout<<"se recolecto "<<CANTIDAD<<" de "<<material->mostrar_material()<<endl;
+    materiales->sumar_materiales(METAL,CANTIDAD_METAL);
+ if (this->material->mostrar_material()==NOMBRE_ANDYCOIN)
+    materiales->sumar_materiales(ANDYCOIN,CANTIDAD_ANDYCOIN);
+ cout<<"se recolecto "<<material->mostrar_material()<<endl;
  delete material;
  material = nullptr;
 }
