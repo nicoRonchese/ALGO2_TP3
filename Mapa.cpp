@@ -81,7 +81,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
      fila = stoi(fila_objeto) - 1;
      columna = stoi(columna_objeto) - 1;
      Matriz[fila][columna]->colocar_material(objeto);
-     elimininar_transitables(fila,columna);
+     eliminar_transitables(fila,columna);
      getline(archivo, objeto, '(');
      objeto = quitar_espacio_final(objeto);
     }
