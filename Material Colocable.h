@@ -28,7 +28,7 @@ class MaterialColocable{
      //Constructor
      //PRE:
      //POS: define el nombre y signo del edificio
-     MaterialColocable();
+     MaterialColocable(string nombre);
 
      //Destructor
      //PRE:
