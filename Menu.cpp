@@ -586,6 +586,12 @@ void Menu::guardar_salir(){
 }
 
 Menu::~Menu(){
+  for (int i = 0; i < cantidad_jugadores; i++){
+    delete objetivos[i];
+    delete edificios_construidos[i];
+ }
+ delete [] objetivos;
+ delete [] edificios_construidos;
  delete mapa;
  delete datosEdificios;
  delete datosMateriales;
