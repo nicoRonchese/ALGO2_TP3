@@ -24,6 +24,10 @@ class CasilleroTransitable : public Casillero {
     void recolectar_material(DatosMateriales* materiales);
     string devolver_elemento_colocable();
 
+    private:
+    string comprobar_terreno();
+    string comprobar_ubicacion();
+
 };
 
 #endif // CASILLERO_TRANSITABLE_H_INCLUDED

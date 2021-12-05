@@ -73,6 +73,8 @@ class EdificioColocable{
      //POS: segun el edificio recolecta los materiales que se producen
      void recolectar();
 
+     string mostrar_signo();
+
 };
 
 

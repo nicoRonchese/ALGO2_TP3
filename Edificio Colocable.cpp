@@ -36,5 +36,9 @@ void EdificioColocable::mostrar_en_mapa(){
   cout<<signo_mapa<<" ";
 }
 
+string EdificioColocable::mostrar_signo(){
+  return this->signo_mapa;
+}
+
 EdificioColocable::~EdificioColocable(){
 }

@@ -13,6 +13,14 @@ const string CAMINO = "C";
 const string MUELLE = "M";
 const string BETUN = "B";
 const string TERRENO = "T";
+const string VACIO = "V";
+
+const string COLOR_CAMINO = "\033[48;5;246m";
+const string COLOR_BETUN = "\033[48;5;8m";
+const string COLOR_LAGO = "\033[48;5;35m";
+const string COLOR_MUELLE = "\033[48;5;94m";
+const string COLOR_TERRENO = "\033[48;5;2m";
+const string END_COLOR = "\033[0m";
 
 class Casillero{
  protected:

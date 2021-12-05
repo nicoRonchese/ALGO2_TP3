@@ -54,12 +54,10 @@ void CasilleroConstruible:: mostrar(){
 }
 
 void CasilleroConstruible:: mostrar_en_mapa(){
-   if (comprobar_vacio())
-    cout<<"V"; //vacio?
-   if (comprobar_jugador_colocado())
-    cout<<*jugador_colocado;
-   else
-    edificio->mostrar_en_mapa();
+   string ubicacion = comprobar_ubicacion();
+
+   cout << COLOR_TERRENO << ubicacion << END_COLOR;
+   
 }
 
 void CasilleroConstruible::recoleccion(DatosMateriales* materiales){
@@ -96,6 +94,20 @@ int CasilleroConstruible::devolver_propietario(){
 
 string CasilleroConstruible::devolver_elemento_colocable(){
   return (edificio->nombre_edificio());
+}
+
+string CasilleroConstruible::comprobar_ubicacion(){
+   string ubicacion_actual;
+
+   if (comprobar_vacio()){
+      ubicacion_actual = VACIO;
+   }else if (comprobar_jugador_colocado()){
+      ubicacion_actual = *jugador_colocado;
+   }else{
+      ubicacion_actual = edificio->mostrar_signo();
+   }
+
+   return ubicacion_actual;
 }
 
 CasilleroConstruible::~CasilleroConstruible(){

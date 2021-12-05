@@ -35,4 +35,8 @@ string MaterialColocable::mostrar_material(){
  return nombre;
 }
 
+string MaterialColocable::mostrar_signo(){
+    return signo_mapa;
+}
+
 MaterialColocable::~MaterialColocable(){}

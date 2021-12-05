@@ -151,16 +151,19 @@ string Mapa::quitar_espacio_final(string edificio){
 
 
 void Mapa::mostrar_mapa(){
+  for(int k = 0; k < columnas_matriz; k++){
+        cout << k << " ";
+  }
+  cout << endl;
+
   for (int fila=0; fila<filas_matriz; fila++){
     for (int columna=0; columna<columnas_matriz; columna++){
         Matriz[fila][columna]->mostrar_en_mapa();
-        if (columna == columnas_matriz -1)
-        {
-           cout <<" "<<endl;
-        }
-
+        cout << " ";
     }
+    cout << " " << fila << endl;
   }
+  
 }
 
 void Mapa::mostrar_casillero(int fila, int columna){

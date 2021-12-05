@@ -28,6 +28,9 @@ class CasilleroConstruible : public Casillero {
     int devolver_propietario();
     string devolver_elemento_colocable();
 
+    private:
+    string comprobar_ubicacion();
+
 };
 
 #endif // CASILLERO_CONSTRUIBLE_H_INCLUDED
