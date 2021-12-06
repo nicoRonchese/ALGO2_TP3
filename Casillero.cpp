@@ -51,9 +51,11 @@ string Casillero :: demoler_edificio(){
  return "";
 }
 
-void Casillero :: atacar_edificio(){}
+void Casillero :: atacar_edificio(cantidad_edificios_construidos** datos){}
 
-bool Casillero :: consultar_vida(){}
+bool Casillero :: consultar_vida(){
+ return false;
+}
 
 void Casillero :: reparar_edificio(){}
 

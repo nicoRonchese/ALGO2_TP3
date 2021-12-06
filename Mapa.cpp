@@ -6,7 +6,6 @@
 
 Mapa::Mapa(){
    cantidad_transitables = 0;
-   cantidad_transitables_ocupados = 0;
    crear_matriz_archivo();
 }
 
@@ -346,10 +345,10 @@ string Mapa::demoler_edificio(int fila, int columna){
  return edificio;
 }
 
-bool Mapa::atacar_edificio(int fila, int columna, int turno){
+bool Mapa::atacar_edificio(int fila, int columna, int turno, cantidad_edificios_construidos** datos){
   bool ataque_completado = false;
   if (comprobar_coordenadas_ataque(fila, columna, turno)){
-    Matriz[fila][columna]->atacar_edificio();
+    Matriz[fila][columna]->atacar_edificio(datos);
     ataque_completado = true;
   }
   return ataque_completado;

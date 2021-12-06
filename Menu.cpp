@@ -212,7 +212,7 @@ void Menu::comenzar_partida(){
  }
  while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
     mostrar_mapa();
-    mostrar_turno();  
+    mostrar_turno();
     mostrar_energia();
     mostrar_menu_juego();
     cout <<"Ingrese una opcion: ";
@@ -520,7 +520,7 @@ void Menu::atacar_construccion(){
      columna = ingrese_numero(columna_string);
      fila--;
      columna--;
-     if (mapa->atacar_edificio(fila, columna, turno)){
+     if (mapa->atacar_edificio(fila, columna, turno, edificios_construidos)){
       energia[turno] -= COSTO_ATACAR;
       objetivos[turno]->actualizar_objetivo(BOMBARDERO, 1);
      }

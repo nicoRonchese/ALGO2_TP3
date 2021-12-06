@@ -18,27 +18,6 @@ using namespace std;
 const string PATH_MAPA = "mapa.txt";
 const string PATH_UBICACIONES = "ubicaciones.txt";
 
-struct objetivo_constructor{
- bool escuela = false;
- bool aserradero = false;
- bool mina = false;
- bool mina_oro = false;
- bool fabrica = false;
- bool planta_electrica = false;
-};
-
-struct cantidad_edificios_construidos{
-  int cantidad_aserraderos = 0;
-  int cantidad_fabricas = 0;
-  int cantidad_minas = 0;
-  int cantidad_minas_oro = 0;
-  int cantidad_escuelas = 0;
-  int cantidad_plantas_electricas = 0;
-  int andycoins_ganadas = 0;
-  int posicion_jugador[2];
-  objetivo_constructor constructor;
-};
-
 class Mapa{
  protected:
     //Atributos
@@ -48,7 +27,6 @@ class Mapa{
     int columnas_matriz;
     int **transitables;
     int cantidad_transitables;
-    int cantidad_transitables_ocupados;
     Grafo grafo[2];
 
  public:
@@ -120,7 +98,7 @@ class Mapa{
     //POS: devuelve el nombre del edificio demolido
     string demoler_edificio(int fila, int columna);
 
-    bool atacar_edificio(int fila, int columna, int turno);
+    bool atacar_edificio(int fila, int columna, int turno, cantidad_edificios_construidos** datos);
 
     void reparar_edificio(int fila, int columna);
 

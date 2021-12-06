@@ -4,6 +4,27 @@
 #include <string>
 #include "DatosMateriales.h"
 
+struct objetivo_constructor{
+ bool escuela = false;
+ bool aserradero = false;
+ bool mina = false;
+ bool mina_oro = false;
+ bool fabrica = false;
+ bool planta_electrica = false;
+};
+
+struct cantidad_edificios_construidos{
+  int cantidad_aserraderos = 0;
+  int cantidad_fabricas = 0;
+  int cantidad_minas = 0;
+  int cantidad_minas_oro = 0;
+  int cantidad_escuelas = 0;
+  int cantidad_plantas_electricas = 0;
+  int andycoins_ganadas = 0;
+  int posicion_jugador[2];
+  objetivo_constructor constructor;
+};
+
 using namespace std;
 const string CONSTRUIBLE = "C";
 const string INACCESIBLE = "L";
@@ -83,7 +104,7 @@ class Casillero{
     //POS: borra el edificio y devuelve el nombre del edificio que borro
     virtual string demoler_edificio();
 
-    virtual void atacar_edificio();
+    virtual void atacar_edificio(cantidad_edificios_construidos** datos);
 
     virtual bool consultar_vida();
 

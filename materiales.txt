@@ -1,6 +1,6 @@
 piedra 100 100
 madera 300 200
-metal 200 100
+metal 250 100
 andycoins 300 200
 bombas 0 0
 diamante 2 3

@@ -20,7 +20,7 @@ class CasilleroConstruible : public Casillero {
     bool comprobar_vacio();
     bool comprobar_propietario(int jugador);
     string demoler_edificio();
-    void atacar_edificio();
+    void atacar_edificio(cantidad_edificios_construidos** datos);
     bool consultar_vida();
     void reparar_edificio();
     void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
@@ -28,6 +28,7 @@ class CasilleroConstruible : public Casillero {
     string devolver_elemento_colocable();
 
   private:
+    void restar_edificio(string nombre, int jugador, cantidad_edificios_construidos** datos);
     string devolver_signo_mapa();
 
 };
