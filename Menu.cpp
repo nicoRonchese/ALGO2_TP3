@@ -265,8 +265,6 @@ bool Menu::consultar_energia(int costo_energia){
 }
 
 void Menu::procesar_opcion_juego(int opcion){
-
-    cout<<endl;
     switch (opcion) {
         case CONSTRUIR_EDIFICIO:
             construir_edificio();
@@ -615,6 +613,7 @@ void Menu::moverse_coordenada(){
     cout<<"Desea moverse?(s/n): ";
     cin>>movimiento;
     if (movimiento== "s"){
+     cout<<endl;
      mapa->cambiar_posicion(turno,datos,datosMateriales);
      edificios_construidos[turno]->posicion_jugador[0] = fila_destino;
      edificios_construidos[turno]->posicion_jugador[1] = columna_destino;
@@ -638,13 +637,11 @@ void Menu::finalizar_turno(){
  energia[turno] += ENERGIA_RECIBIDA;
  if (!objetivos[turno]->comprobar_objetivos_cumplidos())
     cambiar_turno();
- lluvia_recursos();
 }
 
 void Menu::guardar_salir(){
  datosMateriales->guardar_materiales();
- mapa->guardar_construcciones();
- //datosEdificios->guardar_edificios();
+ mapa->guardar_construcciones(edificios_construidos[JUGADOR_UNO]->posicion_jugador, edificios_construidos[JUGADOR_DOS]->posicion_jugador);
 }
 
 Menu::~Menu(){
