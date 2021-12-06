@@ -355,18 +355,31 @@ int Menu::devolver_cantidad_construida(string nombre){
 }
 
 void Menu::sumar_edificio(string nombre){
- if (nombre==ESCUELA)
+ if (nombre==ESCUELA){
     edificios_construidos[turno]->cantidad_escuelas++;
- if (nombre==FABRICA)
+    objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->cantidad_escuelas);
+ }
+ if (nombre==FABRICA){
     edificios_construidos[turno]->cantidad_fabricas++;
- if (nombre==MINA)
+ }
+ if (nombre==MINA){
     edificios_construidos[turno]->cantidad_minas++;
- if (nombre==MINA_ORO)
+    objetivos[turno]->actualizar_objetivo(MINERO, tipos_minas_construidas());
+ }
+ if (nombre==MINA_ORO){
     edificios_construidos[turno]->cantidad_minas_oro++;
- if (nombre==PLANTA_ELECTRICA)
+    objetivos[turno]->actualizar_objetivo(MINERO, tipos_minas_construidas());
+ }
+ if (nombre==PLANTA_ELECTRICA){
     edificios_construidos[turno]->cantidad_plantas_electricas++;
- if (nombre==ASERRADERO)
+ }
+ if (nombre==ASERRADERO){
     edificios_construidos[turno]->cantidad_aserraderos++;
+ }
+ if (nombre==OBELISCO){
+    objetivos[turno]->construccion_obelisco();
+ }
+ objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, tipos_edificios_construidos(nombre));
 }
 
 void Menu::restar_edificio(string nombre){
@@ -410,11 +423,6 @@ void Menu::construir_edificio(){
         sumar_edificio(nombre);
         cout<<nombre<<" construido/a correctamente"<<endl;
         energia[turno] -= COSTO_CONSTRUIR;
-        objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, tipos_edificios_construidos(nombre));
-        if (nombre == ESCUELA)
-         objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->cantidad_escuelas);
-        if (nombre == MINA || nombre == MINA_ORO)
-         objetivos[turno]->actualizar_objetivo(MINERO, tipos_minas_construidas());
      }
     }
    }
