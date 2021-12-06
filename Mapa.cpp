@@ -305,7 +305,7 @@ bool Mapa::recolectar_recursos(DatosMateriales* materiales, int* energia, int ju
      for (int fila=0; fila<filas_matriz; fila++){
       for (int columna=0; columna<columnas_matriz; columna++){
         if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (consultar_propietario(fila, columna, jugador))){
-           cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<") ";
+           cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<"), ";
            Matriz[fila][columna]->recolectar_producido(materiales, energia, jugador);
            producido++;
           }
@@ -359,15 +359,15 @@ void Mapa::reparar_edificio(int fila, int columna){
     Matriz[fila][columna]->reparar_edificio();
 }
 
-void Mapa::guardar_construcciones(){
+void Mapa::guardar_construcciones(int posicion_1[], int posicion_2[]){
     ofstream archivo(PATH_UBICACIONES);
     if(archivo.fail()){
-     cout << "Error abriendo el fichero" << PATH_UBICACIONES << endl;
+     cout << "Error abriendo el fichero " << PATH_UBICACIONES << endl;
     }
     else{
         guardar_materiales(archivo);
-        guardar_jugador(archivo, JUGADOR_UNO);
-        guardar_jugador(archivo, JUGADOR_DOS);
+        guardar_jugador(archivo, JUGADOR_UNO, posicion_1);
+        guardar_jugador(archivo, JUGADOR_DOS, posicion_2);
         cout<<"Datos ubicaciones guardados"<<endl;
         archivo.close();
     }
@@ -382,8 +382,8 @@ void Mapa::guardar_materiales(ofstream &archivo){
   }
 }
 
-void Mapa::guardar_jugador(ofstream &archivo, int jugador){
-  //archivo<<jugador+1<<" ("<<coordenada_jugador(jugador)<<")"<<endl;
+void Mapa::guardar_jugador(ofstream &archivo, int jugador,  int posicion[]){
+  archivo<<jugador+1<<" ("<<posicion[0]+1<<", "<<posicion[1]+1<<")"<<endl;
   for (int fila=0; fila<filas_matriz; fila++){
     for (int columna=0; columna<columnas_matriz; columna++){
       if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(jugador)))
@@ -465,9 +465,11 @@ bool Mapa::comprobar_coordenadas_moverse(int fila, int columna){
 }
 
 void Mapa::recolectar_material_tirado(int fila, int columna, int turno, DatosMateriales* materiales){
-    if ((Matriz[fila][columna]->devolver_tipo_casillero()==TRANSITABLE) && (!Matriz[fila][columna]->comprobar_vacio()))
+    if ((Matriz[fila][columna]->devolver_tipo_casillero()==TRANSITABLE) && (!Matriz[fila][columna]->comprobar_vacio())){
+            cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<") ";
             Matriz[fila][columna]->recolectar_material(materiales, turno);
             agregar_transitables(fila,columna);
+    }
 }
 
 camino_especifico Mapa::moverse_coordenada(int jugador,int fila_origen,int columna_origen,int fila_destino,int columna_destino){
