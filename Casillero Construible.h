@@ -1,7 +1,5 @@
 #ifndef CASILLERO_CONSTRUIBLE_H_INCLUDED
 #define CASILLERO_CONSTRUIBLE_H_INCLUDED
-#include "Escuela.h"
-#include "Fabrica.h"
 #include "Casillero.h"
 #include "DatosMateriales.h"
 
@@ -23,13 +21,14 @@ class CasilleroConstruible : public Casillero {
     bool comprobar_propietario(int jugador);
     string demoler_edificio();
     void atacar_edificio();
+    bool consultar_vida();
     void reparar_edificio();
-    void recoleccion(DatosMateriales* materiales);
+    void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
     int devolver_propietario();
     string devolver_elemento_colocable();
 
-    private:
-    string comprobar_ubicacion();
+  private:
+    string devolver_signo_mapa();
 
 };
 

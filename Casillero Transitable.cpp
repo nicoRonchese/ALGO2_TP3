@@ -1,6 +1,7 @@
 #include "Casillero Transitable.h"
 #include "Material Colocable.cpp"
 
+
 CasilleroTransitable::CasilleroTransitable(string tipo_terreno) : Casillero(tipo_terreno) {
  material = nullptr;
  tipo_casillero = TRANSITABLE;
@@ -25,36 +26,6 @@ void CasilleroTransitable:: mostrar(){
     mostrar_material();
  }
 }
-void CasilleroTransitable:: mostrar_en_mapa(){
-   string color_terreno = comprobar_terreno();
-   string ubicacion = comprobar_ubicacion();
-
-   cout << color_terreno << ubicacion << END_COLOR;
-   
-}
-
-void CasilleroTransitable:: colocar_material(string nombre){
- material = new MaterialColocable(nombre);
-}
-
-void CasilleroTransitable:: recolectar_material(DatosMateriales* materiales){
- if (this->material->mostrar_material()==NOMBRE_MADERA)
-    materiales->sumar_materiales(MADERA,CANTIDAD_MADERA);
- if (this->material->mostrar_material()==NOMBRE_PIEDRA)
-    materiales->sumar_materiales(PIEDRA,CANTIDAD_PIEDRA);
- if (this->material->mostrar_material()==NOMBRE_METAL)
-    materiales->sumar_materiales(METAL,CANTIDAD_METAL);
- if (this->material->mostrar_material()==NOMBRE_ANDYCOIN)
-    materiales->sumar_materiales(ANDYCOIN,CANTIDAD_ANDYCOIN);
- cout<<"se recolecto "<<material->mostrar_material()<<endl;
- delete material;
- material = nullptr;
-}
-
-string CasilleroTransitable::devolver_elemento_colocable(){
- //return material->nombre_material();
- return material->mostrar_material();
-}
 
 string CasilleroTransitable::comprobar_terreno(){
    string color_terreno;
@@ -70,18 +41,44 @@ string CasilleroTransitable::comprobar_terreno(){
    return color_terreno;
 }
 
-string CasilleroTransitable::comprobar_ubicacion(){
-   string ubicacion_actual;
+string CasilleroTransitable::devolver_signo_mapa(){
+   string signo;
+   if (comprobar_jugador_colocado())
+     signo = *jugador_colocado;
+   else if (comprobar_vacio())
+     signo = VACIO;
+   else
+     signo = material->devolver_signo();
+   return signo;
+}
 
-   if (comprobar_vacio()){
-      ubicacion_actual = VACIO;
-   }else if (comprobar_jugador_colocado()){
-      ubicacion_actual = *jugador_colocado;
-   }else{
-     ubicacion_actual = material->mostrar_signo();
-   }
+void CasilleroTransitable:: mostrar_en_mapa(){
+  string color_terreno = comprobar_terreno();
+  string signo =  devolver_signo_mapa();
+  cout << color_terreno << signo << END_COLOR;
+}
 
-   return ubicacion_actual;
+void CasilleroTransitable:: colocar_material(string nombre){
+ material = new MaterialColocable(nombre);
+}
+
+void CasilleroTransitable:: recolectar_material(DatosMateriales* materiales, int jugador){
+ if (this->material->mostrar_material()==NOMBRE_MADERA)
+    materiales->sumar_materiales(MADERA, CANTIDAD_MADERA, jugador);
+ if (this->material->mostrar_material()==NOMBRE_PIEDRA)
+    materiales->sumar_materiales(PIEDRA, CANTIDAD_PIEDRA, jugador);
+ if (this->material->mostrar_material()==NOMBRE_METAL)
+    materiales->sumar_materiales(METAL, CANTIDAD_METAL, jugador);
+ if (this->material->mostrar_material()==NOMBRE_ANDYCOIN)
+    materiales->sumar_materiales(ANDYCOIN, CANTIDAD_ANDYCOIN, jugador);
+ cout<<"se recolecto "<<material->mostrar_material()<<endl;
+ delete material;
+ material = nullptr;
+}
+
+string CasilleroTransitable::devolver_elemento_colocable(){
+ //return material->nombre_material();
+ return material->mostrar_material();
 }
 
 CasilleroTransitable::~CasilleroTransitable(){

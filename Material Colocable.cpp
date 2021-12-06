@@ -27,16 +27,12 @@ void MaterialColocable::mostrar(){
  cout << "Soy un material del tipo "<<nombre<<" y estoy en el casillero consultado" << endl;
 }
 
-void MaterialColocable::mostrar_en_mapa(){
- cout<<signo_mapa; //color
+string MaterialColocable::devolver_signo(){
+  return this->signo_mapa;
 }
 
 string MaterialColocable::mostrar_material(){
  return nombre;
-}
-
-string MaterialColocable::mostrar_signo(){
-    return signo_mapa;
 }
 
 MaterialColocable::~MaterialColocable(){}

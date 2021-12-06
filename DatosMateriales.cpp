@@ -144,8 +144,8 @@ bool DatosMateriales::comprobar_materiales_construccion(edificio edificio, int j
 }
 
 
-void DatosMateriales::sumar_materiales(int posicion,int cant){
-    //materiales[posicion]->cantidad += cant;
+void DatosMateriales::sumar_materiales(int posicion, int cantidad, int jugador){
+    materiales[jugador][posicion]->cantidad += cantidad;
 }
 
 void DatosMateriales::restar_construccion_materiales(edificio edificio, int jugador){

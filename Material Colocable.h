@@ -41,13 +41,11 @@ class MaterialColocable{
 
      //PRE:
      //POS: muestra en terminal una letra segun el material
-     void mostrar_en_mapa();
+     string devolver_signo();
 
      //PRE:
      //POS: devuelve un string que representa el nombre del material
      string mostrar_material();
-
-     string mostrar_signo();
 };
 
 

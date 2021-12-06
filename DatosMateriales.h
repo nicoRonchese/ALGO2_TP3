@@ -71,7 +71,7 @@ class DatosMateriales{
 
     //PRE:Recibir una posicion dentro del tamaño del vector y una cantidad
     //POS:Suma la cantidad ingresada al material que se encuentre en esa posicion
-    void sumar_materiales(int posicion, int cant);
+    void sumar_materiales(int posicion, int cantidad, int jugador);
 
     //PRE:Recibir un edificio
     //POS:Resta los materiales usados para la construccion

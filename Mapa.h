@@ -8,6 +8,8 @@
 #include "Casillero Transitable.h"
 #include "Casillero Construible.h"
 #include "Casillero Inaccesible.h"
+#include "Grafo.h"
+#include "Grafo.cpp"
 //#include "Datos Edificios.h"
 //#include "Datos Materiales.h"
 
@@ -32,6 +34,8 @@ struct cantidad_edificios_construidos{
   int cantidad_minas_oro = 0;
   int cantidad_escuelas = 0;
   int cantidad_plantas_electricas = 0;
+  int andycoins_ganadas = 0;
+  int posicion_jugador[2];
   objetivo_constructor constructor;
 };
 
@@ -45,6 +49,7 @@ class Mapa{
     int **transitables;
     int cantidad_transitables;
     int cantidad_transitables_ocupados;
+    Grafo grafo[2];
 
  public:
     //Métodos públicos
@@ -64,6 +69,8 @@ class Mapa{
     bool ubicar_edificios_archivo();
 
     void completar_cantidad_edificios(cantidad_edificios_construidos** edificios_construidos);
+
+    void mostrar_mapa_terrenos();
 
     //PRE:
     //POS: muestra en la terminal una matriz que representa al mapa del juego
@@ -119,7 +126,7 @@ class Mapa{
 
     //PRE: debe recibir un puntero a un dato tipo Datos_materiales
     //POS: "recolecta" los recursos que hayan generado los edificios construidos y se los suma a materiales
-    void recolectar_recursos(int turno, DatosMateriales* materiales);
+    bool recolectar_recursos(DatosMateriales* materiales, int* energia, int jugador);
 
     //PRE:
     //POS: mustra en la terminal todos los edificios que se hayan construido
@@ -133,9 +140,15 @@ class Mapa{
 
     bool comprobar_coordenadas_reparacion(int fila,int columna, int turno);
 
+    bool comprobar_coordenadas_moverse(int fila, int columna);
+
     //PRE: debe recibir un puntero a un dato tipo Datos_materiales
     //POS: "recolecta" los recursos que se encuentren en casilleros transitables y se los suma a materiales
     void recolectar_material_tirado(int fila, int columna, int turno, DatosMateriales* materiales);
+
+    camino_especifico moverse_coordenada(int jugador,int fila_origen,int columna_origen,int fila_destino,int columna_destino);
+
+    void cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales);
 
  private:
     //Métodos privados
@@ -147,6 +160,10 @@ class Mapa{
     string leer_jugador_uno(ifstream &archivo, string objeto);
 
     string leer_jugador_dos(ifstream &archivo, string objeto);
+
+    int costo_terreno(string tipo_casillero, int jugador);
+
+    void cargar_datos_grafo();
 
     //PRE: fila y columna deben estar dentro del rango de la matriz
     //POS: devuelve un  puntero a casillero que reprensenta un tipo de casillero segun el string

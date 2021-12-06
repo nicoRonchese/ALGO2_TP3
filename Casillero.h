@@ -47,6 +47,8 @@ class Casillero{
 
     void sacar_jugador();
 
+    int devolver_jugador();
+
     bool comprobar_jugador_colocado();
 
     //PRE:
@@ -56,6 +58,8 @@ class Casillero{
     //PRE:
     //POS: muestra en terminal una letra segun el casillero
     virtual void mostrar_en_mapa();
+
+    void mostrar_en_mapa_terreno();
 
     //PRE:
     //POS: segun el string identifica que tipo de edifcio es y que caracteristicas tiene
@@ -81,11 +85,13 @@ class Casillero{
 
     virtual void atacar_edificio();
 
+    virtual bool consultar_vida();
+
     virtual void reparar_edificio();
 
     //PRE: materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el
     //POS: segun el edificio agrega un tipo de material o no
-    virtual void recoleccion(DatosMateriales* materiales, int jugador);
+    virtual void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
 
     //PRE:
     //POS: devuelve el nombre de los edificios en casilleros construibles

@@ -17,16 +17,17 @@ class CasilleroTransitable : public Casillero {
     CasilleroTransitable(string tipo_terreno);
     ~CasilleroTransitable();
     void mostrar();
+    string comprobar_terreno();
     void mostrar_en_mapa();
     void mostrar_material();
     bool comprobar_vacio();
     void colocar_material(string nombre);
-    void recolectar_material(DatosMateriales* materiales);
+    void recolectar_material(DatosMateriales* materiales, int jugador);
     string devolver_elemento_colocable();
 
-    private:
-    string comprobar_terreno();
-    string comprobar_ubicacion();
+  private:
+    string devolver_signo_mapa();
+
 };
 
 #endif // CASILLERO_TRANSITABLE_H_INCLUDED

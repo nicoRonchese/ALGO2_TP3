@@ -10,15 +10,12 @@ void CasilleroInaccesible:: mostrar(){
 }
 
 void CasilleroInaccesible:: mostrar_en_mapa(){
-  string ubicacion;
-
-  if(comprobar_jugador_colocado()){
-    ubicacion = *jugador_colocado;
-  }else{
-    ubicacion = VACIO;
-  }
-
-  cout << COLOR_LAGO << ubicacion << END_COLOR;
+  string signo;
+  if(comprobar_jugador_colocado())
+    signo = *jugador_colocado;
+  else
+    signo = VACIO;
+  cout << COLOR_LAGO << signo << END_COLOR;
 }
 
 

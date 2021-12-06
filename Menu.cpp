@@ -155,7 +155,7 @@ void Menu::procesar_opcion_inicial(int opcion){
             listar_edificios();
             break;
         case MOSTRAR_MAPA:
-            mostrar_mapa();
+            mostrar_mapa_terrenos();
             break;
         case CAMBIAR_CANTIDAD_JUGADORES:
             cambiar_cantidad_jugadores();
@@ -179,9 +179,8 @@ void Menu::listar_edificios(){
  datosEdificios->mostrar_edificios();
 }
 
-void Menu::mostrar_mapa(){
-  mapa->mostrar_mapa();
-  imprimir_cuadro_referencias_terrenos();
+void Menu::mostrar_mapa_terrenos(){
+ mapa->mostrar_mapa_terrenos();
 }
 
 void Menu::cambiar_cantidad_jugadores(){
@@ -195,9 +194,10 @@ void Menu::cambiar_cantidad_jugadores(){
 
 void Menu::cambiar_turno(){
  turno++;
- if (turno == cantidad_jugadores)
+ if (turno == cantidad_jugadores){
     lluvia_recursos();
     turno = JUGADOR_UNO;
+ }
 }
 
 void Menu::comenzar_partida(){
@@ -211,7 +211,8 @@ void Menu::comenzar_partida(){
   objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
  }
  while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
-    mostrar_turno();
+    mostrar_mapa();
+    mostrar_turno();  
     mostrar_energia();
     mostrar_menu_juego();
     cout <<"Ingrese una opcion: ";
@@ -221,6 +222,7 @@ void Menu::comenzar_partida(){
     procesar_opcion_juego(opcion);
     objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
     objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
+    edificios_construidos[turno]->andycoins_ganadas = datosMateriales->devolver_cantidad(turno, ANDYCOIN);
     chequear_energia();
     if (objetivos[turno]->comprobar_objetivos_cumplidos()){
         system(CLR_SCREEN);
@@ -263,6 +265,8 @@ bool Menu::consultar_energia(int costo_energia){
 }
 
 void Menu::procesar_opcion_juego(int opcion){
+
+    cout<<endl;
     switch (opcion) {
         case CONSTRUIR_EDIFICIO:
             construir_edificio();
@@ -306,6 +310,33 @@ void Menu::procesar_opcion_juego(int opcion){
         default:
             cout << "Error: opcion invalida"<<endl;
     }
+}
+
+void Menu::imprimir_caracter_especial(string caracter, int cantidad, bool espacio){
+    for(int i = 0; i < cantidad; i++){
+        cout << caracter;
+        if(espacio){
+            cout << " ";
+        }
+    }
+}
+
+void Menu::imprimir_cuadro_referencias_terrenos(){
+    cout << "               " << SUBRAYADO << "Referencias de colores" << END_COLOR << "                           " << endl;
+    cout << " ";
+    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
+    cout << " " << endl;
+    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
+    cout << CUADRO_VERTICAL <<" Camino " << COLOR_CAMINO << " " << END_COLOR << "  Betun " << COLOR_BETUN << " " << END_COLOR << "  Muelle " << COLOR_MUELLE << " " << END_COLOR << "  Lago " << COLOR_LAGO << " " << END_COLOR << "  Terreno " << COLOR_TERRENO << " " << END_COLOR <<"  " << CUADRO_VERTICAL << endl;
+    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
+    cout << " ";
+    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
+    cout << " " << endl;
+}
+
+void Menu::mostrar_mapa(){
+ imprimir_cuadro_referencias_terrenos();
+ mapa->mostrar_mapa();
 }
 
 int Menu::devolver_cantidad_construida(string nombre){
@@ -558,13 +589,43 @@ void Menu::mostrar_objetivos(){
 
 void Menu::recolectar_recursos(){
  if (consultar_energia(COSTO_RECOLECTAR)){
-  //if (mapa->recolectar_recursos(fila, columna))
+  if (mapa->recolectar_recursos(datosMateriales, energia, turno)){
      energia[turno] -= COSTO_RECOLECTAR;
+     int andycoins_ganadas =  datosMateriales->devolver_cantidad(turno, ANDYCOIN) - edificios_construidos[turno]->andycoins_ganadas;
+     objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, andycoins_ganadas);
+  }
  }
 }
 
 void Menu::moverse_coordenada(){
- //energia_necesaria=mapa->moverse_coordenada();
+ camino_especifico datos;
+ int fila_destino,columna_destino;
+ string movimiento,fila,columna;
+ cout<<"Ingrese coordenada de destino:"<<endl<<"Fila: ";
+ cin>>fila;
+ fila_destino = ingrese_numero(fila);
+ cout<<"Columna: ";
+ cin>> columna;
+ columna_destino = ingrese_numero(columna);
+ fila_destino--;
+ columna_destino--;
+ if (mapa->comprobar_coordenadas_moverse(fila_destino,columna_destino)){
+   datos = mapa->moverse_coordenada(turno,edificios_construidos[turno]->posicion_jugador[0],edificios_construidos[turno]->posicion_jugador[1],fila_destino,columna_destino);
+   if (consultar_energia(datos.costo)){
+    cout<<"Desea moverse?(s/n): ";
+    cin>>movimiento;
+    if (movimiento== "s"){
+     mapa->cambiar_posicion(turno,datos,datosMateriales);
+     edificios_construidos[turno]->posicion_jugador[0] = fila_destino;
+     edificios_construidos[turno]->posicion_jugador[1] = columna_destino;
+     energia[turno] = energia[turno] - datos.costo;
+    }
+   }
+   for (int fila=0; fila<(datos.longitud); fila++){
+    delete [] datos.camino[fila];
+   }
+   delete [] datos.camino;
+ }
 }
 
 void Menu::finalizar_turno(){
@@ -584,28 +645,6 @@ void Menu::guardar_salir(){
  datosMateriales->guardar_materiales();
  mapa->guardar_construcciones();
  //datosEdificios->guardar_edificios();
-}
-
-void Menu::imprimir_caracter_especial(string caracter, int cantidad, bool espacio){
-    for(int i = 0; i < cantidad; i++){
-        cout << caracter;
-        if(espacio){
-            cout << " ";
-        }
-    }
-}
-
-void Menu::imprimir_cuadro_referencias_terrenos(){
-    cout << "               " << SUBRAYADO << "Referencias de colores" << END_COLOR << "                           " << endl;
-    cout << " ";
-    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
-    cout << " " << endl;
-    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
-    cout << CUADRO_VERTICAL <<" Camino " << COLOR_CAMINO << " " << END_COLOR << "  Betun " << COLOR_BETUN << " " << END_COLOR << "  Muelle " << COLOR_MUELLE << " " << END_COLOR << "  Lago " << COLOR_LAGO << " " << END_COLOR << "  Terreno " << COLOR_TERRENO << " " << END_COLOR <<"  " << CUADRO_VERTICAL << endl;
-    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
-    cout << " ";
-    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
-    cout << " " << endl;
 }
 
 Menu::~Menu(){

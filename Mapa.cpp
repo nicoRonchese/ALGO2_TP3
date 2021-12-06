@@ -29,9 +29,48 @@ void Mapa::crear_matriz_archivo(){
      for (int columna=0; columna<columnas_matriz; columna++){
       archivo >> tipo_casillero;
       Matriz[fila][columna]=definir_casillero(tipo_casillero,fila,columna);
+      grafo[JUGADOR_UNO].agregarVertice(fila, columna, costo_terreno(tipo_casillero, JUGADOR_UNO));
+      grafo[JUGADOR_DOS].agregarVertice(fila, columna, costo_terreno(tipo_casillero, JUGADOR_DOS));
      }
     }
    }
+   cargar_datos_grafo();
+}
+
+int Mapa::costo_terreno(string tipo_casillero, int jugador){
+ int costo;
+ if (tipo_casillero==MUELLE && jugador==JUGADOR_UNO)
+  costo = 5;
+ else if (tipo_casillero==MUELLE && jugador==JUGADOR_DOS)
+  costo = 2;
+ else if (tipo_casillero==LAGO && jugador==JUGADOR_UNO)
+  costo = 2;
+ else if (tipo_casillero==LAGO && jugador==JUGADOR_DOS)
+  costo = 5;
+ else if (tipo_casillero==TERRENO)
+  costo = 25;
+ else if (tipo_casillero==CAMINO)
+  costo = 4;
+ else if (tipo_casillero==BETUN)
+  costo = 0;
+ return costo;
+}
+
+void Mapa::cargar_datos_grafo(){
+  for (int fila=0; fila<filas_matriz; fila++){
+     for (int columna=0; columna<columnas_matriz; columna++){
+       if (fila!=0){
+         grafo[JUGADOR_UNO].agregarCamino(fila, columna, fila-1, columna);
+         grafo[JUGADOR_DOS].agregarCamino(fila, columna, fila-1, columna);
+       }
+       if (columna!=0){
+         grafo[JUGADOR_UNO].agregarCamino(fila, columna, fila, columna-1);
+         grafo[JUGADOR_DOS].agregarCamino(fila, columna, fila, columna-1);
+       }
+     }
+    }
+    grafo[JUGADOR_UNO].usarFloyd();
+    grafo[JUGADOR_DOS].usarFloyd();
 }
 
 Casillero* Mapa::definir_casillero(string tipo_terreno,int fila,int columna){
@@ -148,10 +187,21 @@ string Mapa::quitar_espacio_final(string edificio){
   return sin_espacio;
 }
 
+void Mapa::mostrar_mapa_terrenos(){
+  for (int fila=0; fila<filas_matriz; fila++){
+    for (int columna=0; columna<columnas_matriz; columna++){
+        Matriz[fila][columna]->mostrar_en_mapa_terreno();
+        if (columna == columnas_matriz -1)
+        {
+           cout<<endl;
+        }
 
+    }
+  }
+}
 
 void Mapa::mostrar_mapa(){
-  for(int k = 0; k < columnas_matriz; k++){
+  for(int k = 1; k <= columnas_matriz; k++){
         cout << k << " ";
   }
   cout << endl;
@@ -161,9 +211,8 @@ void Mapa::mostrar_mapa(){
         Matriz[fila][columna]->mostrar_en_mapa();
         cout << " ";
     }
-    cout << " " << fila << endl;
+    cout << " " << fila+1 << endl;
   }
-  
 }
 
 void Mapa::mostrar_casillero(int fila, int columna){
@@ -251,21 +300,20 @@ bool Mapa::consultar_propietario(int fila, int columna, int turno){
   return (Matriz[fila][columna]->comprobar_propietario(turno));
 }
 
-void Mapa::recolectar_recursos(int turno, DatosMateriales* materiales){
+bool Mapa::recolectar_recursos(DatosMateriales* materiales, int* energia, int jugador){
      int producido = 0;
      for (int fila=0; fila<filas_matriz; fila++){
       for (int columna=0; columna<columnas_matriz; columna++){
-        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (consultar_propietario(fila, columna, turno))){
-          if ((Matriz[fila][columna]->devolver_elemento_colocable()==ASERRADERO) || (Matriz[fila][columna]->devolver_elemento_colocable()==MINA) || (Matriz[fila][columna]->devolver_elemento_colocable()==FABRICA)) {
+        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (consultar_propietario(fila, columna, jugador))){
            cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<") ";
-           Matriz[fila][columna]->recoleccion(materiales, turno);
+           Matriz[fila][columna]->recolectar_producido(materiales, energia, jugador);
            producido++;
           }
-         }
        }
       }
       if (producido==0)
         cout<<"No se produjo recursos"<<endl;
+      return (producido!=0);
 }
 
 void Mapa::mostrar_construcciones(int turno){
@@ -398,18 +446,56 @@ bool Mapa::comprobar_coordenadas_reparacion(int fila,int columna, int turno){
          cout<<"Se encuentra vacio el casillero, no hay nada para reparar"<<endl;
      else if (!consultar_propietario(fila, columna, turno))
          cout<<"No puedes reparar un edificio que no es tuyo"<<endl;
+     else if (Matriz[fila][columna]->consultar_vida())
+         cout<<"No puedes reparar un edificio que esta en perfectas condiciones"<<endl;
      else
          chequeo = true;
      return chequeo;
 }
 
+bool Mapa::comprobar_coordenadas_moverse(int fila, int columna){
+     bool chequeo = false;
+     if (!consultar_coordenada(fila,columna))
+         cout<<"Error: Coordenada fuera del mapa"<<endl;
+     if (Matriz[fila][columna]->comprobar_jugador_colocado())
+        cout<<"No te puedes mover a una coordenada ocupada por otro jugador"<<endl;
+     else
+         chequeo = true;
+     return chequeo;
+}
 
 void Mapa::recolectar_material_tirado(int fila, int columna, int turno, DatosMateriales* materiales){
-    fila--;
-    columna--;
     if ((Matriz[fila][columna]->devolver_tipo_casillero()==TRANSITABLE) && (!Matriz[fila][columna]->comprobar_vacio()))
             Matriz[fila][columna]->recolectar_material(materiales, turno);
-            agregar_transitables(fila,columna);// a terimanr
+            agregar_transitables(fila,columna);
+}
+
+camino_especifico Mapa::moverse_coordenada(int jugador,int fila_origen,int columna_origen,int fila_destino,int columna_destino){
+  //falta muestra en el mapa el camino
+  camino_especifico datos;
+  if ((jugador+1)%2 != 0)
+  {
+    datos = grafo[JUGADOR_UNO].caminoMinimo(fila_origen, columna_origen, fila_destino, columna_destino);
+  }
+  else{
+    datos = grafo[JUGADOR_DOS].caminoMinimo(fila_origen, columna_origen, fila_destino, columna_destino);
+  }
+  //mostrar_mapa_rojo()
+  return datos;
+}
+
+void Mapa::cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales){
+  for (int i = 0; i < dato.longitud; i++)
+  {
+    if (i == 0)
+    {
+      Matriz[dato.camino[i][0]][dato.camino[i][1]]->sacar_jugador();
+    }
+    if (i == dato.longitud-1){
+      Matriz[dato.camino[i][0]][dato.camino[i][1]]->colocar_jugador(jugador);
+    }
+    recolectar_material_tirado(dato.camino[i][0],dato.camino[i][1],jugador,materiales);
+  }
 }
 
 Mapa::~Mapa(){
@@ -434,6 +520,10 @@ void Mapa::completar_cantidad_edificios(cantidad_edificios_construidos** edifici
       for (int columna=0; columna<columnas_matriz; columna++){
         if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio())){
            sumar_edificio(edificios_construidos, Matriz[fila][columna]->devolver_propietario(), Matriz[fila][columna]->devolver_elemento_colocable());
+        }
+        if (Matriz[fila][columna]->comprobar_jugador_colocado()){
+          edificios_construidos[Matriz[fila][columna]->devolver_jugador()]->posicion_jugador[0]=fila;
+          edificios_construidos[Matriz[fila][columna]->devolver_jugador()]->posicion_jugador[1]=columna;
         }
       }
      }

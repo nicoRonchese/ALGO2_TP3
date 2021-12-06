@@ -137,7 +137,7 @@ class Menu{
      //PRE:
      //POS: muestra en terminal una matriz con letras en diferentes colores segun el tipo de casillero,
      // esta matriz representa el mapa del juego
-     void mostrar_mapa();
+     void mostrar_mapa_terrenos();
 
      //PRE:
      //POS:
@@ -157,6 +157,12 @@ class Menu{
      void sumar_edificio(string nombre);
 
      void restar_edificio(string nombre);
+
+     void imprimir_caracter_especial(string caracter, int cantidad, bool espacio);
+
+     void imprimir_cuadro_referencias_terrenos();
+
+     void mostrar_mapa();
 
      //PRE:
      //POS: si los datos  de mapa y datos_materiales tanto como de los ingresados por el usuario lo permiten,
@@ -230,10 +236,6 @@ class Menu{
      //PRE: debe recibir un string
      //POS: comprueba si es un numero y si no lo es pide el ingreso de uno
      int ingrese_numero(string numero);
-
-     private:
-     void imprimir_caracter_especial(string caracter, int cantidad, bool espacio);
-     void imprimir_cuadro_referencias_terrenos();
 };
 
 #endif // MENU_H_INCLUDED

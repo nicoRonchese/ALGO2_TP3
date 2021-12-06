@@ -1,4 +1,4 @@
 1 (1, 1)
-escuela (1, 1)
+planta electrica (1, 1)
 2 (2, 3)
 fabrica (2, 2)

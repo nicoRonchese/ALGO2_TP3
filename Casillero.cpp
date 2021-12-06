@@ -15,6 +15,10 @@ void Casillero :: sacar_jugador(){
  jugador_colocado = nullptr;
 }
 
+int Casillero ::devolver_jugador(){
+    return stoi(*jugador_colocado)-1;
+}
+
 bool Casillero :: comprobar_jugador_colocado(){
  return (jugador_colocado != nullptr);
 }
@@ -22,6 +26,10 @@ bool Casillero :: comprobar_jugador_colocado(){
 void Casillero :: mostrar(){}
 
 void Casillero :: mostrar_en_mapa() {}
+
+void Casillero :: mostrar_en_mapa_terreno() {
+ cout<<tipo_terreno<<" ";
+}
 
 bool Casillero:: comprobar_vacio(){
  return 0;
@@ -45,6 +53,8 @@ string Casillero :: demoler_edificio(){
 
 void Casillero :: atacar_edificio(){}
 
+bool Casillero :: consultar_vida(){}
+
 void Casillero :: reparar_edificio(){}
 
 string Casillero :: devolver_elemento_colocable(){
@@ -55,7 +65,7 @@ int Casillero :: devolver_propietario(){
  return 0;
 }
 
-void Casillero :: recoleccion(DatosMateriales* materiales, int jugador){}
+void Casillero :: recolectar_producido(DatosMateriales* materiales, int* energia, int jugador){}
 
 void Casillero :: recolectar_material(DatosMateriales* materiales, int jugador){}
 

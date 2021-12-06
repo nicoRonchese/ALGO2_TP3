@@ -53,14 +53,47 @@ void CasilleroConstruible:: mostrar(){
  }
 }
 
-void CasilleroConstruible:: mostrar_en_mapa(){
-   string ubicacion = comprobar_ubicacion();
-
-   cout << COLOR_TERRENO << ubicacion << END_COLOR;
+string CasilleroConstruible::devolver_signo_mapa(){
+   string signo;
+   if (comprobar_jugador_colocado())
+      signo = *jugador_colocado;
+   else if (comprobar_vacio())
+      signo = VACIO;
+   else
+      signo = edificio->devolver_signo();
+   return signo;
 }
 
-void CasilleroConstruible::recoleccion(DatosMateriales* materiales){
-   edificio->recolectar();
+void CasilleroConstruible:: mostrar_en_mapa(){
+   string signo = devolver_signo_mapa();
+   cout << COLOR_TERRENO << signo << END_COLOR;
+}
+
+void CasilleroConstruible::recolectar_producido(DatosMateriales* materiales, int* energia, int jugador){
+   if (edificio->nombre_edificio()==ASERRADERO){
+    materiales->sumar_materiales(MADERA, 25, jugador);
+    cout<<"se produjo 25 de madera"<<endl;
+   }
+   if (edificio->nombre_edificio()==MINA){
+    materiales->sumar_materiales(PIEDRA, 15, jugador);
+    cout<<"se produjo 15 de piedra"<<endl;
+   }
+   if (edificio->nombre_edificio()==FABRICA){
+    materiales->sumar_materiales(METAL, 40, jugador);
+    cout<<"se produjo 40 de metal"<<endl;
+   }
+   if (edificio->nombre_edificio()==ESCUELA){
+    materiales->sumar_materiales(ANDYCOIN, 25, jugador);
+    cout<<"se produjo 25 andycoins"<<endl;
+   }
+   if (edificio->nombre_edificio()==PLANTA_ELECTRICA){
+    energia[jugador] += 15;
+    cout<<"se produjo 15 de energia"<<endl;
+   }
+   if (edificio->nombre_edificio()==MINA_ORO){
+    materiales->sumar_materiales(ANDYCOIN, 50, jugador);
+    cout<<"se produjo 50 andycoins"<<endl;
+   }
 }
 
 
@@ -83,6 +116,17 @@ void CasilleroConstruible::atacar_edificio(){
   cout<<" se encuentra en malas condiciones"<<endl;
 }
 
+bool CasilleroConstruible::consultar_vida(){
+ bool vida_maxima = false;
+ if (edificio->nombre_edificio()==MINA && edificio->devolver_vida()==VIDA_EDIFICIO_FUERTE)
+  vida_maxima = true;
+ else if (edificio->nombre_edificio()==FABRICA && edificio->devolver_vida()==VIDA_EDIFICIO_FUERTE)
+  vida_maxima = true;
+ else if (edificio->devolver_vida() == VIDA_EDIFICIO_DEBIL)
+  vida_maxima = true;
+ return vida_maxima;
+}
+
 void CasilleroConstruible::reparar_edificio(){
  edificio->reparar_edificio();
 }
@@ -93,20 +137,6 @@ int CasilleroConstruible::devolver_propietario(){
 
 string CasilleroConstruible::devolver_elemento_colocable(){
   return (edificio->nombre_edificio());
-}
-
-string CasilleroConstruible::comprobar_ubicacion(){
-   string ubicacion_actual;
-
-   if (comprobar_vacio()){
-      ubicacion_actual = VACIO;
-   }else if (comprobar_jugador_colocado()){
-      ubicacion_actual = *jugador_colocado;
-   }else{
-      ubicacion_actual = edificio->mostrar_signo();
-   }
-
-   return ubicacion_actual;
 }
 
 CasilleroConstruible::~CasilleroConstruible(){

@@ -11,8 +11,4 @@ void Fabrica::mostrar(){
  cout << "Tengo "<<vida<<" de vida y mi propietario es el jugador "<<propietario+1<< endl;
 }
 
-void Fabrica::recolectar(DatosMateriales* materiales){
-    cout<<"una Fabrica produjo 40 de metal"<<endl;
-}
-
 Fabrica::~Fabrica(){}

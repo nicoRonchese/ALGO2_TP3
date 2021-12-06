@@ -236,8 +236,9 @@ void Objetivos::cansado(int energia, int ubicacion_objetivo){
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
 
-void Objetivos::constructor(int edificio_construido, int ubicacion_objetivo){
-    objetivos[ubicacion_objetivo]->cantidad += edificio_construido;
+void Objetivos::constructor(int edificios_construidos, int ubicacion_objetivo){
+    if (objetivos[ubicacion_objetivo]->cantidad < edificios_construidos)
+     objetivos[ubicacion_objetivo]->cantidad = edificios_construidos;
     if (objetivos[ubicacion_objetivo]->cantidad == 6)
      objetivos[ubicacion_objetivo]->cumplido = true;
 }
@@ -257,10 +258,10 @@ void Objetivos::extremista(int bombas_compradas, int ubicacion_objetivo){
 
 void Objetivos::sortear_objetivos(int* objetivos_preparados, int total_objetivos_jugador){
     for(int contador = 0; contador < total_objetivos_jugador; contador++){
-        objetivos_preparados[contador] = rand() % TOTAL_OBJETIVOS + 1;
+        objetivos_preparados[contador] = rand() % (TOTAL_OBJETIVOS+1);
         if(contador > 0){
             while(hay_objetivo_repetido(objetivos_preparados, contador)){
-                objetivos_preparados[contador] = rand() % TOTAL_OBJETIVOS + 1;
+                objetivos_preparados[contador] = rand() % (TOTAL_OBJETIVOS+1);
             }
         }
     }

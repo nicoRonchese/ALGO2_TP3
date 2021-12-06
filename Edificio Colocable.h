@@ -53,7 +53,7 @@ class EdificioColocable{
 
      //PRE:
      //POS: muestra en terminal el simbolo que representa ese edificio
-     void mostrar_en_mapa();
+     string devolver_signo();
 
      int propietario_edificio();
 
@@ -68,12 +68,6 @@ class EdificioColocable{
      void recibir_bomba();
 
      void reparar_edificio();
-
-     //PRE: debe recibir un puntero a Datos_materiales con al menos piedra,metal y madera
-     //POS: segun el edificio recolecta los materiales que se producen
-     void recolectar();
-
-     string mostrar_signo();
 
 };
 
