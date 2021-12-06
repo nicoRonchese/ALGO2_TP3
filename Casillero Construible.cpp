@@ -72,27 +72,27 @@ void CasilleroConstruible:: mostrar_en_mapa(){
 void CasilleroConstruible::recolectar_producido(DatosMateriales* materiales, int* energia, int jugador){
    if (edificio->nombre_edificio()==ASERRADERO){
     materiales->sumar_materiales(MADERA, 25, jugador);
-    cout<<"se produjo 25 de madera"<<endl;
+    cout<<ASERRADERO<<" produjo 25 de madera"<<endl;
    }
    if (edificio->nombre_edificio()==MINA){
     materiales->sumar_materiales(PIEDRA, 15, jugador);
-    cout<<"se produjo 15 de piedra"<<endl;
+    cout<<MINA<<" produjo 15 de piedra"<<endl;
    }
    if (edificio->nombre_edificio()==FABRICA){
     materiales->sumar_materiales(METAL, 40, jugador);
-    cout<<"se produjo 40 de metal"<<endl;
+    cout<<FABRICA<<" produjo 40 de metal"<<endl;
    }
    if (edificio->nombre_edificio()==ESCUELA){
     materiales->sumar_materiales(ANDYCOIN, 25, jugador);
-    cout<<"se produjo 25 andycoins"<<endl;
+    cout<<ESCUELA<<" produjo 25 andycoins"<<endl;
    }
    if (edificio->nombre_edificio()==PLANTA_ELECTRICA){
     energia[jugador] += 15;
-    cout<<"se produjo 15 de energia"<<endl;
+    cout<<PLANTA_ELECTRICA<<" produjo 15 de energia"<<endl;
    }
    if (edificio->nombre_edificio()==MINA_ORO){
     materiales->sumar_materiales(ANDYCOIN, 50, jugador);
-    cout<<"se produjo 50 andycoins"<<endl;
+    cout<<MINA_ORO<<" produjo 50 andycoins"<<endl;
    }
 }
 
