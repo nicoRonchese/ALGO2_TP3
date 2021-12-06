@@ -46,6 +46,8 @@ class MaterialColocable{
      //PRE:
      //POS: devuelve un string que representa el nombre del material
      string mostrar_material();
+
+     string mostrar_signo();
 };
 
 

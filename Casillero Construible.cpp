@@ -57,7 +57,6 @@ void CasilleroConstruible:: mostrar_en_mapa(){
    string ubicacion = comprobar_ubicacion();
 
    cout << COLOR_TERRENO << ubicacion << END_COLOR;
-   
 }
 
 void CasilleroConstruible::recoleccion(DatosMateriales* materiales){

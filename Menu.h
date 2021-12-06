@@ -9,6 +9,9 @@
 
 using namespace std;
 
+#define SUBRAYADO "\033[4m"
+#define CUADRO_HORIZONTAL "\u2505"
+#define CUADRO_VERTICAL "\u2507"
 
 const int CANTIDAD_JUGADORES = 2;
 const int JUGADOR_UNO = 0;
@@ -227,6 +230,10 @@ class Menu{
      //PRE: debe recibir un string
      //POS: comprueba si es un numero y si no lo es pide el ingreso de uno
      int ingrese_numero(string numero);
+
+     private:
+     void imprimir_caracter_especial(string caracter, int cantidad, bool espacio);
+     void imprimir_cuadro_referencias_terrenos();
 };
 
 #endif // MENU_H_INCLUDED

@@ -30,6 +30,7 @@ void CasilleroTransitable:: mostrar_en_mapa(){
    string ubicacion = comprobar_ubicacion();
 
    cout << color_terreno << ubicacion << END_COLOR;
+   
 }
 
 void CasilleroTransitable:: colocar_material(string nombre){

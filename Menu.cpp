@@ -180,7 +180,8 @@ void Menu::listar_edificios(){
 }
 
 void Menu::mostrar_mapa(){
- mapa->mostrar_mapa();
+  mapa->mostrar_mapa();
+  imprimir_cuadro_referencias_terrenos();
 }
 
 void Menu::cambiar_cantidad_jugadores(){
@@ -583,6 +584,28 @@ void Menu::guardar_salir(){
  datosMateriales->guardar_materiales();
  mapa->guardar_construcciones();
  //datosEdificios->guardar_edificios();
+}
+
+void Menu::imprimir_caracter_especial(string caracter, int cantidad, bool espacio){
+    for(int i = 0; i < cantidad; i++){
+        cout << caracter;
+        if(espacio){
+            cout << " ";
+        }
+    }
+}
+
+void Menu::imprimir_cuadro_referencias_terrenos(){
+    cout << "               " << SUBRAYADO << "Referencias de colores" << END_COLOR << "                           " << endl;
+    cout << " ";
+    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
+    cout << " " << endl;
+    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
+    cout << CUADRO_VERTICAL <<" Camino " << COLOR_CAMINO << " " << END_COLOR << "  Betun " << COLOR_BETUN << " " << END_COLOR << "  Muelle " << COLOR_MUELLE << " " << END_COLOR << "  Lago " << COLOR_LAGO << " " << END_COLOR << "  Terreno " << COLOR_TERRENO << " " << END_COLOR <<"  " << CUADRO_VERTICAL << endl;
+    cout << CUADRO_VERTICAL << "                                                 " << CUADRO_VERTICAL << endl;
+    cout << " ";
+    imprimir_caracter_especial(CUADRO_HORIZONTAL, 25, true);
+    cout << " " << endl;
 }
 
 Menu::~Menu(){

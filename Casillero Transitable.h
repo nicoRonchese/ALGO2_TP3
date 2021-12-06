@@ -27,7 +27,6 @@ class CasilleroTransitable : public Casillero {
     private:
     string comprobar_terreno();
     string comprobar_ubicacion();
-
 };
 
 #endif // CASILLERO_TRANSITABLE_H_INCLUDED
