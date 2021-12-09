@@ -118,7 +118,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
      getline(archivo, basura, '\n');
      fila = stoi(fila_objeto) - 1;
      columna = stoi(columna_objeto) - 1;
-     Matriz[fila][columna]->colocar_material(objeto);
+     Matriz[fila][columna]->colocar_material(construir_material(objeto));
      eliminar_transitables(fila,columna);
      getline(archivo, objeto, '(');
      objeto = quitar_espacio_final(objeto);
@@ -136,6 +136,8 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
       fila = stoi(fila_objeto) - 1;
       columna = stoi(columna_objeto) - 1;
       Matriz[fila][columna]->colocar_jugador(JUGADOR_UNO);
+      if  (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
+       eliminar_transitables(fila, columna);
       getline(archivo, objeto, '(');
       objeto = quitar_espacio_final(objeto);
       while (objeto != "2"){
@@ -144,7 +146,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
         getline(archivo, basura, '\n');
         fila = stoi(fila_objeto) - 1;
         columna = stoi(columna_objeto) - 1;
-        Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_UNO);
+        Matriz[fila][columna]->colocar_edificio(construir_edificio(objeto, JUGADOR_UNO));
         getline(archivo, objeto, '(');
         objeto = quitar_espacio_final(objeto);
       }
@@ -162,6 +164,8 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
          fila = stoi(fila_objeto) - 1;
          columna = stoi(columna_objeto) - 1;
          Matriz[fila][columna]->colocar_jugador(JUGADOR_DOS);
+         if  (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
+          eliminar_transitables(fila, columna);
          getline(archivo, objeto, '(');
          objeto = quitar_espacio_final(objeto);
          while (!archivo.eof()){
@@ -170,7 +174,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
              getline(archivo, basura, '\n');
              fila = stoi(fila_objeto) - 1;
              columna = stoi(columna_objeto) - 1;
-             Matriz[fila][columna]->colocar_edificio(objeto, JUGADOR_DOS);
+             Matriz[fila][columna]->colocar_edificio(construir_edificio(objeto, JUGADOR_DOS));
              getline(archivo, objeto, '(');
              objeto = quitar_espacio_final(objeto);
          }
@@ -275,13 +279,13 @@ void Mapa::lluvia_materiales(){
   {
     int i = rand()%cantidad_transitables;
     if ((metal+madera+andycoins < total))
-        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_PIEDRA);
+        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(construir_material(NOMBRE_PIEDRA));
     else if (metal+andycoins < total)
-        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_MADERA);
+        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(construir_material(NOMBRE_MADERA));
     else if (andycoins < total)
-        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_METAL);
+        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(construir_material(NOMBRE_METAL));
     else
-        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(NOMBRE_ANDYCOIN);
+        Matriz[transitables[i][0]][transitables[i][1]]->colocar_material(construir_material(NOMBRE_ANDYCOIN));
     eliminar_transitables(transitables[i][0], transitables[i][1]);
     total--;
    }
@@ -329,14 +333,40 @@ void Mapa::mostrar_construcciones(int turno){
     cout<<"No tienes edificios construidos"<<endl;
 }
 
-bool Mapa::construir_edificio(string nombre, int fila, int columna, int turno){
+bool Mapa::construccion_edificio(string nombre, int fila, int columna, int turno){
    bool construccion_completada = false;
   //datos_edificios->edificio_construido(nombre);
   if (comprobar_coordenadas_construccion(fila, columna)){
-    Matriz[fila][columna]->colocar_edificio(nombre, turno);
+    Matriz[fila][columna]->colocar_edificio(construir_edificio(nombre, turno));
     construccion_completada = true;
   }
   return construccion_completada;
+}
+
+EdificioColocable* Mapa::construir_edificio(string nombre, int jugador){
+ EdificioColocable* edificio;
+ if (nombre == MINA)
+    edificio = new Mina(jugador);
+ else if (nombre == ASERRADERO)
+    edificio = new Aserradero(jugador);
+ else if (nombre == FABRICA)
+    edificio = new Fabrica(jugador);
+ else if (nombre == ESCUELA)
+    edificio = new Escuela(jugador);
+ else if (nombre == OBELISCO)
+    edificio = nullptr;
+ else if (nombre == PLANTA_ELECTRICA)
+    edificio = new PlantaElectrica(jugador);
+ else if(nombre == MINA_ORO)
+    edificio = new MinaOro(jugador);
+ else
+    cout<< "No es un edificio colocable por lo que no se va a encontrar en el mapa" << endl;
+ return edificio;
+}
+
+MaterialColocable* Mapa::construir_material(string nombre){
+ MaterialColocable* material = new MaterialColocable(nombre);
+ return material;
 }
 
 string Mapa::demoler_edificio(int fila, int columna){
@@ -486,16 +516,19 @@ camino_especifico Mapa::moverse_coordenada(int jugador,int fila_origen,int colum
 }
 
 void Mapa::cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales){
-  for (int i = 0; i < dato.longitud; i++)
-  {
+  for (int i = 0; i < dato.longitud; i++){
+    recolectar_material_tirado(dato.camino[i][0],dato.camino[i][1],jugador,materiales);
     if (i == 0)
     {
       Matriz[dato.camino[i][0]][dato.camino[i][1]]->sacar_jugador();
+      if  (Matriz[dato.camino[i][0]][dato.camino[i][1]]->devolver_tipo_casillero() == TRANSITABLE)
+       agregar_transitables(dato.camino[i][0], dato.camino[i][1]);
     }
-    if (i == dato.longitud-1){
+    else if (i == dato.longitud-1){
       Matriz[dato.camino[i][0]][dato.camino[i][1]]->colocar_jugador(jugador);
+      if  (Matriz[dato.camino[i][0]][dato.camino[i][1]]->devolver_tipo_casillero() == TRANSITABLE)
+       eliminar_transitables(dato.camino[i][0], dato.camino[i][1]);
     }
-    recolectar_material_tirado(dato.camino[i][0],dato.camino[i][1],jugador,materiales);
   }
 }
 

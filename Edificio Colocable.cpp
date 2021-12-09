@@ -34,5 +34,6 @@ string EdificioColocable::devolver_signo(){
   return this->signo_mapa;
 }
 
+
 EdificioColocable::~EdificioColocable(){
 }

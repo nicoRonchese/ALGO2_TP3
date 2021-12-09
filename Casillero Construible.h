@@ -3,6 +3,14 @@
 #include "Casillero.h"
 #include "DatosMateriales.h"
 
+const int PRODUCCION_ASERRADERO_CANTIDAD = 25;
+const int PRODUCCION_FABRICA_CANTIDAD = 40;
+const int PRODUCCION_MINA_CANTIDAD = 15;
+const int PRODUCCION_ESCUELA_CANTIDAD = 25;
+const int PRODUCCION_MINA_ORO_CANTIDAD = 50;
+const int PRODUCCION_PLANTA_ELECTRICA_CANTIDAD = 15;
+
+
 class CasilleroConstruible : public Casillero {
   private:
      //Atributos
@@ -16,7 +24,7 @@ class CasilleroConstruible : public Casillero {
     ~CasilleroConstruible();
     void mostrar();
     void mostrar_en_mapa();
-    void colocar_edificio(string nombre, int jugador);
+    void colocar_edificio(EdificioColocable* edificio);
     bool comprobar_vacio();
     bool comprobar_propietario(int jugador);
     string demoler_edificio();

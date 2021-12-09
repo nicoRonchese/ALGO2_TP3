@@ -3,15 +3,9 @@
 #include <iostream>
 #include <string>
 #include "DatosMateriales.h"
+#include "Material Colocable.h"
+#include "Edificio Colocable.h"
 
-struct objetivo_constructor{
- bool escuela = false;
- bool aserradero = false;
- bool mina = false;
- bool mina_oro = false;
- bool fabrica = false;
- bool planta_electrica = false;
-};
 
 struct cantidad_edificios_construidos{
   int cantidad_aserraderos = 0;
@@ -20,9 +14,7 @@ struct cantidad_edificios_construidos{
   int cantidad_minas_oro = 0;
   int cantidad_escuelas = 0;
   int cantidad_plantas_electricas = 0;
-  int andycoins_ganadas = 0;
   int posicion_jugador[2];
-  objetivo_constructor constructor;
 };
 
 using namespace std;
@@ -84,7 +76,7 @@ class Casillero{
 
     //PRE:
     //POS: segun el string identifica que tipo de edifcio es y que caracteristicas tiene
-    virtual void colocar_edificio(string edificio, int jugador);
+    virtual void colocar_edificio(EdificioColocable* edificio);
 
     //PRE:
     //POS: en los casilleros coonstruibles y transitables verifica si hay un material o un edificio en ese casillero
@@ -94,7 +86,7 @@ class Casillero{
 
     //PRE: material ingresado debe ser existente
     //POS: segun el string identifica que tipo de material es y que caracteristicas tiene
-    virtual void colocar_material(string material);
+    virtual void colocar_material(MaterialColocable* material);
 
     //PRE:
     //POS: devuelve un string que representa que que tipo de casillero es

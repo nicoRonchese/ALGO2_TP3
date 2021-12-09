@@ -14,23 +14,8 @@ CasilleroConstruible::CasilleroConstruible(string tipo_terreno) : Casillero(tipo
  this->tipo_terreno = tipo_terreno;
 }
 
-void CasilleroConstruible:: colocar_edificio(string nombre, int jugador){
- if (nombre == MINA)
-    this->edificio = new Mina(jugador);
- else if (nombre == ASERRADERO)
-    this->edificio = new Aserradero(jugador);
- else if (nombre == FABRICA)
-    this->edificio = new Fabrica(jugador);
- else if (nombre == ESCUELA)
-    this->edificio = new Escuela(jugador);
- else if (nombre == OBELISCO)
-    this->edificio = new Escuela(jugador);
- else if (nombre == PLANTA_ELECTRICA)
-    this->edificio = new PlantaElectrica(jugador);
- else if(nombre == MINA_ORO)
-    this->edificio = new MinaOro(jugador);
- else
-    cout<< "No es un edificio colocable por lo que no se va a encontrar en el mapa" << endl;
+void CasilleroConstruible:: colocar_edificio(EdificioColocable* edificio){
+ this->edificio = edificio;
 }
 
 bool CasilleroConstruible:: comprobar_vacio(){
@@ -71,28 +56,28 @@ void CasilleroConstruible:: mostrar_en_mapa(){
 
 void CasilleroConstruible::recolectar_producido(DatosMateriales* materiales, int* energia, int jugador){
    if (edificio->nombre_edificio()==ASERRADERO){
-    materiales->sumar_materiales(MADERA, 25, jugador);
-    cout<<ASERRADERO<<" produjo 25 de madera"<<endl;
+    materiales->sumar_materiales(MADERA, PRODUCCION_ASERRADERO_CANTIDAD, jugador);
+    cout<<ASERRADERO<<" produjo "<<PRODUCCION_ASERRADERO_CANTIDAD<<" de madera"<<endl;
    }
-   if (edificio->nombre_edificio()==MINA){
-    materiales->sumar_materiales(PIEDRA, 15, jugador);
-    cout<<MINA<<" produjo 15 de piedra"<<endl;
+   else if (edificio->nombre_edificio()==MINA){
+    materiales->sumar_materiales(PIEDRA, PRODUCCION_MINA_CANTIDAD, jugador);
+    cout<<MINA<<" produjo "<<PRODUCCION_MINA_CANTIDAD<<" de piedra"<<endl;
    }
-   if (edificio->nombre_edificio()==FABRICA){
-    materiales->sumar_materiales(METAL, 40, jugador);
-    cout<<FABRICA<<" produjo 40 de metal"<<endl;
+   else if (edificio->nombre_edificio()==FABRICA){
+    materiales->sumar_materiales(METAL, PRODUCCION_FABRICA_CANTIDAD, jugador);
+    cout<<FABRICA<<" produjo "<<PRODUCCION_FABRICA_CANTIDAD<<" de metal"<<endl;
    }
-   if (edificio->nombre_edificio()==ESCUELA){
-    materiales->sumar_materiales(ANDYCOIN, 25, jugador);
-    cout<<ESCUELA<<" produjo 25 andycoins"<<endl;
+   else if (edificio->nombre_edificio()==ESCUELA){
+    materiales->sumar_materiales(ANDYCOIN, PRODUCCION_ESCUELA_CANTIDAD, jugador);
+    cout<<ESCUELA<<" produjo "<<PRODUCCION_ESCUELA_CANTIDAD<<" andycoins"<<endl;
    }
-   if (edificio->nombre_edificio()==PLANTA_ELECTRICA){
-    energia[jugador] += 15;
-    cout<<PLANTA_ELECTRICA<<" produjo 15 de energia"<<endl;
+   else if (edificio->nombre_edificio()==PLANTA_ELECTRICA){
+    energia[jugador] += PRODUCCION_PLANTA_ELECTRICA_CANTIDAD;
+    cout<<PLANTA_ELECTRICA<<" produjo "<<PRODUCCION_PLANTA_ELECTRICA_CANTIDAD<<" de energia"<<endl;
    }
-   if (edificio->nombre_edificio()==MINA_ORO){
-    materiales->sumar_materiales(ANDYCOIN, 50, jugador);
-    cout<<MINA_ORO<<" produjo 50 andycoins"<<endl;
+   else if (edificio->nombre_edificio()==MINA_ORO){
+    materiales->sumar_materiales(ANDYCOIN, PRODUCCION_MINA_ORO_CANTIDAD, jugador);
+    cout<<MINA_ORO<<" produjo "<<PRODUCCION_MINA_ORO_CANTIDAD<<" andycoins"<<endl;
    }
 }
 

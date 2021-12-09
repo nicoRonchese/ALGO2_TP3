@@ -39,9 +39,9 @@ bool Casillero:: comprobar_propietario(int jugador){
  return false;
 }
 
-void Casillero :: colocar_edificio(string edificio, int jugador) {}
+void Casillero :: colocar_edificio(EdificioColocable* edificio) {}
 
-void Casillero:: colocar_material(string material){}
+void Casillero:: colocar_material(MaterialColocable* material){}
 
 string Casillero:: devolver_tipo_casillero(){
  return tipo_casillero;

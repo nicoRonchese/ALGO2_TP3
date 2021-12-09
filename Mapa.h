@@ -92,7 +92,7 @@ class Mapa{
 
     //PRE: fila y columna deben estar dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: suma 1 a la cantidad de esdificios construidos de ese tipo y lo coloca en matriz
-    bool construir_edificio(string nombre, int fila,int columna, int turno);
+    bool construccion_edificio(string nombre, int fila,int columna, int turno);
 
     //PRE: fila y columna deben estra dentro del rango de la matriz
     //POS: devuelve el nombre del edificio demolido
@@ -156,6 +156,10 @@ class Mapa{
     //PRE: fila y columna deben estra dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: devuelve un booleano que representa si se puede construir en esa coordenada
     bool comprobar_coordenadas_construccion(int fila,int columna);
+
+    EdificioColocable* construir_edificio(string nombre, int jugador);
+
+    MaterialColocable* construir_material(string nombre);
 
     bool comprobar_coordenadas_ataque(int fila,int columna, int turno);
 

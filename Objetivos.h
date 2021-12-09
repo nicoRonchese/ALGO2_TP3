@@ -19,6 +19,7 @@ const int ARMADO = 8;
 const int EXTREMISTA = 9;
 const int TOTAL_OBJETIVOS = 9;
 const int TOTAL_OBJETIVOS_JUGADOR = 3;
+const int TOTAL_OBJETIVOS_PARA_GANAR = 2;
 
 struct Objetivo{
     int tipo_objetivo;
@@ -30,26 +31,42 @@ class Objetivos{
  private:
   Objetivo** objetivos;
   int maximo_escuelas;
-  bool obelisco_construido;
+  bool obelisco = false;
+  bool escuela = false;
+  bool aserradero = false;
+  bool mina = false;
+  bool mina_oro = false;
+  bool fabrica = false;
+  bool planta_electrica = false;
 
  public:
   Objetivos(int maximo_escuelas);
 
   ~Objetivos();
-    
-  void sorteo_objetivos();
-  
+
   void construccion_obelisco();
 
   void mostrar_victoria(int jugador);
- 
-  bool comprobar_objetivo(int tipo_objetivo);
 
   bool comprobar_objetivos_cumplidos();
 
-  void mostrar_objetivo(int numero_objetivo, int ubicacion_objetivo);
-
   void mostrar_objetivos();
+
+  void actualizar_objetivo(int tipo_objetivo, int cantidad);
+
+  void actualizar_tipos_construidos(string nombre);
+
+  int devolver_cantidad_construidos();
+
+  int devolver_tipos_minas_construidas();
+
+ private:
+
+  void sorteo_objetivos();
+
+  void mostrar_objetivos_cumplidos();
+
+  void mostrar_objetivo(int numero_objetivo, int ubicacion_objetivo);
 
   void mostrar_comprar_andypolis(int ubicacion_objetivo);
 
@@ -70,8 +87,6 @@ class Objetivos{
   void mostrar_armado(int ubicacion_objetivo);
 
   void mostrar_extremista(int ubicacion_objetivo);
-
-  void actualizar_objetivo(int tipo_objetivo, int cantidad);
 
   void procesar_objetivo(int numero_objetivo, int cantidad, int ubicacion_objetivo);
 
@@ -95,7 +110,6 @@ class Objetivos{
 
   void extremista(int bombas_compradas, int ubicacion_objetivo);
 
-  private:
   void sortear_objetivos(int* objetivos_preparados, int total_objetivos_jugador);
 
   bool hay_objetivo_repetido(int* objetivos_preparados, int objetivo_actual);

@@ -21,7 +21,7 @@ class CasilleroTransitable : public Casillero {
     void mostrar_en_mapa();
     void mostrar_material();
     bool comprobar_vacio();
-    void colocar_material(string nombre);
+    void colocar_material(MaterialColocable* material);
     void recolectar_material(DatosMateriales* materiales, int jugador);
     string devolver_elemento_colocable();
 

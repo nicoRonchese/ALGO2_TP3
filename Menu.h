@@ -82,6 +82,8 @@ class Menu{
      //POS:
      void crear_datos_jugadores();
 
+     void inicializar_datos_objetivos();
+
      //PRE:
      //POS:
      void menu_inicial();

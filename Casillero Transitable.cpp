@@ -58,8 +58,8 @@ void CasilleroTransitable:: mostrar_en_mapa(){
   cout << color_terreno << signo << END_COLOR;
 }
 
-void CasilleroTransitable:: colocar_material(string nombre){
- material = new MaterialColocable(nombre);
+void CasilleroTransitable:: colocar_material(MaterialColocable* material){
+ this->material = material;
 }
 
 void CasilleroTransitable:: recolectar_material(DatosMateriales* materiales, int jugador){
