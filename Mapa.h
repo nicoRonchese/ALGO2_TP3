@@ -113,6 +113,8 @@ class Mapa{
     //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
     //POS: guarda todos las ubicaciones de los archivos en el archivo
     void guardar_construcciones(int posicion_1[], int posicion_2[]);
+ 
+    bool comprobar_colocacion_jugador(int fila, int columna);
 
     bool comprobar_coordenadas_demolicion(int fila,int columna, int turno);
 
