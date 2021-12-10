@@ -109,6 +109,8 @@ class Menu{
      void mostrar_menu_juego();
 
      void colocar_jugadores();
+ 
+     void poner_jugador(int jugador);
 
      //PRE:
      //POS:
