@@ -84,18 +84,14 @@ void Menu::poner_jugador(int jugador){
 void Menu::menu_inicial(){
  int opcion = 0;
  string basura,resp;
- while (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
+ while (opcion!=GUARDAR_SALIR_INICIAL && opcion!=COMENZAR_PARTIDA){
     mostrar_menu_inicial();
     cout <<"Ingrese una opcion: ";
     cin>>resp;
     opcion = ingrese_numero(resp);
     cout<<endl;
-    if (opcion==COMENZAR_PARTIDA){
-     colocar_jugadores();
-     system(CLR_SCREEN);
-    }
     procesar_opcion_inicial(opcion);
-    if (opcion!=GUARDAR_SALIR && opcion!=COMENZAR_PARTIDA){
+    if (opcion!=GUARDAR_SALIR_INICIAL && opcion!=COMENZAR_PARTIDA){
      cout<<endl;
      cout << "Presione una letra y enter para continuar: ";
      cin >> basura;
@@ -161,7 +157,7 @@ void Menu::mostrar_menu_juego(){
 void Menu::procesar_opcion_inicial(int opcion){
     switch (opcion) {
         case MODIFICAR_EDIFICIO:
-            construir_edificio();
+            modificar_edificio();
             break;
         case LISTAR_EDIFICIOS:
             listar_edificios();
@@ -173,10 +169,12 @@ void Menu::procesar_opcion_inicial(int opcion){
             cambiar_cantidad_jugadores();
             break;
         case COMENZAR_PARTIDA:
+            colocar_jugadores();
+            system(CLR_SCREEN);
             comenzar_partida();
             break;
         case GUARDAR_SALIR_INICIAL:
-            guardar_salir();
+            crear_datos_jugadores(); //creo los datos para que los delete del destructor funcionen y no se rompa el programa
             break;
         default:
             cout << "Error: opcion invalida"<<endl;
