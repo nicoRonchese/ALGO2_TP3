@@ -422,6 +422,17 @@ void Mapa::guardar_jugador(ofstream &archivo, int jugador,  int posicion[]){
   }
 }
 
+bool Mapa::comprobar_colocacion_jugador(int fila, int columna){
+ bool chequeo = false;
+ if (!consultar_coordenada(fila,columna))
+  cout<<"Error: Coordenada fuera del mapa"<<endl;
+ else if (Matriz[fila][columna]->comprobar_jugador_colocado())
+  cout<<"Jugador ya colocado en esa posicion"<<endl;
+ else
+  chequeo = true;
+ return chequeo;
+}
+
 bool Mapa::comprobar_coordenadas_construccion(int fila,int columna){
      bool chequeo = false;
      if (!consultar_coordenada(fila,columna))
@@ -430,6 +441,8 @@ bool Mapa::comprobar_coordenadas_construccion(int fila,int columna){
          cout<<"No es un casillero construible"<<endl;
      else if (!consultar_vacio(fila,columna))
          cout<<"Ya se encuentra una construccion en el casillero"<<endl;
+     else if (Matriz[fila][columna]->comprobar_jugador_colocado())
+         cout<<"No puedes construir encima de un jugador"<<endl;
      else
          chequeo = true;
      return chequeo;
@@ -488,6 +501,8 @@ bool Mapa::comprobar_coordenadas_moverse(int fila, int columna){
          cout<<"Error: Coordenada fuera del mapa"<<endl;
      if (Matriz[fila][columna]->comprobar_jugador_colocado())
         cout<<"No te puedes mover a una coordenada ocupada por otro jugador"<<endl;
+     else if ((consultar_casillero(fila,columna)==CONSTRUIBLE) && (!consultar_vacio(fila,columna)))
+        cout<<"No te puedes mover a un casillero ocupado por un edificio"<<endl;
      else
          chequeo = true;
      return chequeo;
