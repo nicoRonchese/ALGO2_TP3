@@ -54,21 +54,32 @@ void Menu::empezar_menu(){
 
 void Menu::colocar_jugadores(){
  for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
-     cout<<"Jugador "<<jugador+1<<":"<<endl;
-     string fila_string,columna_string;
-     int fila,columna;
-     cout<<"Fila: ";
-     cin>>fila_string;
-     fila = ingrese_numero(fila_string);
-     cout<<"Columna: ";
-     cin>>columna_string;
-     columna = ingrese_numero(columna_string);
-     fila--;
-     columna--;
-     mapa->colocar_jugador(fila, columna, jugador);
-     cout<<endl;
+     poner_jugador(jugador);
  }
 }
+
+void Menu::poner_jugador(int jugador){
+  int fila, columna;
+  string fila_string,columna_string;
+  cout<<"Jugador "<<jugador+1<<":"<<endl;
+  cout<<"Fila: ";
+  cin>>fila_string;
+  fila = ingrese_numero(fila_string);
+  cout<<"Columna: ";
+  cin>>columna_string;
+  columna = ingrese_numero(columna_string);
+  fila--;
+  columna--;
+  if (mapa->comprobar_colocacion_jugador(fila, columna)){
+   cout<<endl;
+   mapa->colocar_jugador(fila, columna, jugador);
+  }
+  else{
+   cout<<endl;
+   poner_jugador(jugador);
+  }
+ }
+
 
 void Menu::menu_inicial(){
  int opcion = 0;
@@ -578,7 +589,6 @@ void Menu::moverse_coordenada(){
     cout<<"Desea moverse?(s/n): ";
     cin>>movimiento;
     if (movimiento== "s"){
-     cout<<endl;
      mapa->cambiar_posicion(turno,datos,datosMateriales);
      edificios_construidos[turno]->posicion_jugador[0] = fila_destino;
      edificios_construidos[turno]->posicion_jugador[1] = columna_destino;
