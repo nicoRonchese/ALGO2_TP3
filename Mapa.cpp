@@ -135,9 +135,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
       getline(archivo, basura, '\n');
       fila = stoi(fila_objeto) - 1;
       columna = stoi(columna_objeto) - 1;
-      Matriz[fila][columna]->colocar_jugador(JUGADOR_UNO);
-      if  (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
-       eliminar_transitables(fila, columna);
+      colocar_jugador(fila, columna, JUGADOR_UNO);
       getline(archivo, objeto, '(');
       objeto = quitar_espacio_final(objeto);
       while (objeto != "2"){
@@ -163,9 +161,7 @@ string Mapa::leer_materiales_ubicaciones(ifstream &archivo, string objeto){
          getline(archivo, basura, '\n');
          fila = stoi(fila_objeto) - 1;
          columna = stoi(columna_objeto) - 1;
-         Matriz[fila][columna]->colocar_jugador(JUGADOR_DOS);
-         if  (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
-          eliminar_transitables(fila, columna);
+         colocar_jugador(fila, columna, JUGADOR_DOS);
          getline(archivo, objeto, '(');
          objeto = quitar_espacio_final(objeto);
          while (!archivo.eof()){
@@ -264,6 +260,8 @@ void Mapa::eliminar_transitables(int fila, int columna){
 }
 
 void Mapa::colocar_jugador(int fila, int columna, int jugador){
+ if (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
+  eliminar_transitables(fila, columna);
  Matriz[fila][columna]->colocar_jugador(jugador);
 }
 
@@ -533,16 +531,13 @@ camino_especifico Mapa::moverse_coordenada(int jugador,int fila_origen,int colum
 void Mapa::cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales){
   for (int i = 0; i < dato.longitud; i++){
     recolectar_material_tirado(dato.camino[i][0],dato.camino[i][1],jugador,materiales);
-    if (i == 0)
-    {
+    if (i == 0){
       Matriz[dato.camino[i][0]][dato.camino[i][1]]->sacar_jugador();
       if  (Matriz[dato.camino[i][0]][dato.camino[i][1]]->devolver_tipo_casillero() == TRANSITABLE)
        agregar_transitables(dato.camino[i][0], dato.camino[i][1]);
     }
     else if (i == dato.longitud-1){
-      Matriz[dato.camino[i][0]][dato.camino[i][1]]->colocar_jugador(jugador);
-      if  (Matriz[dato.camino[i][0]][dato.camino[i][1]]->devolver_tipo_casillero() == TRANSITABLE)
-       eliminar_transitables(dato.camino[i][0], dato.camino[i][1]);
+      colocar_jugador(dato.camino[i][0], dato.camino[i][1], jugador);
     }
   }
 }
