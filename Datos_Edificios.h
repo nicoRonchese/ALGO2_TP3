@@ -4,16 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include "diccionario.h"
-//#include "Edificio Colocable.h"
+#include "Edificio Colocable.h"
 using namespace std;
 
-const string ASERRADERO = "aserradero";
-const string MINA = "mina";
-const string FABRICA = "fabrica";
-const string ESCUELA = "escuela";
-const string OBELISCO = "obelisco";
-const string PLANTA_ELECTRICA = "planta electrica";
-const string MINA_ORO = "mina oro";
 const string PATH_EDIFICIOS = "edificios.txt";
 const string PRODUCCION_ASERRADERO = "Produce 25 de madera";
 const string PRODUCCION_MINA = "Produce 15 de piedra";
@@ -56,7 +49,7 @@ public:
     //POS: devuelve un booleano cuyo valor dependera si el nombre_edificio de algun edififcio concide con nombre
     bool comprobar_edificio(string nombre);
 
-    void modificar_edificio();
+    void modificar_edificio(edificio dato, string llave);
 
 private:
     //Métodos privados

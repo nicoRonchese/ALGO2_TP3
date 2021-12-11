@@ -42,6 +42,7 @@ class Casillero{
     string* jugador_colocado;
     string tipo_casillero;
     string tipo_terreno;
+    bool casillero_marcado_camino;
 
  public:
     //Metódos públicos
@@ -71,6 +72,8 @@ class Casillero{
     //PRE:
     //POS: muestra en terminal una letra segun el casillero
     virtual void mostrar_en_mapa();
+
+    void marcar_casillero_camino();
 
     void mostrar_en_mapa_terreno();
 

@@ -6,7 +6,13 @@ CasilleroInaccesible::CasilleroInaccesible(string tipo_terreno) : Casillero(tipo
 }
 
 void CasilleroInaccesible:: mostrar(){
- cout<<"Soy un casillero inaccesible"<<endl;
+ cout<<"Soy un casillero inaccesible";
+ if (comprobar_jugador_colocado()){
+    cout<<" y no me encuentro vacio"<<endl;
+    cout<<"Soy el jugador "<<(*jugador_colocado)<<" y me encuentro en el casillero consultado"<<endl;
+ }
+ else
+    cout<<" y me encuentro vacio"<<endl;
 }
 
 void CasilleroInaccesible:: mostrar_en_mapa(){

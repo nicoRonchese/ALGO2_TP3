@@ -91,19 +91,7 @@ string Datos_edificios::datos_produccion(string nombre){
     return produccion;
   }
 
-void Datos_edificios::modificar_edificio(){
-    string llave;
-    edificio dato;
-    cout<< "ingrese el nombre del edificio a modificar: ";
-    cin>>llave;
-    cout<< "ingrese cantidad piedra: ";
-    cin>>dato.cantidad_piedra;
-    cout<< "ingrese cantidad madera: ";
-    cin>>dato.cantidad_madera;
-    cout<< "ingrese cantidad metal: ";
-    cin>>dato.cantidad_metal;
-    cout<< "ingrese maxima cantidad permitida: ";
-    cin>>dato.maxima_cantidad_permitida;
+void Datos_edificios::modificar_edificio(edificio dato, string llave){
     dato.produccion = datos_produccion(llave);
     edificios.modificar_elemento(llave,dato);
 }

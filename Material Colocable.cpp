@@ -24,7 +24,7 @@ MaterialColocable::MaterialColocable(string nombre){
 }
 
 void MaterialColocable::mostrar(){
- cout << "Soy un material del tipo "<<nombre<<" y estoy en el casillero consultado" << endl;
+ cout << "Soy un material del tipo "<<nombre<<" y me encuentro en el casillero consultado" << endl;
 }
 
 string MaterialColocable::devolver_signo(){

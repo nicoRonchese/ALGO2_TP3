@@ -18,9 +18,12 @@ bool CasilleroTransitable:: comprobar_vacio(){
 
 void CasilleroTransitable:: mostrar(){
  cout<<"Soy un casillero transitable";
- if (comprobar_vacio()){
-    cout<<" y me encuentro vacio"<<endl;
+ if (comprobar_jugador_colocado()){
+    cout<<" y no me encuentro vacio"<<endl;
+    cout<<"Soy el jugador "<<(*jugador_colocado)<<" y me encuentro en el casillero consultado"<<endl;
  }
+ else if (comprobar_vacio())
+    cout<<" y me encuentro vacio"<<endl;
  else {
     cout<<" y no me encuentro vacio"<<endl;
     mostrar_material();

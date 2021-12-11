@@ -27,8 +27,17 @@ void Casillero :: mostrar(){}
 
 void Casillero :: mostrar_en_mapa() {}
 
+void Casillero :: marcar_casillero_camino(){
+ casillero_marcado_camino = true;
+}
+
 void Casillero :: mostrar_en_mapa_terreno() {
- cout<<tipo_terreno<<" ";
+ if (casillero_marcado_camino){
+  cout<<COLOR_BETUN<<tipo_terreno<<END_COLOR<<" ";
+  casillero_marcado_camino = false;
+ }
+ else
+  cout<<tipo_terreno<<" ";
 }
 
 bool Casillero:: comprobar_vacio(){
@@ -71,4 +80,7 @@ void Casillero :: recolectar_producido(DatosMateriales* materiales, int* energia
 
 void Casillero :: recolectar_material(DatosMateriales* materiales, int jugador){}
 
-Casillero :: ~Casillero(){}
+Casillero :: ~Casillero(){
+ if (comprobar_jugador_colocado())
+  delete jugador_colocado;
+}

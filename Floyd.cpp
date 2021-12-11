@@ -72,14 +72,9 @@ camino_especifico Floyd::caminoMinimo(int origen, int destino) {
     if(matrizCaminos[origen][destino] == POSICION_NO_ENCONTRADA){
         cout << "No hay un camino que conecte " <<  vertices->obtenerNombre(origen + 1) << " con " << vertices->obtenerNombre(destino + 1);
     }else{
-        cout << "El camino minimo que une " <<  vertices->obtenerNombre(origen + 1) << " con " << vertices->obtenerNombre(destino + 1);
-        cout << " tiene un costo de: " << matrizCostos[origen][destino] << " y es el siguiente: ";
-        cout << vertices->obtenerNombre(origen + 1);
         do{
             origen = matrizCaminos[origen][destino];
             agrandarCaminoEspecifico(datos,vertices->obtenerFila(origen +1),vertices->obtenerColumna(origen +1));
-            cout << " -> " << vertices->obtenerNombre(origen + 1);
-            //Matriz[vertices->obtenerFila(origen + 1)][vertices->obtenerColumna(origen + 1)]->marcar_camino();
 
         }while(origen != destino);
     }

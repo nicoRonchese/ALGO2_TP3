@@ -109,7 +109,7 @@ class Menu{
      void mostrar_menu_juego();
 
      void colocar_jugadores();
- 
+
      void poner_jugador(int jugador);
 
      //PRE:
@@ -240,6 +240,8 @@ class Menu{
      //PRE: debe recibir un string
      //POS: comprueba si es un numero y si no lo es pide el ingreso de uno
      int ingrese_numero(string numero);
+
+     int ingresar_cantidad();
 };
 
 #endif // MENU_H_INCLUDED

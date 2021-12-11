@@ -524,8 +524,16 @@ camino_especifico Mapa::moverse_coordenada(int jugador,int fila_origen,int colum
   else{
     datos = grafo[JUGADOR_DOS].caminoMinimo(fila_origen, columna_origen, fila_destino, columna_destino);
   }
-  //mostrar_mapa_rojo()
+  cout<<"El camino tiene un costo de: "<<datos.costo<<" y es el siguiente: "<<endl;
+  mostrar_camino(datos);
   return datos;
+}
+
+void Mapa::mostrar_camino(camino_especifico dato){
+    for (int i = 0; i < dato.longitud; i++){
+      Matriz[dato.camino[i][0]][dato.camino[i][1]]->marcar_casillero_camino();
+    }
+    mostrar_mapa_terrenos();
 }
 
 void Mapa::cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales){

@@ -21,14 +21,26 @@ string Menu::minusculizar(string nombre){
 }
 
 int Menu::ingrese_numero(string numero){
-    int opcion;
-    while (!(isdigit(numero[0])))
-    {
-        cout << "Ingrese un numero porfavor: ";
-        cin >> numero;
-    }
-    opcion = stoi(numero);
-    return opcion;
+ int opcion;
+ while (!(isdigit(numero[0]))){
+  cout << "Ingrese un numero porfavor: ";
+  cin >> numero;
+ }
+ opcion = stoi(numero);
+ return opcion;
+}
+
+int Menu::ingresar_cantidad(){
+ string numero;
+ int cantidad;
+ cin >> numero;
+ cantidad = ingrese_numero(numero);
+ while (cantidad >= 50000 || cantidad <= 0){
+  cout << "Ingrese un numero mayor a 0 y menor a 50.000 porfavor: ";
+  cin >> numero;
+  cantidad = ingrese_numero(numero);
+ }
+ return cantidad;
 }
 
 void Menu::crear_datos_jugadores(){
@@ -182,7 +194,47 @@ void Menu::procesar_opcion_inicial(int opcion){
 }
 
 void Menu::modificar_edificio(){
- //mapa->modificar_edificio();
+ edificio edificio;
+ string llave, respuesta;
+ cout<< "Ingrese el nombre del edificio a modificar: ";
+ cin>>llave;
+ llave = minusculizar(llave);
+ if (datosEdificios->comprobar_edificio(llave)){
+  if (llave != OBELISCO){
+   edificio = datosEdificios->buscar_edificio(llave);
+   cout<<"Desea modificar la cantidad piedra?(s/n): ";
+   cin>>respuesta;
+   respuesta = minusculizar(respuesta);
+   if (respuesta=="s"){
+    cout<< "Ingrese cantidad piedra: ";
+    edificio.cantidad_piedra = ingresar_cantidad();
+   }
+   cout<<"Desea modificar la cantidad madera?(s/n): ";
+   cin>>respuesta;
+   respuesta = minusculizar(respuesta);
+   if (respuesta=="s"){
+    cout<< "Ingrese cantidad madera: ";
+    edificio.cantidad_madera = ingresar_cantidad();
+   }
+   cout<<"Desea modificar la cantidad metal?(s/n): ";
+   cin>>respuesta;
+   respuesta = minusculizar(respuesta);
+   if (respuesta=="s"){
+    cout<< "Ingrese cantidad metal: ";
+    edificio.cantidad_metal = ingresar_cantidad();
+   }
+   cout<<"Desea modificar la maxima cantidad permitida?(s/n): ";
+   cin>>respuesta;
+   respuesta = minusculizar(respuesta);
+   if (respuesta=="s"){
+    cout<<"Ingrese maxima cantidad permitida: ";
+    edificio.maxima_cantidad_permitida = ingresar_cantidad();
+   }
+   datosEdificios->modificar_edificio(edificio, llave);
+  }
+  else
+   cout<<"No se puede modificar el obelisco"<<endl;
+ }
 }
 
 void Menu::listar_edificios(){
