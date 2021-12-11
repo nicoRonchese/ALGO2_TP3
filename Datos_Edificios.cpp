@@ -2,7 +2,6 @@
 
 Datos_edificios::Datos_edificios(){
     cantidad_edificios = 0;
-    diccionario = NULL;
     leer_edificios();
 }
 
@@ -38,6 +37,7 @@ void Datos_edificios::leer_edificios(){
             aux.maxima_cantidad_permitida = stoi(datos[5]);
         }
         aux.produccion = datos_produccion(llave);
+        cantidad_edificios++;
         agregar_edificio(llave, aux);
      }
     }
@@ -45,55 +45,17 @@ void Datos_edificios::leer_edificios(){
 }
 
 void Datos_edificios::agregar_edificio(string llave, edificio datos){
-    nodo *nuevo_nodo = new nodo();
-    nuevo_nodo->llave = llave;
-    nuevo_nodo->datos = datos;
-    nuevo_nodo->der = NULL;
-    nuevo_nodo->izq = NULL;
-    agregar_nodo(diccionario,nuevo_nodo);
+    edificios.agregarElemento(llave,datos);
 }
-
-void Datos_edificios::agregar_nodo(nodo*&origen,nodo *ab){
-    if(origen == NULL){
-        origen = ab;
-	}
-	else{
-		string llave_raiz = origen->llave;
-        string llave_nodo = ab->llave;
-		if(llave_nodo.length() < llave_raiz.length()){
-			agregar_nodo(origen->izq,ab);
-		}else{
-			agregar_nodo(origen->der,ab);
-		}
-	}
-}
-
 
 void Datos_edificios::mostrar_edificios(){
-    recursion_mostrar_edificios(diccionario);
+    edificios.mostrar_edificios();
 }
 
-void Datos_edificios::recursion_mostrar_edificios(nodo *origen){
-    if(origen != NULL){
-        listar_edificios(origen->datos,origen->llave);
-		recursion_mostrar_edificios(origen->der);
-		recursion_mostrar_edificios(origen->izq);
-	}
-}
-
-void Datos_edificios::listar_edificios(edificio dato, string llave){
-    cout<< llave <<" - "<<dato.produccion<<endl;
-    cout<< "Requerimientos:";
-    cout<< " - Piedra: " << dato.cantidad_piedra;
-    cout<< " - Madera: " << dato.cantidad_madera;
-    cout<< " - Metal: " << dato.cantidad_metal<<endl;
-    cout<< "Maximo construible: " <<  dato.maxima_cantidad_permitida << endl << endl;
-
-}
 
 bool Datos_edificios::comprobar_edificio(string nombre){
   bool chequeo = false;
-  if(buscar_edificio(nombre).maxima_cantidad_permitida!=0){
+  if(edificios.buscarElemento(nombre).maxima_cantidad_permitida!=0){
       chequeo = true;
   }
   else
@@ -101,29 +63,9 @@ bool Datos_edificios::comprobar_edificio(string nombre){
   return chequeo;
 }
 
-edificio Datos_edificios::recursion_buscar_edificio(nodo *ab,string nombre){
-    if(ab != NULL){
-		if(nombre == ab->llave){
-			edificio aux = ab->datos;
-			return aux;
-		}
-		else if( nombre.length() < (ab->llave).length()){
-			return recursion_buscar_edificio(ab->izq,nombre);
-		}
-		else{
-		    return recursion_buscar_edificio(ab->der,nombre);
-		}
-    }
-    else{
-        edificio edificio_vacio;
-        edificio_vacio.maxima_cantidad_permitida = 0;
-        return edificio_vacio;
-    }
-
-}
 
 edificio Datos_edificios::buscar_edificio(string nombre){
-    return recursion_buscar_edificio(diccionario,nombre);
+    return edificios.buscarElemento(nombre);
 }
 
 string Datos_edificios::datos_produccion(string nombre){
@@ -148,6 +90,23 @@ string Datos_edificios::datos_produccion(string nombre){
     }
     return produccion;
   }
+
+void Datos_edificios::modificar_edificio(){
+    string llave;
+    edificio dato;
+    cout<< "ingrese el nombre del edificio a modificar: ";
+    cin>>llave;
+    cout<< "ingrese cantidad piedra: ";
+    cin>>dato.cantidad_piedra;
+    cout<< "ingrese cantidad madera: ";
+    cin>>dato.cantidad_madera;
+    cout<< "ingrese cantidad metal: ";
+    cin>>dato.cantidad_metal;
+    cout<< "ingrese maxima cantidad permitida: ";
+    cin>>dato.maxima_cantidad_permitida;
+    dato.produccion = datos_produccion(llave);
+    edificios.modificar_elemento(llave,dato);
+}
 
 Datos_edificios::~Datos_edificios(){}
 
