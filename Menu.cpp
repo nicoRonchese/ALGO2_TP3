@@ -45,15 +45,17 @@ int Menu::ingresar_cantidad(){
 
 void Menu::crear_datos_jugadores(){
  this->datosMateriales = new DatosMateriales(cantidad_jugadores);
- this->edificios_construidos = new cantidad_edificios_construidos*[cantidad_jugadores];
+ this->edificios_construidos = new Contador_edificios*[cantidad_jugadores];
  this->objetivos = new Objetivos*[cantidad_jugadores];
  this->energia = new int[cantidad_jugadores];
+ this->posiciones_jugadores = new int *[cantidad_jugadores];
  for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+    posiciones_jugadores[jugador] = new int[2];
     objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
-    edificios_construidos[jugador] = new cantidad_edificios_construidos;
+    edificios_construidos[jugador] = new Contador_edificios;
     energia[jugador] = ENERGIA_INICIAL;
  }
- mapa->completar_cantidad_edificios(edificios_construidos);
+ mapa->completar_cantidad_edificios(edificios_construidos, posiciones_jugadores);
  this->turno = JUGADOR_UNO;
 }
 
@@ -186,6 +188,7 @@ void Menu::procesar_opcion_inicial(int opcion){
             comenzar_partida();
             break;
         case GUARDAR_SALIR_INICIAL:
+            datosEdificios->guardar_edificios();
             crear_datos_jugadores(); //creo los datos para que los delete del destructor funcionen y no se rompa el programa
             break;
         default:
@@ -264,19 +267,19 @@ void Menu::cambiar_turno(){
 
 void Menu::inicializar_datos_objetivos(){
  for (int turno = 0; turno<cantidad_jugadores; turno++){
-  if (edificios_construidos[turno]->cantidad_escuelas > 0){
-   objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->cantidad_escuelas);
+  if (edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA) > 0){
+   objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA));
    objetivos[turno]->actualizar_tipos_construidos(ESCUELA);
   }
-  if (edificios_construidos[turno]->cantidad_fabricas > 0)
+  if (edificios_construidos[turno]->devolver_cantidad_construida(FABRICA) > 0)
    objetivos[turno]->actualizar_tipos_construidos(FABRICA);
-  if (edificios_construidos[turno]->cantidad_minas > 0)
+  if (edificios_construidos[turno]->devolver_cantidad_construida(MINA) > 0)
    objetivos[turno]->actualizar_tipos_construidos(MINA);
-  if (edificios_construidos[turno]->cantidad_minas_oro > 0)
+  if (edificios_construidos[turno]->devolver_cantidad_construida(MINA_ORO) > 0)
    objetivos[turno]->actualizar_tipos_construidos(MINA_ORO);
-  if (edificios_construidos[turno]->cantidad_aserraderos > 0)
+  if (edificios_construidos[turno]->devolver_cantidad_construida(ASERRADERO) > 0)
    objetivos[turno]->actualizar_tipos_construidos(ASERRADERO);
-  if (edificios_construidos[turno]->cantidad_plantas_electricas > 0)
+  if (edificios_construidos[turno]->devolver_cantidad_construida(PLANTA_ELECTRICA) > 0)
    objetivos[turno]->actualizar_tipos_construidos(PLANTA_ELECTRICA);
   objetivos[turno]->actualizar_objetivo(MINERO, 0);
   objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, 0);
@@ -393,67 +396,6 @@ void Menu::mostrar_mapa(){
  mapa->mostrar_mapa();
 }
 
-int Menu::devolver_cantidad_construida(string nombre){
- int cantidad_construida;
- if (nombre==ESCUELA)
-    cantidad_construida = edificios_construidos[turno]->cantidad_escuelas;
- else if (nombre==FABRICA)
-    cantidad_construida = edificios_construidos[turno]->cantidad_fabricas;
- else if (nombre==MINA)
-    cantidad_construida = edificios_construidos[turno]->cantidad_minas;
- else if (nombre==MINA_ORO)
-    cantidad_construida = edificios_construidos[turno]->cantidad_minas_oro;
- else if (nombre==PLANTA_ELECTRICA)
-    cantidad_construida = edificios_construidos[turno]->cantidad_plantas_electricas;
- else if (nombre==ASERRADERO)
-    cantidad_construida = edificios_construidos[turno]->cantidad_aserraderos;
- return cantidad_construida;
-}
-
-void Menu::sumar_edificio(string nombre){
- if (nombre==ESCUELA){
-    edificios_construidos[turno]->cantidad_escuelas++;
-    objetivos[turno]->actualizar_objetivo(LETRADO, 1);
- }
- else if (nombre==FABRICA){
-    edificios_construidos[turno]->cantidad_fabricas++;
- }
- else if (nombre==MINA){
-    edificios_construidos[turno]->cantidad_minas++;
- }
- else if (nombre==MINA_ORO){
-    edificios_construidos[turno]->cantidad_minas_oro++;
- }
- else if (nombre==PLANTA_ELECTRICA){
-    edificios_construidos[turno]->cantidad_plantas_electricas++;
- }
- else if (nombre==ASERRADERO){
-    edificios_construidos[turno]->cantidad_aserraderos++;
- }
- else if (nombre==OBELISCO){
-    objetivos[turno]->construccion_obelisco();
- }
- objetivos[turno]->actualizar_tipos_construidos(nombre);
- objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, 0);
- objetivos[turno]->actualizar_objetivo(MINERO, 0);
-}
-
-void Menu::restar_edificio(string nombre){
- if (nombre==ESCUELA)
-    edificios_construidos[turno]->cantidad_escuelas--;
- else if (nombre==FABRICA)
-    edificios_construidos[turno]->cantidad_fabricas--;
- else if (nombre==MINA)
-    edificios_construidos[turno]->cantidad_minas--;
- else if (nombre==MINA_ORO)
-    edificios_construidos[turno]->cantidad_minas_oro--;
- else if (nombre==PLANTA_ELECTRICA)
-    edificios_construidos[turno]->cantidad_plantas_electricas--;
- else if (nombre==ASERRADERO)
-    edificios_construidos[turno]->cantidad_aserraderos--;
-}
-
-
 void Menu::construir_edificio(){
  if (consultar_energia(COSTO_CONSTRUIR)){
   string nombre;
@@ -476,7 +418,14 @@ void Menu::construir_edificio(){
      columna--;
      if (mapa->construccion_edificio(nombre,fila,columna,turno)){
         datosMateriales->restar_construccion_materiales(datosEdificios->buscar_edificio(nombre), turno);
-        sumar_edificio(nombre);
+        edificios_construidos[turno]->sumar_edificio(nombre);
+        if (nombre == OBELISCO)
+         objetivos[turno]->construccion_obelisco();
+        else if (nombre == OBELISCO)
+         objetivos[turno]->actualizar_objetivo(LETRADO, 1);
+        objetivos[turno]->actualizar_tipos_construidos(nombre);
+        objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, 0);
+        objetivos[turno]->actualizar_objetivo(MINERO, 0);
         cout<<nombre<<" construido/a correctamente"<<endl;
         energia[turno] -= COSTO_CONSTRUIR;
      }
@@ -488,7 +437,7 @@ void Menu::construir_edificio(){
 bool Menu::comprobar_construccion(string nombre){
  bool edificio_construible = false;
  edificio edificio_a_construir = datosEdificios->buscar_edificio(nombre);
- if (edificio_a_construir.maxima_cantidad_permitida==devolver_cantidad_construida(nombre))
+ if (edificio_a_construir.maxima_cantidad_permitida==edificios_construidos[turno]->devolver_cantidad_construida(nombre))
     cout<<"Maximo construido"<<endl;
  else if (!datosMateriales->comprobar_materiales_construccion(edificio_a_construir, turno))
     cout<<"Materiales insuficientes"<<endl;
@@ -517,7 +466,7 @@ void Menu::demoler_edificio(){
   if (mapa->comprobar_coordenadas_demolicion(fila, columna, turno)){
    edificio_demolido = mapa->demoler_edificio(fila, columna);
    datosMateriales->sumar_demolicion_materiales(datosEdificios->buscar_edificio(edificio_demolido), turno);
-   restar_edificio(edificio_demolido);
+   edificios_construidos[turno]->restar_edificio(edificio_demolido);
    cout<<edificio_demolido<<" demolido/a correctamente"<<endl;
    energia[turno] -= COSTO_DEMOLER;
   }
@@ -634,14 +583,14 @@ void Menu::moverse_coordenada(){
  fila_destino--;
  columna_destino--;
  if (mapa->comprobar_coordenadas_moverse(fila_destino,columna_destino)){
-   datos = mapa->moverse_coordenada(turno,edificios_construidos[turno]->posicion_jugador[0],edificios_construidos[turno]->posicion_jugador[1],fila_destino,columna_destino);
+   datos = mapa->moverse_coordenada(turno, posiciones_jugadores[turno][0], posiciones_jugadores[turno][1], fila_destino, columna_destino);
    if (consultar_energia(datos.costo)){
     cout<<"Desea moverse?(s/n): ";
     cin>>movimiento;
     if (movimiento== "s"){
      mapa->cambiar_posicion(turno,datos,datosMateriales);
-     edificios_construidos[turno]->posicion_jugador[0] = fila_destino;
-     edificios_construidos[turno]->posicion_jugador[1] = columna_destino;
+     posiciones_jugadores[turno][0] = fila_destino;
+     posiciones_jugadores[turno][1] = columna_destino;
      andycoins_ganadas =  datosMateriales->devolver_cantidad(turno, ANDYCOIN) - andycoins;
      objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, andycoins_ganadas);
      energia[turno] = energia[turno] - datos.costo;
@@ -668,7 +617,8 @@ void Menu::finalizar_turno(){
 
 void Menu::guardar_salir(){
  datosMateriales->guardar_materiales();
- mapa->guardar_construcciones(edificios_construidos[JUGADOR_UNO]->posicion_jugador, edificios_construidos[JUGADOR_DOS]->posicion_jugador);
+ datosEdificios->guardar_edificios();
+ mapa->guardar_construcciones(posiciones_jugadores[JUGADOR_UNO], posiciones_jugadores[JUGADOR_DOS]);
 }
 
 Menu::~Menu(){

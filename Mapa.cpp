@@ -39,19 +39,19 @@ void Mapa::crear_matriz_archivo(){
 int Mapa::costo_terreno(string tipo_casillero, int jugador){
  int costo;
  if (tipo_casillero==MUELLE && jugador==JUGADOR_UNO)
-  costo = 5;
+  costo = COSTO_MUELLE_UNO;
  else if (tipo_casillero==MUELLE && jugador==JUGADOR_DOS)
-  costo = 2;
+  costo = COSTO_MUELLE_DOS;
  else if (tipo_casillero==LAGO && jugador==JUGADOR_UNO)
-  costo = 2;
+  costo = COSTO_LAGO_UNO;
  else if (tipo_casillero==LAGO && jugador==JUGADOR_DOS)
-  costo = 5;
+  costo = COSTO_LAGO_DOS;
  else if (tipo_casillero==TERRENO)
-  costo = 25;
+  costo = COSTO_TERRENO;
  else if (tipo_casillero==CAMINO)
-  costo = 4;
+  costo = COSTO_CAMINO;
  else if (tipo_casillero==BETUN)
-  costo = 0;
+  costo = COSTO_BETUN;
  return costo;
 }
 
@@ -289,23 +289,11 @@ void Mapa::lluvia_materiales(){
    }
 }
 
-string Mapa::consultar_casillero(int fila, int columna){
- return (Matriz[fila][columna]->devolver_tipo_casillero());
-}
-
-bool Mapa::consultar_vacio(int fila,int columna){
-    return (Matriz[fila][columna]->comprobar_vacio());
-}
-
-bool Mapa::consultar_propietario(int fila, int columna, int turno){
-  return (Matriz[fila][columna]->comprobar_propietario(turno));
-}
-
 bool Mapa::recolectar_recursos(DatosMateriales* materiales, int* energia, int jugador){
      int producido = 0;
      for (int fila=0; fila<filas_matriz; fila++){
       for (int columna=0; columna<columnas_matriz; columna++){
-        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (consultar_propietario(fila, columna, jugador))){
+        if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()) && (Matriz[fila][columna]->comprobar_propietario(jugador))){
            cout<<"En la coordenada ("<<fila+1<<", "<<columna+1<<"), ";
            Matriz[fila][columna]->recolectar_producido(materiales, energia, jugador);
            producido++;
@@ -373,7 +361,7 @@ string Mapa::demoler_edificio(int fila, int columna){
  return edificio;
 }
 
-bool Mapa::atacar_edificio(int fila, int columna, int turno, cantidad_edificios_construidos** datos){
+bool Mapa::atacar_edificio(int fila, int columna, int turno, Contador_edificios** datos){
   bool ataque_completado = false;
   if (comprobar_coordenadas_ataque(fila, columna, turno)){
     Matriz[fila][columna]->atacar_edificio(datos);
@@ -431,13 +419,13 @@ bool Mapa::comprobar_colocacion_jugador(int fila, int columna){
  return chequeo;
 }
 
-bool Mapa::comprobar_coordenadas_construccion(int fila,int columna){
+bool Mapa::comprobar_coordenadas_construccion(int fila, int columna){
      bool chequeo = false;
      if (!consultar_coordenada(fila,columna))
          cout<<"Error: Coordenada fuera del mapa"<<endl;
-     else if (!(consultar_casillero(fila,columna)==CONSTRUIBLE))
+     else if (Matriz[fila][columna]->devolver_tipo_casillero()!=CONSTRUIBLE)
          cout<<"No es un casillero construible"<<endl;
-     else if (!consultar_vacio(fila,columna))
+     else if (!Matriz[fila][columna]->comprobar_vacio())
          cout<<"Ya se encuentra una construccion en el casillero"<<endl;
      else if (Matriz[fila][columna]->comprobar_jugador_colocado())
          cout<<"No puedes construir encima de un jugador"<<endl;
@@ -446,15 +434,15 @@ bool Mapa::comprobar_coordenadas_construccion(int fila,int columna){
      return chequeo;
 }
 
-bool Mapa::comprobar_coordenadas_demolicion(int fila,int columna, int turno){
+bool Mapa::comprobar_coordenadas_demolicion(int fila, int columna, int turno){
      bool chequeo = false;
      if (!consultar_coordenada(fila,columna))
          cout<<"Error: Coordenada fuera del mapa"<<endl;
-     else if (!(consultar_casillero(fila,columna)==CONSTRUIBLE))
+     else if (Matriz[fila][columna]->devolver_tipo_casillero()!=CONSTRUIBLE)
          cout<<"No es un casillero construible por lo que no puede haber una construccion"<<endl;
-     else if (consultar_vacio(fila,columna))
+     else if (Matriz[fila][columna]->comprobar_vacio())
          cout<<"Se encuentra vacio el casillero, no hay nada para demoler"<<endl;
-     else if (!consultar_propietario(fila, columna, turno))
+     else if (!Matriz[fila][columna]->comprobar_propietario(turno))
          cout<<"No puedes demoler un edificio que no es tuyo"<<endl;
      else
          chequeo = true;
@@ -465,11 +453,11 @@ bool Mapa::comprobar_coordenadas_ataque(int fila,int columna, int turno){
      bool chequeo = false;
      if (!consultar_coordenada(fila,columna))
          cout<<"Error: Coordenada fuera del mapa"<<endl;
-     else if (!(consultar_casillero(fila,columna)==CONSTRUIBLE))
+     else if (Matriz[fila][columna]->devolver_tipo_casillero()!=CONSTRUIBLE)
          cout<<"No es un casillero construible por lo que no puede haber una construccion"<<endl;
-     else if (consultar_vacio(fila,columna))
+     else if (Matriz[fila][columna]->comprobar_vacio())
          cout<<"Se encuentra vacio el casillero, no hay nada para atacar"<<endl;
-     else if (consultar_propietario(fila, columna, turno))
+     else if (Matriz[fila][columna]->comprobar_propietario(turno))
          cout<<"No puedes atacar un edificio que es tuyo"<<endl;
      else
          chequeo = true;
@@ -480,11 +468,11 @@ bool Mapa::comprobar_coordenadas_reparacion(int fila,int columna, int turno){
      bool chequeo = false;
      if (!consultar_coordenada(fila,columna))
          cout<<"Error: Coordenada fuera del mapa"<<endl;
-     else if (!(consultar_casillero(fila,columna)==CONSTRUIBLE))
+     else if (Matriz[fila][columna]->devolver_tipo_casillero()!=CONSTRUIBLE)
          cout<<"No es un casillero construible por lo que no puede haber una construccion"<<endl;
-     else if (consultar_vacio(fila,columna))
+     else if (Matriz[fila][columna]->comprobar_vacio())
          cout<<"Se encuentra vacio el casillero, no hay nada para reparar"<<endl;
-     else if (!consultar_propietario(fila, columna, turno))
+     else if (!Matriz[fila][columna]->comprobar_propietario(turno))
          cout<<"No puedes reparar un edificio que no es tuyo"<<endl;
      else if (Matriz[fila][columna]->consultar_vida())
          cout<<"No puedes reparar un edificio que esta en perfectas condiciones"<<endl;
@@ -499,7 +487,7 @@ bool Mapa::comprobar_coordenadas_moverse(int fila, int columna){
          cout<<"Error: Coordenada fuera del mapa"<<endl;
      if (Matriz[fila][columna]->comprobar_jugador_colocado())
         cout<<"No te puedes mover a una coordenada ocupada por otro jugador"<<endl;
-     else if ((consultar_casillero(fila,columna)==CONSTRUIBLE) && (!consultar_vacio(fila,columna)))
+     else if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio()))
         cout<<"No te puedes mover a un casillero ocupado por un edificio"<<endl;
      else
          chequeo = true;
@@ -567,34 +555,20 @@ Mapa::~Mapa(){
 
 }
 
-void Mapa::completar_cantidad_edificios(cantidad_edificios_construidos** edificios_construidos){
+void Mapa::completar_cantidad_edificios(Contador_edificios** edificios_construidos, int** posicion_jugadores){
      for (int fila=0; fila<filas_matriz; fila++){
       for (int columna=0; columna<columnas_matriz; columna++){
         if ((Matriz[fila][columna]->devolver_tipo_casillero()==CONSTRUIBLE) && (!Matriz[fila][columna]->comprobar_vacio())){
-           sumar_edificio(edificios_construidos, Matriz[fila][columna]->devolver_propietario(), Matriz[fila][columna]->devolver_elemento_colocable());
+           edificios_construidos[Matriz[fila][columna]->devolver_propietario()]->sumar_edificio(Matriz[fila][columna]->devolver_elemento_colocable());
         }
         if (Matriz[fila][columna]->comprobar_jugador_colocado()){
-          edificios_construidos[Matriz[fila][columna]->devolver_jugador()]->posicion_jugador[0]=fila;
-          edificios_construidos[Matriz[fila][columna]->devolver_jugador()]->posicion_jugador[1]=columna;
+          posicion_jugadores[Matriz[fila][columna]->devolver_jugador()][0]=fila;
+          posicion_jugadores[Matriz[fila][columna]->devolver_jugador()][1]=columna;
         }
       }
      }
 }
 
-void Mapa::sumar_edificio(cantidad_edificios_construidos** edificios_construidos, int jugador, string tipo_edificio){
- if (tipo_edificio==ESCUELA)
-    edificios_construidos[jugador]->cantidad_escuelas++;
- if (tipo_edificio==FABRICA)
-    edificios_construidos[jugador]->cantidad_fabricas++;
- if (tipo_edificio==MINA)
-    edificios_construidos[jugador]->cantidad_minas++;
- if (tipo_edificio==MINA_ORO)
-    edificios_construidos[jugador]->cantidad_minas_oro++;
- if (tipo_edificio==PLANTA_ELECTRICA)
-    edificios_construidos[jugador]->cantidad_plantas_electricas++;
- if (tipo_edificio==ASERRADERO)
-    edificios_construidos[jugador]->cantidad_aserraderos++;
-}
 
 
 

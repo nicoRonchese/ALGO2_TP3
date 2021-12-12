@@ -6,6 +6,7 @@
 #include "MinaOro.cpp"
 #include "PlantaElectrica.cpp"
 #include "Edificio Colocable.cpp"
+#include "Contador Edificios.cpp"
 
 
 CasilleroConstruible::CasilleroConstruible(string tipo_terreno) : Casillero(tipo_terreno) {
@@ -92,32 +93,17 @@ string CasilleroConstruible::demoler_edificio(){
   return (nombre_edificio);
 }
 
-void CasilleroConstruible::atacar_edificio(cantidad_edificios_construidos** datos){
+void CasilleroConstruible::atacar_edificio(Contador_edificios** edificios_construidos){
  edificio->recibir_bomba();
  cout<<edificio->nombre_edificio()<<" fue atacado/a con exito y";
  if (edificio->devolver_vida()==0){
-  restar_edificio(edificio->nombre_edificio(), edificio->propietario_edificio(), datos);
+  edificios_construidos[edificio->propietario_edificio()]->restar_edificio(edificio->nombre_edificio());
   delete edificio;
   edificio = nullptr;
   cout<<" se ha destruido"<<endl;
  }
  else
   cout<<" se encuentra en malas condiciones"<<endl;
-}
-
-void CasilleroConstruible::restar_edificio(string nombre, int jugador, cantidad_edificios_construidos** datos){
- if (nombre==ESCUELA)
-    datos[jugador]->cantidad_escuelas--;
- if (nombre==FABRICA)
-    datos[jugador]->cantidad_fabricas--;
- if (nombre==MINA)
-    datos[jugador]->cantidad_minas--;
- if (nombre==MINA_ORO)
-    datos[jugador]->cantidad_minas_oro--;
- if (nombre==PLANTA_ELECTRICA)
-    datos[jugador]->cantidad_plantas_electricas--;
- if (nombre==ASERRADERO)
-    datos[jugador]->cantidad_aserraderos--;
 }
 
 bool CasilleroConstruible::consultar_vida(){

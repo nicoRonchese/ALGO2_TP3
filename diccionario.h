@@ -45,6 +45,10 @@ public:
 
     void recursion_modificar_elemento(NodoABB<Tipo> *&origen,string llave, Tipo dato);
 
+    void guardar_edificio(string nombre_archivo);
+
+    void recursion_guardar_edificio(string nombre_archivo,NodoABB<Tipo> *nodo);
+
     ~diccionario();
 };
 
@@ -143,6 +147,31 @@ void diccionario <Tipo> :: recursion_modificar_elemento(NodoABB<Tipo> *&origen,s
 		    recursion_modificar_elemento(origen->obtenerder(),llave,dato);
 		}
     }
+}
+
+template < typename Tipo >
+void diccionario <Tipo> :: guardar_edificio(string nombre_archivo){
+    recursion_guardar_edificio(nombre_archivo,primero);
+}
+
+template < typename Tipo >
+void diccionario <Tipo> :: recursion_guardar_edificio(string nombre_archivo,NodoABB<Tipo> *nodo){
+    if (nodo != NULL)
+    {
+        ofstream archivo;
+        string llave = nodo->obtenerllave();
+        edificio datos = nodo->obtenerelemento();
+        archivo.open(nombre_archivo,ios::app);
+        archivo<< llave;
+        archivo <<" "<< datos.cantidad_piedra;
+        archivo <<" "<< datos.cantidad_madera;
+        archivo <<" "<< datos.cantidad_metal;
+        archivo <<" "<< datos.maxima_cantidad_permitida << endl;
+        recursion_guardar_edificio(nombre_archivo,nodo->obtenerder());
+        recursion_guardar_edificio(nombre_archivo,nodo->obtenerizq());
+    }
+    
+    
 }
 
 template < typename Tipo >

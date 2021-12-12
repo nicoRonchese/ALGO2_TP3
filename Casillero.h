@@ -5,17 +5,8 @@
 #include "DatosMateriales.h"
 #include "Material Colocable.h"
 #include "Edificio Colocable.h"
+#include "Contador Edificios.h"
 
-
-struct cantidad_edificios_construidos{
-  int cantidad_aserraderos = 0;
-  int cantidad_fabricas = 0;
-  int cantidad_minas = 0;
-  int cantidad_minas_oro = 0;
-  int cantidad_escuelas = 0;
-  int cantidad_plantas_electricas = 0;
-  int posicion_jugador[2];
-};
 
 using namespace std;
 const string CONSTRUIBLE = "C";
@@ -99,7 +90,7 @@ class Casillero{
     //POS: borra el edificio y devuelve el nombre del edificio que borro
     virtual string demoler_edificio();
 
-    virtual void atacar_edificio(cantidad_edificios_construidos** datos);
+    virtual void atacar_edificio(Contador_edificios** datos);
 
     virtual bool consultar_vida();
 

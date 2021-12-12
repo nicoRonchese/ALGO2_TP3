@@ -17,6 +17,13 @@
 using namespace std;
 const string PATH_MAPA = "mapa.txt";
 const string PATH_UBICACIONES = "ubicaciones.txt";
+const int COSTO_MUELLE_UNO = 5;
+const int COSTO_MUELLE_DOS = 2;
+const int COSTO_LAGO_UNO = 2;
+const int COSTO_LAGO_DOS = 5;
+const int COSTO_BETUN = 0;
+const int COSTO_CAMINO = 4;
+const int COSTO_TERRENO = 25;
 
 class Mapa{
  protected:
@@ -46,7 +53,7 @@ class Mapa{
     //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
     bool ubicar_edificios_archivo();
 
-    void completar_cantidad_edificios(cantidad_edificios_construidos** edificios_construidos);
+    void completar_cantidad_edificios(Contador_edificios** edificios_construidos, int** posicion_jugadores);
 
     void mostrar_mapa_terrenos();
 
@@ -82,13 +89,9 @@ class Mapa{
 
     //PRE: fila y columna deben estar dentro del rango de la matriz
     //POS: devuelve el tipo del casillero que se encuentra en esa coordenada
-    string consultar_casillero(int fila, int columna);
 
     //PRE: fila y columna deben estar dentro del rango de la matriz
     //POS: devuelve si el casillero que se encuentra en esa coordenada esta vacio en forma de booleano
-    bool consultar_vacio(int fila, int columna);
-
-    bool consultar_propietario(int fila, int columna, int turno);
 
     //PRE: fila y columna deben estar dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: suma 1 a la cantidad de esdificios construidos de ese tipo y lo coloca en matriz
@@ -98,7 +101,7 @@ class Mapa{
     //POS: devuelve el nombre del edificio demolido
     string demoler_edificio(int fila, int columna);
 
-    bool atacar_edificio(int fila, int columna, int turno, cantidad_edificios_construidos** datos);
+    bool atacar_edificio(int fila, int columna, int turno, Contador_edificios** datos);
 
     void reparar_edificio(int fila, int columna);
 
@@ -170,8 +173,6 @@ class Mapa{
     void guardar_materiales(ofstream &archivo);
 
     void guardar_jugador(ofstream &archivo, int jugador, int posicion[]);
-
-    void sumar_edificio(cantidad_edificios_construidos** edificios_construidos, int jugador, string tipo_edificio);
 
     //PRE:
     //POS: elimina el espacio final de la palabra

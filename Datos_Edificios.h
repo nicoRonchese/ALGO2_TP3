@@ -51,6 +51,8 @@ public:
 
     void modificar_edificio(edificio dato, string llave);
 
+    void guardar_edificios();
+
 private:
     //Métodos privados
 

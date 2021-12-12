@@ -60,7 +60,7 @@ string Casillero :: demoler_edificio(){
  return "";
 }
 
-void Casillero :: atacar_edificio(cantidad_edificios_construidos** datos){}
+void Casillero :: atacar_edificio(Contador_edificios** datos){}
 
 bool Casillero :: consultar_vida(){
  return false;

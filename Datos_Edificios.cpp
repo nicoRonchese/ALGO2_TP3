@@ -96,5 +96,14 @@ void Datos_edificios::modificar_edificio(edificio dato, string llave){
     edificios.modificar_elemento(llave,dato);
 }
 
+void Datos_edificios::guardar_edificios(){
+    ofstream archivo;
+    archivo.open(PATH_EDIFICIOS,ios::out);
+    if(!archivo)
+    cout << "Error abriendo el fichero" << endl;
+    archivo.close();
+    edificios.guardar_edificio(PATH_EDIFICIOS);
+}
+
 Datos_edificios::~Datos_edificios(){}
 

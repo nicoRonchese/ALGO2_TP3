@@ -7,6 +7,7 @@
 #include "Datos_Edificios.h"
 #include "Objetivos.h"
 
+
 using namespace std;
 
 #define SUBRAYADO "\033[4m"
@@ -52,8 +53,9 @@ class Menu{
      Mapa* mapa;
      DatosMateriales* datosMateriales;
      Datos_edificios* datosEdificios;
-     cantidad_edificios_construidos** edificios_construidos;
+     Contador_edificios** edificios_construidos;
      Objetivos** objetivos;
+     int** posiciones_jugadores;
      int turno;
      int cantidad_jugadores;
      int* energia;
