@@ -1,29 +1,29 @@
 #include "Edificio Colocable.h"
 
 EdificioColocable::EdificioColocable(int jugador){
- propietario = jugador;
+  propietario = jugador;
 }
 
 void EdificioColocable::mostrar(){}
 
 int EdificioColocable::propietario_edificio(){
- return propietario;
+  return propietario;
 }
 
 string EdificioColocable::nombre_edificio(){
- return nombre;
+  return nombre;
 }
 
 bool EdificioColocable::comprobar_propietario(int propietario){
- return (this->propietario==propietario);
+  return (this->propietario==propietario);
 }
 
 int EdificioColocable::devolver_vida(){
- return vida;
+  return vida;
 }
 
 void EdificioColocable::recibir_bomba(){
- vida -= 50;
+  vida -= 50;
 }
 
 void EdificioColocable::reparar_edificio(){
@@ -33,7 +33,6 @@ void EdificioColocable::reparar_edificio(){
 string EdificioColocable::devolver_signo(){
   return this->signo_mapa;
 }
-
 
 EdificioColocable::~EdificioColocable(){
 }

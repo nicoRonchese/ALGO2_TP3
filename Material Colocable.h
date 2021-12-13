@@ -23,29 +23,29 @@ class MaterialColocable{
     int cantidad;
 
  public:
-     //Metodos públicos
+   //Metodos públicos
 
-     //Constructor
-     //PRE:
-     //POS: define el nombre y signo del edificio
-     MaterialColocable(string nombre);
+   //Constructor
+   //PRE: -.
+   //POS: Define el nombre y signo del edificio.
+   MaterialColocable(string nombre);
 
-     //Destructor
-     //PRE:
-     //POS: libera la memoria
-     ~MaterialColocable();
+   //PRE: -.
+   //POS: Muestra en terminal un mensaje indicando que tque tipo  de material es.
+   void mostrar();
 
-     //PRE:
-     //POS: muestra en terminal un mensaje indicando que tque tipo  de material es
-     void mostrar();
+   //PRE: -.
+   //POS: Muestra en terminal una letra segun el material.
+   string devolver_signo();
 
-     //PRE:
-     //POS: muestra en terminal una letra segun el material
-     string devolver_signo();
+   //PRE: -.
+   //POS: Devuelve un string que representa el nombre del material.
+   string mostrar_material();
 
-     //PRE:
-     //POS: devuelve un string que representa el nombre del material
-     string mostrar_material();
+   //Destructor
+   //PRE: -.
+   //POS: Libera la memoria.
+   ~MaterialColocable();
 };
 
 

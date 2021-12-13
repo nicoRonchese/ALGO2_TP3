@@ -9,9 +9,9 @@ void Datos_edificios::leer_edificios(){
     ifstream archivo(PATH_EDIFICIOS);
     edificio aux;
     string llave,datos[6];
-    if(archivo.fail())
-     cout << "Error abriendo el fichero " << PATH_EDIFICIOS << endl;
-    else{
+    if(archivo.fail()){
+        cout << "Error abriendo el fichero " << PATH_EDIFICIOS << endl;
+    } else{
      while(archivo>>datos[0]){
         archivo >> datos[1];
         if (isdigit(datos[1][0])!=0)
@@ -52,17 +52,16 @@ void Datos_edificios::mostrar_edificios(){
     edificios.mostrar_edificios();
 }
 
-
 bool Datos_edificios::comprobar_edificio(string nombre){
   bool chequeo = false;
-  if(edificios.buscarElemento(nombre).maxima_cantidad_permitida!=0){
+  if(edificios.buscarElemento(nombre).maxima_cantidad_permitida != 0){
       chequeo = true;
+  } else{
+    cout << "Edificio no encontrado" << endl;
   }
-  else
-    cout<<"Edificio no encontrado"<<endl;
+
   return chequeo;
 }
-
 
 edificio Datos_edificios::buscar_edificio(string nombre){
     return edificios.buscarElemento(nombre);
@@ -70,22 +69,22 @@ edificio Datos_edificios::buscar_edificio(string nombre){
 
 string Datos_edificios::datos_produccion(string nombre){
     string produccion;
-    if (ASERRADERO==nombre){
+    if (ASERRADERO == nombre){
         produccion = PRODUCCION_ASERRADERO;
     }
-    else if (MINA==nombre){
+    else if (MINA == nombre){
         produccion = PRODUCCION_MINA;
     }
-    else if (FABRICA==nombre){
+    else if (FABRICA == nombre){
         produccion = PRODUCCION_FABRICA;
     }
-    else if (ESCUELA==nombre){
+    else if (ESCUELA == nombre){
         produccion = PRODUCCION_ESCUELA;
     }
-    else if (PLANTA_ELECTRICA==nombre){
+    else if (PLANTA_ELECTRICA == nombre){
         produccion = PRODUCCION_PLANTA_ELECTRICA;
     }
-    else if (MINA_ORO==nombre){
+    else if (MINA_ORO == nombre){
         produccion = PRODUCCION_MINA_ORO;
     }
     return produccion;

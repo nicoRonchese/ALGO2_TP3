@@ -3,10 +3,11 @@
 DatosMateriales::DatosMateriales(int cantidad_jugadores) {
     this->materiales = new Material**[cantidad_jugadores];
     this->cantidad_jugadores = cantidad_jugadores;
-    if (cantidad_jugadores==CANTIDAD_JUGADORES)
-     leer_archivo();
-    else
-     leer_archivo_inicial();
+    if (cantidad_jugadores == CANTIDAD_JUGADORES){
+        leer_archivo();
+    }else{
+        leer_archivo_inicial();
+    }
     ordenar_materiales();
 }
 
@@ -72,39 +73,41 @@ void DatosMateriales::agregar_material(Material* material, int jugador){
         materiales_aux[i] = materiales[jugador][i];
     }
     materiales_aux[cantidad_materiales] = material;
-    if (cantidad_materiales != 0)
-     delete [] materiales[jugador];
+    if (cantidad_materiales != 0){
+        delete [] materiales[jugador];
+    }
     materiales[jugador]= materiales_aux;
 }
 
 int DatosMateriales::devolver_cantidad(int jugador, int material){
- return materiales[jugador][material] -> cantidad;
+    return materiales[jugador][material] -> cantidad;
 }
 
 void DatosMateriales::mostrar_materiales(int jugador){
-    for (int material=0; material<cantidad_materiales; material++)
+    for (int material = 0; material<cantidad_materiales; material++){
         cout<<materiales[jugador][material] -> nombre<<": "<<materiales[jugador][material] -> cantidad<<" unidades"<<endl;
+    }
 }
 
 bool DatosMateriales::comprar_bombas(int jugador, int cantidad){
- bool compra_realizada=false;
- if (cantidad*COSTO_BOMBA>materiales[jugador][ANDYCOIN]->cantidad)
-    cout<<"No tiene la cantidad necesaria de Andycoins para esta compra"<<endl;
- else{
-    materiales[jugador][ANDYCOIN]->cantidad-=cantidad*COSTO_BOMBA;
-    materiales[jugador][BOMBA]->cantidad+=cantidad;
-    cout<<"Compra realizada con exito"<<endl;
-    compra_realizada=true;
- }
- return compra_realizada;
+    bool compra_realizada = false;
+    if (cantidad*COSTO_BOMBA>materiales[jugador][ANDYCOIN]->cantidad){
+       cout << "No tiene la cantidad necesaria de Andycoins para esta compra" << endl;
+    }else{
+       materiales[jugador][ANDYCOIN]->cantidad -= cantidad*COSTO_BOMBA;
+       materiales[jugador][BOMBA]->cantidad += cantidad;
+       cout<< "Compra realizada con exito" << endl;
+       compra_realizada = true;
+    }
+    return compra_realizada;
 }
 
 void DatosMateriales::cambio(int posicion1, int posicion2){
     Material *aux;
     for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
-     aux = materiales[jugador][posicion1];
-     materiales[jugador][posicion1] = materiales[jugador][posicion2];
-     materiales[jugador][posicion2] = aux;
+        aux = materiales[jugador][posicion1];
+        materiales[jugador][posicion1] = materiales[jugador][posicion2];
+        materiales[jugador][posicion2] = aux;
     }
 }
 
@@ -127,8 +130,7 @@ void DatosMateriales::guardar_materiales() {
     ofstream archivo(PATH_MATERIALES);
     if(archivo.fail()){
     cout << "Error abriendo el fichero " << PATH_MATERIALES << endl;
-    }
-    else{
+    } else{
         for(int i=0; i<cantidad_materiales;i++){
             archivo<< materiales[JUGADOR_UNO][i]->nombre;
             archivo <<" "<< materiales[JUGADOR_UNO][i]->cantidad;
@@ -140,7 +142,7 @@ void DatosMateriales::guardar_materiales() {
 }
 
 bool DatosMateriales::comprobar_materiales_construccion(edificio edificio, int jugador){
- return (materiales[jugador][PIEDRA]->cantidad>=edificio.cantidad_piedra && materiales[jugador][MADERA]->cantidad>=edificio.cantidad_madera && materiales[jugador][METAL]->cantidad>=edificio.cantidad_metal);
+    return (materiales[jugador][PIEDRA]->cantidad>=edificio.cantidad_piedra && materiales[jugador][MADERA]->cantidad>=edificio.cantidad_madera && materiales[jugador][METAL]->cantidad>=edificio.cantidad_metal);
 }
 
 
@@ -149,42 +151,43 @@ void DatosMateriales::sumar_materiales(int posicion, int cantidad, int jugador){
 }
 
 void DatosMateriales::restar_construccion_materiales(edificio edificio, int jugador){
- materiales[jugador][PIEDRA]->cantidad -= edificio.cantidad_piedra;
- materiales[jugador][MADERA]->cantidad -= edificio.cantidad_madera;
- materiales[jugador][METAL]->cantidad -= edificio.cantidad_metal;
+    materiales[jugador][PIEDRA]->cantidad -= edificio.cantidad_piedra;
+    materiales[jugador][MADERA]->cantidad -= edificio.cantidad_madera;
+    materiales[jugador][METAL]->cantidad -= edificio.cantidad_metal;
 }
 
 void DatosMateriales::sumar_demolicion_materiales(edificio edificio, int jugador){
- materiales[jugador][PIEDRA]->cantidad += edificio.cantidad_piedra/2;
- materiales[jugador][MADERA]->cantidad += edificio.cantidad_madera/2;
- materiales[jugador][METAL]->cantidad += edificio.cantidad_metal/2;
+    materiales[jugador][PIEDRA]->cantidad += edificio.cantidad_piedra/2;
+    materiales[jugador][MADERA]->cantidad += edificio.cantidad_madera/2;
+    materiales[jugador][METAL]->cantidad += edificio.cantidad_metal/2;
 }
 
 bool DatosMateriales::reparacion_edificio(edificio edificio, int jugador){
- bool materiales_suficientes = false;
- if  (materiales[jugador][PIEDRA]->cantidad >= edificio.cantidad_piedra/4 & materiales[jugador][MADERA]->cantidad >= edificio.cantidad_madera/4 & materiales[jugador][METAL]->cantidad >= edificio.cantidad_metal/4){
-     materiales_suficientes = true;
-     restar_reparacion_materiales(edificio, jugador);
- }
- else
-    cout<<"No tienes los materiales suficientes para reparar este edificio"<<endl;
- return materiales_suficientes;
+    bool materiales_suficientes = false;
+    if  (materiales[jugador][PIEDRA]->cantidad >= edificio.cantidad_piedra/4 & materiales[jugador][MADERA]->cantidad >= edificio.cantidad_madera/4 & materiales[jugador][METAL]->cantidad >= edificio.cantidad_metal/4){
+        materiales_suficientes = true;
+        restar_reparacion_materiales(edificio, jugador);
+    }
+    else{
+        cout << "No tienes los materiales suficientes para reparar este edificio" << endl;
+    }
+    return materiales_suficientes;
 }
 
 void DatosMateriales::restar_reparacion_materiales(edificio edificio, int jugador){
- materiales[jugador][PIEDRA]->cantidad -= edificio.cantidad_piedra/4;
- materiales[jugador][MADERA]->cantidad -= edificio.cantidad_madera/4;
- materiales[jugador][METAL]->cantidad -= edificio.cantidad_metal/4;
+    materiales[jugador][PIEDRA]->cantidad -= edificio.cantidad_piedra/4;
+    materiales[jugador][MADERA]->cantidad -= edificio.cantidad_madera/4;
+    materiales[jugador][METAL]->cantidad -= edificio.cantidad_metal/4;
 }
 
 DatosMateriales::~DatosMateriales() {
-   for (int jugador=0; jugador<cantidad_jugadores; jugador++){
-    for (int material=0; material<cantidad_materiales; material++){
+    for (int jugador=0; jugador<cantidad_jugadores; jugador++){
+        for (int material=0; material<cantidad_materiales; material++){
             delete materiales[jugador][material];
     }
-    delete [] materiales[jugador];
+        delete [] materiales[jugador];
    }
-   delete [] materiales;
 
+    delete [] materiales;
 }
 

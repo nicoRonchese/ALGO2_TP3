@@ -36,79 +36,102 @@ class Casillero{
     bool casillero_marcado_camino;
 
  public:
-    //Metódos públicos
+   //Metódos públicos
 
-    //Constructor
-    //PRE:
-    //POS: asigna el tipo de casillero
-    Casillero(string tipo_terreno);
+   //Constructor
+   //PRE:
+   //POS: Asigna el tipo de casillero.
+   Casillero(string tipo_terreno);
+   
+   //PRE: Recibe un jugador valido.
+   //POS: Muestra en terminal un mensaje indicando que tipo  de casillero es.
+   void colocar_jugador(int jugador);
 
-    //Destructor
-    //PRE:
-    //POS: libera la memoria tomada por edificios o materiales
-    virtual ~Casillero();
+   //PRE: -.
+   //POS: Elimina al jugador actual del casillero.
+   void sacar_jugador();
 
-    void colocar_jugador(int jugador);
+   //PRE: -.
+   //POS: Devuelve el número del jugador colocado.
+   int devolver_jugador();
 
-    void sacar_jugador();
+   //PRE: -.
+   //POS: Devuelve 'true' si el casillero no esta vacio y 'false' de estarlo.
+   bool comprobar_jugador_colocado();
 
-    int devolver_jugador();
+   //PRE: -.
+   //POS: Muestra en terminal un mensaje indicando que tque tipo  de casillero es.
+   virtual void mostrar();
 
-    bool comprobar_jugador_colocado();
+   //PRE: -.
+   //POS: Muestra en terminal una letra segun el casillero.
+   virtual void mostrar_en_mapa();
 
-    //PRE:
-    //POS: muestra en terminal un mensaje indicando que tque tipo  de casillero es
-    virtual void mostrar();
+   //PRE: -.
+   //POS: Marca el casillero como camino.
+   void marcar_casillero_camino();
 
-    //PRE:
-    //POS: muestra en terminal una letra segun el casillero
-    virtual void mostrar_en_mapa();
+   //PRE: -.
+   //POS: Muestra por pantalla el color del casillero.
+   void mostrar_en_mapa_terreno();
 
-    void marcar_casillero_camino();
+   //PRE: -.
+   //POS: Coloca un edificio en el casillero correspondiente.
+   virtual void colocar_edificio(EdificioColocable* edificio);
 
-    void mostrar_en_mapa_terreno();
+   //PRE: -.
+   //POS: En los casilleros coonstruibles y transitables verifica si hay un material 
+   //     o un edificio en ese casillero.
+   virtual bool comprobar_vacio();
 
-    //PRE:
-    //POS: segun el string identifica que tipo de edifcio es y que caracteristicas tiene
-    virtual void colocar_edificio(EdificioColocable* edificio);
+   //PRE: -.
+   //POS: Comprueba si el casillero tiene propietario.
+   virtual bool comprobar_propietario(int jugador);
 
-    //PRE:
-    //POS: en los casilleros coonstruibles y transitables verifica si hay un material o un edificio en ese casillero
-    virtual bool comprobar_vacio();
+   //PRE: Material ingresado debe ser existente.
+   //POS: Segun el string identifica que tipo de material es y que caracteristicas tiene.
+   virtual void colocar_material(MaterialColocable* material);
 
-    virtual bool comprobar_propietario(int jugador);
+   //PRE: -.
+   //POS: Devuelve un string que representa que que tipo de casillero es.
+   string devolver_tipo_casillero();
 
-    //PRE: material ingresado debe ser existente
-    //POS: segun el string identifica que tipo de material es y que caracteristicas tiene
-    virtual void colocar_material(MaterialColocable* material);
+   //PRE: -.
+   //POS: Borra el edificio y devuelve el nombre del edificio que borro.
+   virtual string demoler_edificio();
 
-    //PRE:
-    //POS: devuelve un string que representa que que tipo de casillero es
-    string devolver_tipo_casillero();
+   //PRE: -.
+   //POS: Ataca el edificio ubicado en el casillero y muestra por pantalla el estado del mismo.
+   virtual void atacar_edificio(Contador_edificios** datos);
 
-    //PRE:
-    //POS: borra el edificio y devuelve el nombre del edificio que borro
-    virtual string demoler_edificio();
+   //PRE: -.
+   //POS: Devuelve 'true' si el edificio tiene su vida total y 'false' de lo contrario.
+   virtual bool consultar_vida();
 
-    virtual void atacar_edificio(Contador_edificios** datos);
+   //PRE: -.
+   //POS: Repara el edificio ubicado en el casillero.
+   virtual void reparar_edificio();
 
-    virtual bool consultar_vida();
+   //PRE: Materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el.
+   //POS: Segun el edificio agrega un tipo de material o no.
+   virtual void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
 
-    virtual void reparar_edificio();
+   //PRE: -.
+   //POS: devuelve el nombre del elemento colocado en el casillero.
+   virtual string devolver_elemento_colocable();
 
-    //PRE: materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el
-    //POS: segun el edificio agrega un tipo de material o no
-    virtual void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
+   //PRE: -.
+   //POS: Devuelve el propietario del casillero.
+   virtual int devolver_propietario();
 
-    //PRE:
-    //POS: devuelve el nombre de los edificios en casilleros construibles
-    virtual string devolver_elemento_colocable();
+   //PRE: Materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el.
+   //POS: Segun el material en el casillero agregan un tipo de material o no.
+   virtual void recolectar_material(DatosMateriales* materiales, int jugador);
 
-    virtual int devolver_propietario();
-
-    //PRE: materiales debe ser un puntero a Datos_materiales con por lo menos madera, piedra y metal en el
-    //POS: segun el material en el casillero agregan un tipo de material o no
-    virtual void recolectar_material(DatosMateriales* materiales, int jugador);
+   //Destructor
+   //PRE: -.
+   //POS: Libera la memoria tomada por edificios o materiales.
+   virtual ~Casillero();
 
 };
 

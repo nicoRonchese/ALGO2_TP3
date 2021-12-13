@@ -64,8 +64,8 @@ class Menu{
      //Métodos públicos
 
      //Constructor
-     //PRE: los archivos que necesitan los objetos mapa y datos materiales deben existir en el directorio
-     //POS:obtiene los datos con los que el sistema puede trabajar
+     //PRE: Los archivos que necesitan los objetos mapa y datos materiales deben existir en el directorio.
+     //POS: Obtiene los datos con los que el sistema puede trabajar.
      Menu();
 
      //Destructor

@@ -5,13 +5,32 @@
 class Fabrica : public EdificioColocable{
 
  public:
-     //Métodos públicos
+    //Métodos públicos
+    /*
+    Constructor
+    * Pre: Recibe un jugador valido.
+    * Post: Construye una fábrica.
+    */
+    Fabrica(int jugador);
 
-     Fabrica(int jugador);
-     ~Fabrica();
-     void mostrar();
-     void recolectar(DatosMateriales* materiales);
+    /*
+    * Pre: -.
+    * Post: Muestra por pantalla la vida y el propietario de la fábrica.
+    */
+    void mostrar();
 
+    /*
+    * Pre: -.
+    * Post: Recolecta los materiales correspondientes a la fábrica.
+    */
+    void recolectar(DatosMateriales* materiales);
+
+    /*
+    Destructor
+    * Pre: -.
+    * Post: Libera la memoria.
+    */
+    ~Fabrica();
 };
 
 

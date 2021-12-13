@@ -27,37 +27,44 @@ public:
     //Métodos públicos
 
     //Constructor
-    //PRE:el archivo edificios.txt debe existir en el directorio donde se encuentre el programa
-    //POS: carga la informacion del archivo en el vector dinamico edificios y la cantidad de
-    //edificios que haya en cantidad_edificios
+    //PRE: El archivo edificios.txt debe existir en el directorio donde se encuentre el programa.
+    //POS: Carga la informacion del archivo en el vector dinamico edificios y la cantidad de
+    //     edificios que haya en cantidad_edificios.
     Datos_edificios();
 
-    //Destructor
-    //PRE:
-    //POS:libera la memoria tomada para en edificios
-    ~Datos_edificios();
-
-    //PRE:
-    //POS:Muestra en la terminal los nombres de los edificios disponibles
+    //PRE: -.
+    //POS: Muestra en la terminal los nombres de los edificios disponibles.
     void mostrar_edificios();
 
-    //PRE:
-    //POS:devuelve un edificio con los datos del edificio cuyo nombre_edificio sea igual a nombre
+    //PRE: -.
+    //POS: Devuelve un edificio con los datos del edificio cuyo nombre_edificio sea igual a nombre.
     edificio buscar_edificio(string nombre);
 
-    //PRE:
-    //POS: devuelve un booleano cuyo valor dependera si el nombre_edificio de algun edififcio concide con nombre
+    //PRE: -.
+    //POS: Devuelve un booleano cuyo valor dependera si el nombre_edificio de algun edififcio concide con nombre
     bool comprobar_edificio(string nombre);
 
+    //PRE: -.
+    //POS: Modifica el edificio con los datos pasados por parametro.
     void modificar_edificio(edificio dato, string llave);
 
+    //PRE: -.
+    //POS: Guarda los edificios en su correspondiente archivo.
     void guardar_edificios();
+
+    //Destructor
+    //PRE: -.
+    //POS:libera la memoria tomada para en edificios.
+    ~Datos_edificios();
 
 private:
     //Métodos privados
-
+    //PRE: -.
+    //POS: Lee el archivo de edificios y carga los datos.
     void leer_edificios();
 
+    //PRE: -.
+    //POS: Agrega el edificio con los datos pasados por parametro.
     void agregar_edificio(string llave, edificio datos);
 
     //PRE:

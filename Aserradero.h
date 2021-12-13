@@ -4,8 +4,8 @@
 
 class Aserradero : public EdificioColocable{
 
- public:
-    //Métodos
+public:
+    //Métodos públicos
     /*
     Constructor
     * Pre: Recibe un jugador valido.
@@ -21,7 +21,7 @@ class Aserradero : public EdificioColocable{
 
     /*
     * Pre: -.
-    * Post: Recolecta los materiales correspondientes al aserradero,
+    * Post: Recolecta los materiales correspondientes al aserradero.
     */
     void recolectar(DatosMateriales* materiales);
 

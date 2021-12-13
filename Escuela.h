@@ -4,12 +4,32 @@
 
 class Escuela : public EdificioColocable{
  public:
-     //Métodos públicos
+    //Métodos públicos
+    /*
+    Constructor
+    * Pre: Recibe un jugador valido.
+    * Post: Construye una escuela.
+    */
+    Escuela(int jugador);
 
-     Escuela(int jugador);
-     ~Escuela();
-     void mostrar();
-     void recolectar(DatosMateriales* materiales);
+    /*
+    * Pre: -.
+    * Post: Muestra por pantalla la vida y el propietario de la escuela.
+    */
+    void mostrar();
+
+    /*
+    * Pre: -.
+    * Post: Recolecta los materiales correspondientes a la escuela.
+    */
+    void recolectar(DatosMateriales* materiales);
+
+    /*
+    Destructor
+    * Pre: -.
+    * Post: Libera la memoria.
+    */
+    ~Escuela();
 };
 
 
