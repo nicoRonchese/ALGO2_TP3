@@ -13,25 +13,60 @@ private:
 
 /*MÉTODOS*/
 public:
+    /*
+    Constructor
+    * Pre: Recibe una fila, columna y costo.
+    * Post: Crea el nodo.
+    */
     Nodo(int fila, int columna, int costo);
 
-    //post: devuelve el nodo siguiente.
+    /*
+    * Pre: -.
+    * Post: Devuelve el nodo siguiente.
+    */
     Nodo<Tipo>* obtenerSiguiente();
 
-    //post: devuelve el nombre del nodo
+    /*
+    * Pre: -.
+    * Post: Devuelve el nombre del nodo.
+    */ 
     string obtenerNombre();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve la fila del nodo.
+    */
     int obtenerFila();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve la columna del nodo.
+    */
     int obtenerColumna();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve el costo del nodo.
+    */
     int obtenerCosto();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve 'true' si la fila y columna es la correspondiente al nodo y 'false' de no ser así.
+    */
     bool comprobar_nodo(int fila, int columna);
 
-    //post: le asigna como siguiente el nodo recibido
+    /*
+    * Pre: -.
+    * Post: le asigna como siguiente el nodo recibido.
+    */
     void asignarSiguiente(Nodo<Tipo>* siguiente);
 
+    /*
+    Destructor
+    * Pre: -.
+    * Post: Libera la memoria.
+    */
     ~Nodo();
 };
 

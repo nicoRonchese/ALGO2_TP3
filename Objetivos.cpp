@@ -1,10 +1,10 @@
 #include "Objetivos.h"
 
 Objetivos::Objetivos(int maximo_escuelas){
- this->obelisco = false;
- this->maximo_escuelas = maximo_escuelas;
- this->objetivos = new Objetivo*[TOTAL_OBJETIVOS_JUGADOR];
- sorteo_objetivos();
+  this->obelisco = false;
+  this->maximo_escuelas = maximo_escuelas;
+  this->objetivos = new Objetivo*[TOTAL_OBJETIVOS_JUGADOR];
+  sorteo_objetivos();
 }
 
 void Objetivos::sorteo_objetivos(){
@@ -22,7 +22,7 @@ void Objetivos::sorteo_objetivos(){
 }
 
 void Objetivos::construccion_obelisco(){
- obelisco = true;
+  obelisco = true;
 }
 
 void Objetivos::mostrar_victoria(int turno){
@@ -93,10 +93,10 @@ void Objetivos::mostrar_objetivos_cumplidos(){
 }
 
 void Objetivos::mostrar_objetivos(){
- mostrar_objetivos_cumplidos();
- for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
-  mostrar_objetivo(objetivos[objetivo]->tipo_objetivo, objetivo);
- }
+  mostrar_objetivos_cumplidos();
+  for (int objetivo = 0 ; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
+    mostrar_objetivo(objetivos[objetivo]->tipo_objetivo, objetivo);
+  }
 }
 
 
@@ -227,8 +227,6 @@ int Objetivos::devolver_tipos_minas_construidas(){
   tipos_minas_construidas++;
  return tipos_minas_construidas;
 }
-
-
 
 void Objetivos::actualizar_objetivo(int tipo_objetivo, int cantidad){
  for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){

@@ -17,7 +17,7 @@ private:
     Lista<Vertice> * vertices;
     Floyd * algoritmoCaminoMinimo;
 
-/*MÉTODOS*/
+/*MÉTODOS PRIVADOS*/
 
     //pre: tienen que existir tanto el origen como el destino. Ademas se deben haber calculado las matrices de Floyd
     //post: muestra el camino minimo entre el origen y el destino
@@ -37,8 +37,11 @@ private:
     void liberarMatrizAdyacencia();
 
 public:
+    /*MÉTODOS PUBLICOS*/
 
+    //Constructor
     Grafo();
+
     //pre: No hay vertices repetidos en nombre
     //post: agrega un nuevo vertice al grafo
     void agregarVertice(int fila, int columna, int costo);
@@ -54,6 +57,7 @@ public:
     //post: selecciona el algortimo de Floyd para calcular el camino mínimo
     void usarFloyd();
 
+    //Destructor
     ~Grafo();
 };
 

@@ -15,20 +15,48 @@ private:
 
 /*MÉTODOS*/
 public:
+    /*
+    Constructor
+    * Pre: Recibe una llave y un dato.
+    * Post: Crea un nodo.
+    */
     NodoABB(string llave,Tipo dato);
 
-    //post: devuelve el nodo siguiente.
+    /*
+    * Pre: -.
+    * Post: Devuelve el nodo izquierdo.
+    */
     NodoABB<Tipo>*& obtenerizq();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve el nodo derecho.
+    */
     NodoABB<Tipo>*& obtenerder();
 
-    //post: devuelve el nombre del nodo
+    /*
+    * Pre: -.
+    * Post: Devuelve la llave.
+    */
     string obtenerllave();
 
+    /*
+    * Pre: -.
+    * Post: Devuelve el elemento ubicado en el nodo.
+    */
     Tipo obtenerelemento();
 
+    /*
+    * Pre: -.
+    * Post: Modifica el elemento actual con el pasado por parametro.
+    */
     void modificar_elemento(Tipo dato);
 
+    /*
+    Destructor
+    * Pre: -.
+    * Post: Libera la memoria.
+    */
     ~NodoABB();
 };
 

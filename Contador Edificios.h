@@ -12,9 +12,23 @@ class Contador_edificios {
   int cantidad_plantas_electricas = 0;
 
  public:
-
+  //Métodos públicos
+  /*
+  * Pre: Recibe el nombre de un edificio valido.
+  * Post: Devuelve la cantidad de construcciones del edificio pasado por parametro.
+  */
   int devolver_cantidad_construida(string nombre);
+
+  /*
+  * Pre: Recibe el nombre de un edificio valido.
+  * Post: Le suma una construcción al edificio pasado por parametro.
+  */
   void sumar_edificio(string nombre);
+
+  /*
+  * Pre: Recibe el nombre de un edificio valido.
+  * Post: Le resta una construcción al edificio pasado por parametro.
+  */
   void restar_edificio(string nombre);
 };
 

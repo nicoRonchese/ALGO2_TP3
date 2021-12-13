@@ -6,16 +6,16 @@
 #include "Mapa.cpp"
 
 Menu::Menu(){
- this->mapa = new Mapa;
- this->datosEdificios = new Datos_edificios;
- this->cantidad_jugadores = CANTIDAD_JUGADORES;
+    this->mapa = new Mapa;
+    this->datosEdificios = new Datos_edificios;
+    this->cantidad_jugadores = CANTIDAD_JUGADORES;
 }
 
 string Menu::minusculizar(string nombre){
     int largo_nombre = int(nombre.size());
     string nuevo_nombre;
     for (int letra=0; letra<largo_nombre;letra++){
-             nuevo_nombre+=char(tolower(nombre[letra]));
+        nuevo_nombre+=char(tolower(nombre[letra]));
     }
     return nuevo_nombre;
 }
@@ -31,82 +31,82 @@ int Menu::ingrese_numero(string numero){
 }
 
 int Menu::ingresar_cantidad(){
- string numero;
- int cantidad;
- cin >> numero;
- cantidad = ingrese_numero(numero);
- while (cantidad >= 50000 || cantidad <= 0){
-  cout << "Ingrese un numero mayor a 0 y menor a 50.000 porfavor: ";
-  cin >> numero;
-  cantidad = ingrese_numero(numero);
- }
- return cantidad;
+    string numero;
+    int cantidad;
+    cin >> numero;
+    cantidad = ingrese_numero(numero);
+    while (cantidad >= 50000 || cantidad <= 0){
+        cout << "Ingrese un numero mayor a 0 y menor a 50.000 porfavor: ";
+        cin >> numero;
+        cantidad = ingrese_numero(numero);
+    }
+    return cantidad;
 }
 
 void Menu::crear_datos_jugadores(){
- this->datosMateriales = new DatosMateriales(cantidad_jugadores);
- this->edificios_construidos = new Contador_edificios*[cantidad_jugadores];
- this->objetivos = new Objetivos*[cantidad_jugadores];
- this->energia = new int[cantidad_jugadores];
- this->posiciones_jugadores = new int *[cantidad_jugadores];
- for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
-    posiciones_jugadores[jugador] = new int[2];
-    objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
-    edificios_construidos[jugador] = new Contador_edificios;
-    energia[jugador] = ENERGIA_INICIAL;
- }
- mapa->completar_cantidad_edificios(edificios_construidos, posiciones_jugadores);
- this->turno = JUGADOR_UNO;
+    this->datosMateriales = new DatosMateriales(cantidad_jugadores);
+    this->edificios_construidos = new Contador_edificios*[cantidad_jugadores];
+    this->objetivos = new Objetivos*[cantidad_jugadores];
+    this->energia = new int[cantidad_jugadores];
+    this->posiciones_jugadores = new int *[cantidad_jugadores];
+    for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+       posiciones_jugadores[jugador] = new int[2];
+       objetivos[jugador] = new Objetivos(datosEdificios->buscar_edificio(ESCUELA).maxima_cantidad_permitida);
+       edificios_construidos[jugador] = new Contador_edificios;
+       energia[jugador] = ENERGIA_INICIAL;
+    }
+    mapa->completar_cantidad_edificios(edificios_construidos, posiciones_jugadores);
+    this->turno = JUGADOR_UNO;
 }
 
 void Menu::empezar_menu(){
- if (mapa->ubicar_edificios_archivo())
-  comenzar_partida();
- else
-  menu_inicial();
+    if (mapa->ubicar_edificios_archivo()){
+        comenzar_partida();
+    }else{
+        menu_inicial();
+    }
 }
 
 void Menu::colocar_jugadores(){
- for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
-     poner_jugador(jugador);
- }
+    for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
+        poner_jugador(jugador);
+    }
 }
 
 void Menu::poner_jugador(int jugador){
-  int fila, columna;
-  string fila_string,columna_string;
-  cout<<"Jugador "<<jugador+1<<":"<<endl;
-  cout<<"Fila: ";
-  cin>>fila_string;
-  fila = ingrese_numero(fila_string);
-  cout<<"Columna: ";
-  cin>>columna_string;
-  columna = ingrese_numero(columna_string);
-  fila--;
-  columna--;
-  if (mapa->comprobar_colocacion_jugador(fila, columna)){
-   cout<<endl;
-   mapa->colocar_jugador(fila, columna, jugador);
-  }
-  else{
-   cout<<endl;
-   poner_jugador(jugador);
-  }
+    int fila, columna;
+    string fila_string,columna_string;
+    cout << "Jugador " << jugador + 1 << ":" << endl;
+    cout << "Fila: ";
+    cin >> fila_string;
+    fila = ingrese_numero(fila_string);
+    cout << "Columna: ";
+    cin >> columna_string;
+    columna = ingrese_numero(columna_string);
+    fila--;
+    columna--;
+    if (mapa->comprobar_colocacion_jugador(fila, columna)) {
+        cout << endl;
+        mapa->colocar_jugador(fila, columna, jugador);
+    }else {
+        cout << endl;
+        poner_jugador(jugador);
+    }
  }
 
 
 void Menu::menu_inicial(){
  int opcion = 0;
  string basura,resp;
- while (opcion!=GUARDAR_SALIR_INICIAL && opcion!=COMENZAR_PARTIDA){
+ while (opcion != GUARDAR_SALIR_INICIAL && opcion != COMENZAR_PARTIDA){
     mostrar_menu_inicial();
-    cout <<"Ingrese una opcion: ";
-    cin>>resp;
+    cout << "Ingrese una opcion: ";
+    cin >> resp;
     opcion = ingrese_numero(resp);
-    cout<<endl;
+    cout << endl;
     procesar_opcion_inicial(opcion);
     if (opcion!=GUARDAR_SALIR_INICIAL && opcion!=COMENZAR_PARTIDA){
-     cout<<endl;
+     cout << endl;
      cout << "Presione una letra y enter para continuar: ";
      cin >> basura;
      system(CLR_SCREEN);
@@ -115,57 +115,56 @@ void Menu::menu_inicial(){
 }
 
 void Menu::menu_juego(){
- int opcion = 0;
- string basura,resp;
-  while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
-    mostrar_mapa();
-    mostrar_turno();
-    mostrar_energia();
-    mostrar_menu_juego();
-    cout <<"Ingrese una opcion: ";
-    cin>>resp;
-    opcion = ingrese_numero(resp);
-    cout<<endl;
-    procesar_opcion_juego(opcion);
-    objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
-    objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
-    chequear_energia();
-    if (objetivos[turno]->comprobar_objetivos_cumplidos()){
-        system(CLR_SCREEN);
-        objetivos[turno]->mostrar_victoria(turno);
-    }
-    else if (opcion!=GUARDAR_SALIR){
-        cout<<endl;
-        cout << "Presione una letra y enter para continuar: ";
-        cin >> basura;
-        system(CLR_SCREEN);
-    }
- }
+    int opcion = 0;
+    string basura,resp;
+        while (opcion!=GUARDAR_SALIR && !objetivos[turno]->comprobar_objetivos_cumplidos()){
+            mostrar_mapa();
+            mostrar_turno();
+            mostrar_energia();
+            mostrar_menu_juego();
+            cout <<"Ingrese una opcion: ";
+            cin>>resp;
+            opcion = ingrese_numero(resp);
+            cout<<endl;
+            procesar_opcion_juego(opcion);
+            objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
+            objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
+            chequear_energia();
+            if (objetivos[turno]->comprobar_objetivos_cumplidos()){
+                system(CLR_SCREEN);
+                objetivos[turno]->mostrar_victoria(turno);
+            }else if (opcion!=GUARDAR_SALIR){
+                cout<<endl;
+                cout << "Presione una letra y enter para continuar: ";
+                cin >> basura;
+                system(CLR_SCREEN);
+            }
+        }  
 }
 
 void Menu::mostrar_menu_inicial(){
- cout<<"1. Modificar edificio por nombre."<<endl;
- cout<<"2. Listar todos los edificios."<<endl;
- cout<<"3. Mostrar mapa."<<endl;
- cout<<"4. Cambiar cantidad de jugadores."<<endl;
- cout<<"5. Comenzar partida"<<endl;
- cout<<"6. Guardar y salir"<<endl;
+    cout<<"1. Modificar edificio por nombre."<<endl;
+    cout<<"2. Listar todos los edificios."<<endl;
+    cout<<"3. Mostrar mapa."<<endl;
+    cout<<"4. Cambiar cantidad de jugadores."<<endl;
+    cout<<"5. Comenzar partida"<<endl;
+    cout<<"6. Guardar y salir"<<endl;
 }
 
 void Menu::mostrar_menu_juego(){
- cout<<"1. Construir edificio por nombre."<<endl;
- cout<<"2. Listar mis edificios construidos."<<endl;
- cout<<"3. Demoler un edificio por coordenada."<<endl;
- cout<<"4. Atacar un edificio por coordenada."<<endl;
- cout<<"5. Reparar un edificio por coordenada"<<endl;
- cout<<"6. Comprar bombas"<<endl;
- cout<<"7. Consultar coordenada."<<endl;
- cout<<"8. Mostrar inventario."<<endl;
- cout<<"9. Mostrar objetivos."<<endl;
- cout<<"10. Recolectar recursos producidos."<<endl;
- cout<<"11. Moverse a una coordenada."<<endl;
- cout<<"12. Finalizar turno."<<endl;
- cout<<"13. Guardar y salir."<<endl;
+    cout<<"1. Construir edificio por nombre."<<endl;
+    cout<<"2. Listar mis edificios construidos."<<endl;
+    cout<<"3. Demoler un edificio por coordenada."<<endl;
+    cout<<"4. Atacar un edificio por coordenada."<<endl;
+    cout<<"5. Reparar un edificio por coordenada"<<endl;
+    cout<<"6. Comprar bombas"<<endl;
+    cout<<"7. Consultar coordenada."<<endl;
+    cout<<"8. Mostrar inventario."<<endl;
+    cout<<"9. Mostrar objetivos."<<endl;
+    cout<<"10. Recolectar recursos producidos."<<endl;
+    cout<<"11. Moverse a una coordenada."<<endl;
+    cout<<"12. Finalizar turno."<<endl;
+    cout<<"13. Guardar y salir."<<endl;
 }
 
 void Menu::procesar_opcion_inicial(int opcion){
@@ -197,47 +196,47 @@ void Menu::procesar_opcion_inicial(int opcion){
 }
 
 void Menu::modificar_edificio(){
- edificio edificio;
- string llave, respuesta;
- cout<< "Ingrese el nombre del edificio a modificar: ";
- cin>>llave;
- llave = minusculizar(llave);
- if (datosEdificios->comprobar_edificio(llave)){
-  if (llave != OBELISCO){
-   edificio = datosEdificios->buscar_edificio(llave);
-   cout<<"Desea modificar la cantidad piedra?(s/n): ";
-   cin>>respuesta;
-   respuesta = minusculizar(respuesta);
-   if (respuesta=="s"){
-    cout<< "Ingrese cantidad piedra: ";
-    edificio.cantidad_piedra = ingresar_cantidad();
-   }
-   cout<<"Desea modificar la cantidad madera?(s/n): ";
-   cin>>respuesta;
-   respuesta = minusculizar(respuesta);
-   if (respuesta=="s"){
-    cout<< "Ingrese cantidad madera: ";
-    edificio.cantidad_madera = ingresar_cantidad();
-   }
-   cout<<"Desea modificar la cantidad metal?(s/n): ";
-   cin>>respuesta;
-   respuesta = minusculizar(respuesta);
-   if (respuesta=="s"){
-    cout<< "Ingrese cantidad metal: ";
-    edificio.cantidad_metal = ingresar_cantidad();
-   }
-   cout<<"Desea modificar la maxima cantidad permitida?(s/n): ";
-   cin>>respuesta;
-   respuesta = minusculizar(respuesta);
-   if (respuesta=="s"){
-    cout<<"Ingrese maxima cantidad permitida: ";
-    edificio.maxima_cantidad_permitida = ingresar_cantidad();
-   }
-   datosEdificios->modificar_edificio(edificio, llave);
-  }
-  else
-   cout<<"No se puede modificar el obelisco"<<endl;
- }
+    edificio edificio;
+    string llave, respuesta;
+    cout<< "Ingrese el nombre del edificio a modificar: ";
+    cin>>llave;
+    llave = minusculizar(llave);
+    if (datosEdificios->comprobar_edificio(llave)){
+        if (llave != OBELISCO){
+            edificio = datosEdificios->buscar_edificio(llave);
+            cout<<"Desea modificar la cantidad piedra?(s/n): ";
+            cin>>respuesta;
+            respuesta = minusculizar(respuesta);
+            if (respuesta=="s"){
+                cout<< "Ingrese cantidad piedra: ";
+                edificio.cantidad_piedra = ingresar_cantidad();
+            }
+            cout<<"Desea modificar la cantidad madera?(s/n): ";
+            cin>>respuesta;
+            respuesta = minusculizar(respuesta);
+            if (respuesta=="s"){
+                cout<< "Ingrese cantidad madera: ";
+                edificio.cantidad_madera = ingresar_cantidad();
+            }
+            cout<<"Desea modificar la cantidad metal?(s/n): ";
+            cin>>respuesta;
+            respuesta = minusculizar(respuesta);
+            if (respuesta=="s"){
+                cout<< "Ingrese cantidad metal: ";
+                edificio.cantidad_metal = ingresar_cantidad();
+            }
+            cout<<"Desea modificar la maxima cantidad permitida?(s/n): ";
+            cin>>respuesta;
+            respuesta = minusculizar(respuesta);
+            if (respuesta=="s"){
+                cout<<"Ingrese maxima cantidad permitida: ";
+                edificio.maxima_cantidad_permitida = ingresar_cantidad();
+            }
+            datosEdificios->modificar_edificio(edificio, llave);
+        }else{
+            cout<<"No se puede modificar el obelisco"<<endl;
+        }
+    }
 }
 
 void Menu::listar_edificios(){
@@ -249,43 +248,48 @@ void Menu::mostrar_mapa_terrenos(){
 }
 
 void Menu::cambiar_cantidad_jugadores(){
- string cantidad_jugadores_string;
- int cantidad_jugadores;
- cout<<"Cantidad de jugadores: ";
- cin>>cantidad_jugadores_string;
- cantidad_jugadores = ingrese_numero(cantidad_jugadores_string);
- this->cantidad_jugadores = cantidad_jugadores;
+    string cantidad_jugadores_string;
+    int cantidad_jugadores;
+    cout<<"Cantidad de jugadores: ";
+    cin>>cantidad_jugadores_string;
+    cantidad_jugadores = ingrese_numero(cantidad_jugadores_string);
+    this->cantidad_jugadores = cantidad_jugadores;
 }
 
 void Menu::cambiar_turno(){
- turno++;
- if (turno == cantidad_jugadores){
-    lluvia_recursos();
-    turno = JUGADOR_UNO;
- }
+    turno++;
+    if (turno == cantidad_jugadores){
+        lluvia_recursos();
+        turno = JUGADOR_UNO;
+    }
 }
 
 void Menu::inicializar_datos_objetivos(){
- for (int turno = 0; turno<cantidad_jugadores; turno++){
-  if (edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA) > 0){
-   objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA));
-   objetivos[turno]->actualizar_tipos_construidos(ESCUELA);
-  }
-  if (edificios_construidos[turno]->devolver_cantidad_construida(FABRICA) > 0)
-   objetivos[turno]->actualizar_tipos_construidos(FABRICA);
-  if (edificios_construidos[turno]->devolver_cantidad_construida(MINA) > 0)
-   objetivos[turno]->actualizar_tipos_construidos(MINA);
-  if (edificios_construidos[turno]->devolver_cantidad_construida(MINA_ORO) > 0)
-   objetivos[turno]->actualizar_tipos_construidos(MINA_ORO);
-  if (edificios_construidos[turno]->devolver_cantidad_construida(ASERRADERO) > 0)
-   objetivos[turno]->actualizar_tipos_construidos(ASERRADERO);
-  if (edificios_construidos[turno]->devolver_cantidad_construida(PLANTA_ELECTRICA) > 0)
-   objetivos[turno]->actualizar_tipos_construidos(PLANTA_ELECTRICA);
-  objetivos[turno]->actualizar_objetivo(MINERO, 0);
-  objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, 0);
-  objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, datosMateriales->devolver_cantidad(turno, ANDYCOIN));
-  objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
-  objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
+    for (int turno = 0; turno<cantidad_jugadores; turno++){
+        if (edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA) > 0){
+            objetivos[turno]->actualizar_objetivo(LETRADO, edificios_construidos[turno]->devolver_cantidad_construida(ESCUELA));
+            objetivos[turno]->actualizar_tipos_construidos(ESCUELA);
+    }
+    if (edificios_construidos[turno]->devolver_cantidad_construida(FABRICA) > 0){
+        objetivos[turno]->actualizar_tipos_construidos(FABRICA);
+    }
+    if (edificios_construidos[turno]->devolver_cantidad_construida(MINA) > 0){
+        objetivos[turno]->actualizar_tipos_construidos(MINA);
+    }
+    if (edificios_construidos[turno]->devolver_cantidad_construida(MINA_ORO) > 0){
+        objetivos[turno]->actualizar_tipos_construidos(MINA_ORO);
+    }
+    if (edificios_construidos[turno]->devolver_cantidad_construida(ASERRADERO) > 0){
+        objetivos[turno]->actualizar_tipos_construidos(ASERRADERO);
+    }
+    if (edificios_construidos[turno]->devolver_cantidad_construida(PLANTA_ELECTRICA) > 0){
+        objetivos[turno]->actualizar_tipos_construidos(PLANTA_ELECTRICA);
+    }
+    objetivos[turno]->actualizar_objetivo(MINERO, 0);
+    objetivos[turno]->actualizar_objetivo(CONSTRUCTOR, 0);
+    objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, datosMateriales->devolver_cantidad(turno, ANDYCOIN));
+    objetivos[turno]->actualizar_objetivo(EDAD_PIEDRA, datosMateriales->devolver_cantidad(turno, PIEDRA));
+    objetivos[turno]->actualizar_objetivo(ARMADO, datosMateriales->devolver_cantidad(turno, BOMBA));
  }
 }
 
@@ -309,18 +313,21 @@ void Menu::mostrar_energia(){
 }
 
 void Menu::chequear_energia(){
- if (energia[turno]==0){
-  cout<<endl;
-  finalizar_turno();
- }
- if (energia[turno]>ENERGIA_MAXIMA)
-  energia[turno] = ENERGIA_MAXIMA;
+    if (energia[turno] ==0){
+        cout<<endl;
+        finalizar_turno();
+    }
+
+    if (energia[turno] > ENERGIA_MAXIMA){
+        energia[turno] = ENERGIA_MAXIMA;
+    }
 }
 
 bool Menu::consultar_energia(int costo_energia){
-  if (energia[turno] < costo_energia)
-    cout<<"No tienes la energia suficiente para realizar esta accion"<<endl;
-  return (energia[turno] >= costo_energia);
+    if (energia[turno] < costo_energia){
+        cout << "No tienes la energia suficiente para realizar esta accion" << endl;
+    }
+    return (energia[turno] >= costo_energia);
 }
 
 void Menu::procesar_opcion_juego(int opcion){
@@ -392,8 +399,8 @@ void Menu::imprimir_cuadro_referencias_terrenos(){
 }
 
 void Menu::mostrar_mapa(){
- imprimir_cuadro_referencias_terrenos();
- mapa->mostrar_mapa();
+    imprimir_cuadro_referencias_terrenos();
+    mapa->mostrar_mapa();
 }
 
 void Menu::construir_edificio(){
@@ -474,64 +481,64 @@ void Menu::demoler_edificio(){
 }
 
 void Menu::atacar_construccion(){
- if (consultar_energia(COSTO_ATACAR)){
-    if (datosMateriales->devolver_cantidad(turno, BOMBA)>=1){
-     string fila_string,columna_string;
-     int fila,columna;
-     cout<<"Fila: ";
-     cin>>fila_string;
-     fila = ingrese_numero(fila_string);
-     cout<<"Columna: ";
-     cin>>columna_string;
-     columna = ingrese_numero(columna_string);
-     fila--;
-     columna--;
-     if (mapa->atacar_edificio(fila, columna, turno, edificios_construidos)){
-      energia[turno] -= COSTO_ATACAR;
-      objetivos[turno]->actualizar_objetivo(BOMBARDERO, 1);
-     }
+    if (consultar_energia(COSTO_ATACAR)){
+        if (datosMateriales->devolver_cantidad(turno, BOMBA)>=1){
+            string fila_string,columna_string;
+            int fila,columna;
+            cout<<"Fila: ";
+            cin>>fila_string;
+            fila = ingrese_numero(fila_string);
+            cout<<"Columna: ";
+            cin>>columna_string;
+            columna = ingrese_numero(columna_string);
+            fila--;
+            columna--;
+            if (mapa->atacar_edificio(fila, columna, turno, edificios_construidos)){
+                energia[turno] -= COSTO_ATACAR;
+                objetivos[turno]->actualizar_objetivo(BOMBARDERO, 1);
+            }
+        }else {
+            cout<<"No tienes bombas, no puede atacar"<<endl;
+        }
     }
-    else
-     cout<<"No tienes bombas, no puede atacar"<<endl;
- }
 }
 
 void Menu::reparar_construccion(){
  if (consultar_energia(COSTO_REPARAR)){
-     string fila_string,columna_string;
-     int fila,columna;
-     cout<<"Fila: ";
-     cin>>fila_string;
-     fila = ingrese_numero(fila_string);
-     cout<<"Columna: ";
-     cin>>columna_string;
-     columna = ingrese_numero(columna_string);
-     fila--;
-     columna--;
-     if (mapa->comprobar_coordenadas_reparacion(fila, columna, turno)){
-      string nombre_edificio = mapa->devolver_elemento_en_casillero(fila, columna);
-      edificio edificio_a_reparar = datosEdificios->buscar_edificio(nombre_edificio);
-      if (datosMateriales->reparacion_edificio(edificio_a_reparar, turno)){
-         mapa->reparar_edificio(fila, columna);
-         cout<<nombre_edificio<<" reparado/a correctamente"<<endl;
-         energia[turno] -= COSTO_REPARAR;
-      }
-     }
-   }
+        string fila_string,columna_string;
+        int fila,columna;
+        cout<<"Fila: ";
+        cin>>fila_string;
+        fila = ingrese_numero(fila_string);
+        cout<<"Columna: ";
+        cin>>columna_string;
+        columna = ingrese_numero(columna_string);
+        fila--;
+        columna--;
+        if (mapa->comprobar_coordenadas_reparacion(fila, columna, turno)){
+            string nombre_edificio = mapa->devolver_elemento_en_casillero(fila, columna);
+            edificio edificio_a_reparar = datosEdificios->buscar_edificio(nombre_edificio);
+            if (datosMateriales->reparacion_edificio(edificio_a_reparar, turno)){
+                mapa->reparar_edificio(fila, columna);
+                cout<<nombre_edificio<<" reparado/a correctamente"<<endl;
+                energia[turno] -= COSTO_REPARAR;
+            }
+        }
+    }
 }
 
 void Menu::comprar_bombas(){
- if (consultar_energia(COSTO_COMPRAR)){
-  string cantidad_string;
-  int cantidad;
-  cout<<"Cantidad de bombas a comprar: ";
-  cin>>cantidad_string;
-  cantidad = ingrese_numero(cantidad_string);
-  if (datosMateriales->comprar_bombas(turno, cantidad)){
-   energia[turno] -= COSTO_COMPRAR;
-   objetivos[turno]->actualizar_objetivo(EXTREMISTA, cantidad);
-  }
- }
+    if (consultar_energia(COSTO_COMPRAR)){
+        string cantidad_string;
+        int cantidad;
+        cout << "Cantidad de bombas a comprar: ";
+        cin >> cantidad_string;
+        cantidad = ingrese_numero(cantidad_string);
+        if (datosMateriales->comprar_bombas(turno, cantidad)){
+            energia[turno] -= COSTO_COMPRAR;
+            objetivos[turno]->actualizar_objetivo(EXTREMISTA, cantidad);
+        }
+    }
 }
 
 void Menu::consultar_coordenada(){
@@ -556,7 +563,7 @@ void Menu::mostrar_inventario(){
 }
 
 void Menu::mostrar_objetivos(){
- objetivos[turno]->mostrar_objetivos();
+    objetivos[turno]->mostrar_objetivos();
 }
 
 void Menu::recolectar_recursos(){
@@ -571,48 +578,50 @@ void Menu::recolectar_recursos(){
 }
 
 void Menu::moverse_coordenada(){
- int fila_destino, columna_destino, andycoins_ganadas, andycoins = datosMateriales->devolver_cantidad(turno, ANDYCOIN);
- camino_especifico datos;
- string movimiento,fila,columna;
- cout<<"Ingrese coordenada de destino:"<<endl<<"Fila: ";
- cin>>fila;
- fila_destino = ingrese_numero(fila);
- cout<<"Columna: ";
- cin>> columna;
- columna_destino = ingrese_numero(columna);
- fila_destino--;
- columna_destino--;
- if (mapa->comprobar_coordenadas_moverse(fila_destino,columna_destino)){
-   datos = mapa->moverse_coordenada(turno, posiciones_jugadores[turno][0], posiciones_jugadores[turno][1], fila_destino, columna_destino);
-   if (consultar_energia(datos.costo)){
-    cout<<"Desea moverse?(s/n): ";
-    cin>>movimiento;
-    if (movimiento== "s"){
-     mapa->cambiar_posicion(turno,datos,datosMateriales);
-     posiciones_jugadores[turno][0] = fila_destino;
-     posiciones_jugadores[turno][1] = columna_destino;
-     andycoins_ganadas =  datosMateriales->devolver_cantidad(turno, ANDYCOIN) - andycoins;
-     objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, andycoins_ganadas);
-     energia[turno] = energia[turno] - datos.costo;
-    }
-   }
-   for (int fila=0; fila<(datos.longitud); fila++){
-    delete [] datos.camino[fila];
-   }
-   delete [] datos.camino;
+    int fila_destino, columna_destino, andycoins_ganadas, andycoins = datosMateriales->devolver_cantidad(turno, ANDYCOIN);
+    camino_especifico datos;
+    string movimiento,fila,columna;
+    cout<<"Ingrese coordenada de destino:"<<endl<<"Fila: ";
+    cin>>fila;
+    fila_destino = ingrese_numero(fila);
+    cout<<"Columna: ";
+    cin>> columna;
+    columna_destino = ingrese_numero(columna);
+    fila_destino--;
+    columna_destino--;
+    if (mapa->comprobar_coordenadas_moverse(fila_destino,columna_destino)){
+        datos = mapa->moverse_coordenada(turno, posiciones_jugadores[turno][0], posiciones_jugadores[turno][1], fila_destino, columna_destino);
+        if (consultar_energia(datos.costo)){
+            cout<<"Desea moverse?(s/n): ";
+            cin>>movimiento;
+            if (movimiento== "s"){
+                mapa->cambiar_posicion(turno,datos,datosMateriales);
+                posiciones_jugadores[turno][0] = fila_destino;
+                posiciones_jugadores[turno][1] = columna_destino;
+                andycoins_ganadas =  datosMateriales->devolver_cantidad(turno, ANDYCOIN) - andycoins;
+                objetivos[turno]->actualizar_objetivo(COMPRAR_ANDYPOLIS, andycoins_ganadas);
+                energia[turno] = energia[turno] - datos.costo;
+            }
+        }
+        for (int fila=0; fila<(datos.longitud); fila++){
+            delete [] datos.camino[fila];
+        }
+        delete [] datos.camino;
  }
 }
 
 void Menu::finalizar_turno(){
- objetivos[turno]->actualizar_objetivo(CANSADO, energia[turno]);
- objetivos[turno]->actualizar_objetivo(ENERGETICO, energia[turno]);
- if (energia[turno]==0)
-    cout<<"Turno finalizado por falta de energia"<<endl;
- else
-    cout<<"Turno finalizado"<<endl;
- energia[turno] += ENERGIA_RECIBIDA;
- if (!objetivos[turno]->comprobar_objetivos_cumplidos())
-    cambiar_turno();
+    objetivos[turno]->actualizar_objetivo(CANSADO, energia[turno]);
+    objetivos[turno]->actualizar_objetivo(ENERGETICO, energia[turno]);
+    if (energia[turno]==0){
+       cout << "Turno finalizado por falta de energia" << endl;
+    }else {
+       cout << "Turno finalizado" << endl;
+    }
+    energia[turno] += ENERGIA_RECIBIDA;
+    if (!objetivos[turno]->comprobar_objetivos_cumplidos()){
+       cambiar_turno();
+    }
 }
 
 void Menu::guardar_salir(){

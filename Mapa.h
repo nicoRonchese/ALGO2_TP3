@@ -37,23 +37,20 @@ class Mapa{
     Grafo grafo[2];
 
  public:
-    //Métodos públicos
+   //Métodos públicos
 
-    //Constructor
-    //PRE: el archivo mapa.txt y ubicaciones.txt deben existir en el directorio donde se encuentre el programa
-    //POS: cargala informacion de estos archivos en la matriz dinamica matriz y el vector dinamico transitables
-    Mapa();
+   //Constructor
+   //PRE: el archivo mapa.txt y ubicaciones.txt deben existir en el directorio donde se encuentre el programa
+   //POS: cargala informacion de estos archivos en la matriz dinamica matriz y el vector dinamico transitables
+   Mapa();
 
-    //Destructor
-    //PRE:
-    //POS: libera la memoria tomada por matriz y transitables
-    ~Mapa();
+   //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
+   //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
+   bool ubicar_edificios_archivo();
 
-    //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
-    //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
-    bool ubicar_edificios_archivo();
-
-    void completar_cantidad_edificios(Contador_edificios** edificios_construidos, int** posicion_jugadores);
+   //PRE: el archivo ubicaciones.txt debe existir en el directorio donde se encuentre en alrchivo
+   //POS: utiliza los datos del archivo para madificar matriz y var cuantos edificios construidos de cada tipo hay
+   void completar_cantidad_edificios(Contador_edificios** edificios_construidos, int** posicion_jugadores);
 
     void mostrar_mapa_terrenos();
 
@@ -86,12 +83,6 @@ class Mapa{
     //PRE:
     //POS: cambia el valor de algunos de los casilleros transitables dentro de matriz de forma aleatoria
     void lluvia_materiales();
-
-    //PRE: fila y columna deben estar dentro del rango de la matriz
-    //POS: devuelve el tipo del casillero que se encuentra en esa coordenada
-
-    //PRE: fila y columna deben estar dentro del rango de la matriz
-    //POS: devuelve si el casillero que se encuentra en esa coordenada esta vacio en forma de booleano
 
     //PRE: fila y columna deben estar dentro del rango de la matriz y la string debe ser el nombre de un edificio
     //POS: suma 1 a la cantidad de esdificios construidos de ese tipo y lo coloca en matriz
@@ -132,6 +123,11 @@ class Mapa{
     camino_especifico moverse_coordenada(int jugador,int fila_origen,int columna_origen,int fila_destino,int columna_destino);
 
     void cambiar_posicion(int jugador,camino_especifico dato,DatosMateriales* materiales);
+
+   //Destructor
+   //PRE:
+   //POS: libera la memoria tomada por matriz y transitables
+   ~Mapa();
 
  private:
     //Métodos privados

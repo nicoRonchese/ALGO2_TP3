@@ -20,29 +20,51 @@ using namespace std;
 
 class Floyd {
 private:
+    //Atributos
     int ** matrizAdyacencia;
     Lista<Vertice> * vertices;
     int cantidadVertices;
     int ** matrizCostos;
     int ** matrizCaminos;
 
-
+    //Metodos privados
+    /*
+    * Pre: -.
+    * Post: Crea la matriz de caminos y costos.
+    */
     void crearMatrizCamino_Costos(int ** matrizAdyacencia);
 
+    /*
+    * Pre: -.
+    * Post: Agranda el camino pasado por parametro.
+    */
     void agrandarCaminoEspecifico(camino_especifico *datos, int fila , int columna);
 
-    //post: libera la memoria de las matrices de costos y caminos
+    /*
+    * Pre: Recibe el nombre de un edificio valido.
+    * Post: Libera la memoria de las matrices de costos y caminos.
+    */
     void liberarMatrices();
 
-    //post:calcula las matrices de costos y caminos.
+    /*
+    * Pre: -.
+    * Post: Calcula las matrices de costos y caminos
+    */
     void calcularMatrices();
 
 public:
+    //Métodos públicos
+    //Constructor
     Floyd(Lista<Vertice> *vertices, int ** matrizAdyacencia);
 
-    //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
+    /*
+    * Pre: Recibe un origen y un destino.
+    * Post: Muestra por pantalla el camino mínimo entre el origen y el destino, 
+    *       detallando su recorrido y peso.
+    */
     camino_especifico caminoMinimo(int origen, int destino);
 
+    //Destructor
     ~Floyd();
 };
 

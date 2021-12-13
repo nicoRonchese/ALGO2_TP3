@@ -18,26 +18,53 @@ private:
 
 /*MÉTODOS*/
 public:
+
     Lista();
 
-    //post: devuelve la cantidad de elementos que tiene la lista
+    /*
+    * Pre: -.
+    * Post: Devuelve la cantidad de elementos que tiene la lista.
+    */ 
     int obtenerCantidadDeElementos();
 
-    //post: devuelve la posicion en la que se encuentra el nombre que recibe o -1 si no lo encuentra
+    /*
+    * Pre: -.
+    * Post: Devuelve la posicion en la que se encuentra el nombre que recibe o -1 si no lo encuentra.
+    */ 
     int obtenerPosicion(int fila, int columna);
 
-    //post: devuelve el  nombre que se encuentra en la posicion recibida o NOMBRE_NO_ENCONTRADO si no lo encuentra
+    /*
+    * Pre: -.
+    * Post: Devuelve el  nombre que se encuentra en la posicion recibida o 
+    *      NOMBRE_NO_ENCONTRADO si no lo encuentra.
+    */ 
     string obtenerNombre(int posicion);
 
+    /*
+    * Pre: -.
+    * Post: Devuelve la fila de la posición pasada por parametro.
+    */ 
     int obtenerFila(int posicion);
 
+    /*
+    * Pre: -.
+    * Post: Devuelve la columna de la posición pasada por parametro.
+    */ 
     int obtenerColumna(int posicion);
 
+    /*
+    * Pre: -.
+    * Post: Devuelve el costo de la posición pasada por parametro.
+    */ 
     int obtenerCosto(int posicion);
 
-    //post: agrega un nuevo elemento a la lista
+    /*
+    * Pre: -.
+    * Post: Agrega un nuevo elemento a la lista.
+    */ 
     void agregar(int fila, int columna, int peso);
 
+    //Destructor
     ~Lista();
 };
 
