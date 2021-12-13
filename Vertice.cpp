@@ -12,15 +12,15 @@ string Vertice::obtenerNombre() {
 }
 
 int Vertice::obtenerFila(){
- return fila;
+    return fila;
 }
 
 int Vertice::obtenerColumna(){
- return columna;
+    return columna;
 }
 
 bool Vertice::comprobar_vertice(int fila, int columna){
- return (this->fila==fila && this->columna==columna);
+    return (this->fila == fila && this->columna == columna);
 }
 
 int Vertice::obtenerCosto() {

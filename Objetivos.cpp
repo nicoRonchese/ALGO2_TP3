@@ -8,17 +8,18 @@ Objetivos::Objetivos(int maximo_escuelas){
 }
 
 void Objetivos::sorteo_objetivos(){
- int objetivos_preparados[TOTAL_OBJETIVOS_JUGADOR];
- sortear_objetivos(objetivos_preparados, TOTAL_OBJETIVOS_JUGADOR);
- for (int objetivo = 0; objetivo < TOTAL_OBJETIVOS_JUGADOR; objetivo++){
-  objetivos[objetivo] = new Objetivo;
-  objetivos[objetivo]->tipo_objetivo = objetivos_preparados[objetivo];
-  objetivos[objetivo]->cumplido = false;
-  if (objetivos[objetivo]->tipo_objetivo == CANSADO)
-   objetivos[objetivo]->cantidad = 50;
-  else
-   objetivos[objetivo]->cantidad = 0;
- }
+  int objetivos_preparados[TOTAL_OBJETIVOS_JUGADOR];
+  sortear_objetivos(objetivos_preparados, TOTAL_OBJETIVOS_JUGADOR);
+  for (int objetivo = 0; objetivo < TOTAL_OBJETIVOS_JUGADOR; objetivo++){
+    objetivos[objetivo] = new Objetivo;
+    objetivos[objetivo]->tipo_objetivo = objetivos_preparados[objetivo];
+    objetivos[objetivo]->cumplido = false;
+    if (objetivos[objetivo]->tipo_objetivo == CANSADO){
+      objetivos[objetivo]->cantidad = 50;
+    }else {
+      objetivos[objetivo]->cantidad = 0;
+    }
+  }
 }
 
 void Objetivos::construccion_obelisco(){
@@ -27,23 +28,25 @@ void Objetivos::construccion_obelisco(){
 
 void Objetivos::mostrar_victoria(int turno){
  cout << "FELICITACIONES JUGADOR "<< turno+1 <<" GANASTE!!!"<<endl<<endl;
- if (!obelisco)
-  mostrar_objetivos();
- else
-  cout<<"Obelisco fue construido y la patria se restauro"<<endl;
+ if (!obelisco){
+    mostrar_objetivos();
+ }else{
+    cout << "Obelisco fue construido y la patria se restauro" << endl;
+  }
 }
 
 bool Objetivos::comprobar_objetivos_cumplidos(){
- int objetivos_cumplidos = 0;
- if (obelisco)
-  objetivos_cumplidos = TOTAL_OBJETIVOS_PARA_GANAR;
- else{
-  for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
-   if (objetivos[objetivo]->cumplido)
-    objetivos_cumplidos++;
+  int objetivos_cumplidos = 0;
+  if (obelisco){
+    objetivos_cumplidos = TOTAL_OBJETIVOS_PARA_GANAR;
+  }else{
+    for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
+      if (objetivos[objetivo]->cumplido){
+        objetivos_cumplidos++;
+      }
+    }
   }
- }
- return (objetivos_cumplidos == TOTAL_OBJETIVOS_PARA_GANAR);
+  return (objetivos_cumplidos == TOTAL_OBJETIVOS_PARA_GANAR);
 }
 
 void Objetivos::mostrar_objetivo(int tipo_objetivo, int ubicacion_objetivo){
@@ -84,12 +87,13 @@ void Objetivos::mostrar_objetivo(int tipo_objetivo, int ubicacion_objetivo){
 }
 
 void Objetivos::mostrar_objetivos_cumplidos(){
- int objetivos_cumplidos = 0;
- for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
-  if (objetivos[objetivo]->cumplido)
-   objetivos_cumplidos++;
+  int objetivos_cumplidos = 0;
+  for (int objetivo=0; objetivo<TOTAL_OBJETIVOS_JUGADOR; objetivo++){
+    if (objetivos[objetivo]->cumplido){
+      objetivos_cumplidos++;
+    }
  }
- cout<<"Objetivos cumplidos: ("<<objetivos_cumplidos<<", "<<TOTAL_OBJETIVOS_PARA_GANAR<<")"<<endl<<endl;
+  cout << "Objetivos cumplidos: (" << objetivos_cumplidos << ", " << TOTAL_OBJETIVOS_PARA_GANAR << ")" << endl << endl;
 }
 
 void Objetivos::mostrar_objetivos(){
@@ -101,53 +105,53 @@ void Objetivos::mostrar_objetivos(){
 
 
 void Objetivos::mostrar_comprar_andypolis(int ubicacion_objetivo){
- cout<<"Comprar andypolis: haber juntado 100.000 andycoins a lo largo de la partida"<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100.000)"<<endl<<endl;
+  cout<<"Comprar andypolis: haber juntado 100.000 andycoins a lo largo de la partida"<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100.000)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_edad_piedra(int ubicacion_objetivo){
- cout<<"Edad de piedra: tener en el inventario 50000 piedras"<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 50.000)"<<endl<<endl;
+  cout<<"Edad de piedra: tener en el inventario 50000 piedras"<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 50.000)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_bombardero(int ubicacion_objetivo){
- cout<<"Bombardero: haber usado 5 bombas."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 5)"<<endl<<endl;
+  cout<<"Bombardero: haber usado 5 bombas."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 5)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_energetico(int ubicacion_objetivo){
- cout<<"Energetico: haber terminado un turno con 100 puntos de energia."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100)"<<endl<<endl;
+  cout<<"Energetico: haber terminado un turno con 100 puntos de energia."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 100)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_letrado(int ubicacion_objetivo){
- cout<<"Letrado: haber construido el máximo posible de escuelas."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", "<<maximo_escuelas<<")"<<endl<<endl;
+  cout<<"Letrado: haber construido el máximo posible de escuelas."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", "<<maximo_escuelas<<")"<<endl<<endl;
 }
 
 void Objetivos::mostrar_minero(int ubicacion_objetivo){
- cout<<"Minero: haber construido una mina de cada tipo."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 2)"<<endl<<endl;
+  cout<<"Minero: haber construido una mina de cada tipo."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 2)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_cansado(int ubicacion_objetivo){
- cout<<"Cansado: terminar un turno con 0 de energia."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 0)"<<endl<<endl;
+  cout<<"Cansado: terminar un turno con 0 de energia."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 0)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_constructor(int ubicacion_objetivo){
- cout<<"Constructor: construir un edificio de cada tipo."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 6)"<<endl<<endl;
+  cout<<"Constructor: construir un edificio de cada tipo."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 6)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_armado(int ubicacion_objetivo){
- cout<<"Armado: tener 10 bombas en el inventario."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 10)"<<endl<<endl;
+  cout<<"Armado: tener 10 bombas en el inventario."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 10)"<<endl<<endl;
 }
 
 void Objetivos::mostrar_extremista(int ubicacion_objetivo){
- cout<<"Extremista: haber comprado 500 bombas en una partida."<<endl;
- cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 500)"<<endl<<endl;
+  cout<<"Extremista: haber comprado 500 bombas en una partida."<<endl;
+  cout<<"Progreso: ("<<objetivos[ubicacion_objetivo]->cantidad<<", 500)"<<endl<<endl;
 }
 
 void Objetivos::procesar_objetivo(int numero_objetivo, int cantidad, int ubicacion_objetivo){
@@ -188,17 +192,17 @@ void Objetivos::procesar_objetivo(int numero_objetivo, int cantidad, int ubicaci
 }
 
 void Objetivos::actualizar_tipos_construidos(string nombre){
- if (nombre==ESCUELA)
+ if (nombre == ESCUELA)
   escuela = true;
- else if (nombre==FABRICA)
+ else if (nombre == FABRICA)
   fabrica = true;
- else if (nombre==MINA)
+ else if (nombre == MINA)
   mina = true;
- else if (nombre==MINA_ORO)
+ else if (nombre == MINA_ORO)
   mina_oro = true;
- else if (nombre==PLANTA_ELECTRICA)
+ else if (nombre == PLANTA_ELECTRICA)
   planta_electrica = true;
- else if (nombre==ASERRADERO)
+ else if (nombre == ASERRADERO)
   aserradero = true;
 }
 

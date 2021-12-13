@@ -7,8 +7,8 @@ PlantaElectrica::PlantaElectrica(int jugador) : EdificioColocable(jugador) {
 }
 
 void PlantaElectrica::mostrar(){
- cout << "Soy una Planta Electrica y me encuentro en el casillero consultado." << endl;
- cout << "Tengo " << vida << " de vida y mi propietario es el jugador " << propietario + 1 << endl;
+    cout << "Soy una Planta Electrica y me encuentro en el casillero consultado." << endl;
+    cout << "Tengo " << vida << " de vida y mi propietario es el jugador " << propietario + 1 << endl;
 }
 
 PlantaElectrica::~PlantaElectrica(){}
