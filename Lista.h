@@ -19,6 +19,7 @@ private:
 /*MÉTODOS*/
 public:
 
+    //Constructor
     Lista();
 
     /*

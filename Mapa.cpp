@@ -260,9 +260,10 @@ void Mapa::eliminar_transitables(int fila, int columna){
 }
 
 void Mapa::colocar_jugador(int fila, int columna, int jugador){
- if (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE)
-  eliminar_transitables(fila, columna);
- Matriz[fila][columna]->colocar_jugador(jugador);
+  if (Matriz[fila][columna]->devolver_tipo_casillero() == TRANSITABLE){
+    eliminar_transitables(fila, columna);
+  }
+  Matriz[fila][columna]->colocar_jugador(jugador);
 }
 
 void Mapa::lluvia_materiales(){

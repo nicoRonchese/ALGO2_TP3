@@ -44,7 +44,7 @@ class Casillero{
    Casillero(string tipo_terreno);
    
    //PRE: Recibe un jugador valido.
-   //POS: Muestra en terminal un mensaje indicando que tipo  de casillero es.
+   //POS: Coloca el jugador en el casillero.
    void colocar_jugador(int jugador);
 
    //PRE: -.
