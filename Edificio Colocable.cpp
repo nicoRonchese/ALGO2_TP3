@@ -10,7 +10,7 @@ int EdificioColocable::propietario_edificio(){
   return propietario;
 }
 
-string EdificioColocable::nombre_edificio(){
+string EdificioColocable::devolver_nombre(){
   return nombre;
 }
 
@@ -34,5 +34,6 @@ string EdificioColocable::devolver_signo(){
   return this->signo_mapa;
 }
 
-EdificioColocable::~EdificioColocable(){
-}
+void EdificioColocable::recolectar(DatosMateriales* materiales, int* energia){}
+
+EdificioColocable::~EdificioColocable(){}

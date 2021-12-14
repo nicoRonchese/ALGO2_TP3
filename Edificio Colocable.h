@@ -2,28 +2,10 @@
 #define EDIFICIO_COLOCABLE_H_INCLUDED
 #include <string>
 #include <iostream>
-#include "DatosMateriales.h"
-
+#include "Datos Materiales.h"
+#include "Structs Constantes.h"
 
 using namespace std;
-
-const string ASERRADERO = "aserradero";
-const string MINA = "mina";
-const string FABRICA = "fabrica";
-const string ESCUELA = "escuela";
-const string OBELISCO = "obelisco";
-const string PLANTA_ELECTRICA = "planta electrica";
-const string MINA_ORO = "mina oro";
-const string SIGNO_ASERRADERO = "A";
-const string SIGNO_MINA = "M";
-const string SIGNO_FABRICA = "F";
-const string SIGNO_ESCUELA = "E";
-const string SIGNO_OBELISCO = "O";
-const string SIGNO_PLANTA_ELECTRICA = "P";
-const string SIGNO_MINA_ORO = "G";
-const int VIDA_EDIFICIO_FUERTE = 100;
-const int VIDA_EDIFICIO_DEBIL = 50;
-
 
 class EdificioColocable{
  protected:
@@ -56,10 +38,10 @@ class EdificioColocable{
 
     //PRE: -.
     //POS: Devuelve en forma de string el nombre del edificio.
-    string nombre_edificio();
+    string devolver_nombre();
 
     //PRE: -.
-    //POS: Devuelve 'true' si el propietario pasado por referencia es el del edificio y 
+    //POS: Devuelve 'true' si el propietario pasado por referencia es el del edificio y
     //     'false' de no serlo.
     bool comprobar_propietario(int propietario);
 
@@ -74,6 +56,8 @@ class EdificioColocable{
     //PRE: -.
     //POS: Repara el edificio.
     void reparar_edificio();
+
+    virtual void recolectar(DatosMateriales* materiales, int* energia);
 
     //Destructor
     //PRE: -.

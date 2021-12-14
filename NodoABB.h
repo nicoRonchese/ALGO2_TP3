@@ -6,15 +6,16 @@ using namespace std;
 
 template < typename Tipo >
 class NodoABB {
-/*ATRIBUTOS*/
+
 private:
+    /*ATRIBUTOS*/
     string llave;
     Tipo elemento;
     NodoABB<Tipo>* der;
     NodoABB<Tipo>* izq;
 
-/*MÉTODOS*/
 public:
+    /*MÉTODOS PÚBLICOS*/
     /*
     Constructor
     * Pre: Recibe una llave y un dato.
@@ -26,25 +27,25 @@ public:
     * Pre: -.
     * Post: Devuelve el nodo izquierdo.
     */
-    NodoABB<Tipo>*& obtenerizq();
+    NodoABB<Tipo>*& obtener_izquierdo();
 
     /*
     * Pre: -.
     * Post: Devuelve el nodo derecho.
     */
-    NodoABB<Tipo>*& obtenerder();
+    NodoABB<Tipo>*& obtener_derecho();
 
     /*
     * Pre: -.
     * Post: Devuelve la llave.
     */
-    string obtenerllave();
+    string obtener_llave();
 
     /*
     * Pre: -.
     * Post: Devuelve el elemento ubicado en el nodo.
     */
-    Tipo obtenerelemento();
+    Tipo obtener_elemento();
 
     /*
     * Pre: -.
@@ -52,7 +53,7 @@ public:
     */
     void modificar_elemento(Tipo dato);
 
-    /*
+     /*
     Destructor
     * Pre: -.
     * Post: Libera la memoria.
@@ -69,22 +70,22 @@ NodoABB<Tipo>::NodoABB(string nombre,Tipo dato) {
 }
 
 template<typename Tipo>
-NodoABB<Tipo> *&NodoABB<Tipo>::obtenerizq() {
+NodoABB<Tipo> *&NodoABB<Tipo>::obtener_izquierdo() {
     return izq;
 }
 
 template<typename Tipo>
-NodoABB<Tipo> *&NodoABB<Tipo>::obtenerder() {
+NodoABB<Tipo> *&NodoABB<Tipo>::obtener_derecho() {
     return der;
 }
 
 template<typename Tipo>
-string NodoABB<Tipo>::obtenerllave() {
+string NodoABB<Tipo>::obtener_llave() {
     return llave;
 }
 
 template<typename Tipo>
-Tipo NodoABB<Tipo>::obtenerelemento() {
+Tipo NodoABB<Tipo>::obtener_elemento() {
     return elemento;
 }
 

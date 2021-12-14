@@ -1,18 +1,8 @@
 #ifndef MATERIAL_COLOCABLE_H_INCLUDED
 #define MATERIAL_COLOCABLE_H_INCLUDED
 #include <iostream>
-#include "DatosMateriales.h"
+#include "Datos Materiales.h"
 using namespace std;
-
-const string SIGNO_MADERA = "W";
-const string SIGNO_METAL = "I";
-const string SIGNO_PIEDRA = "S";
-const string SIGNO_ANDYCOIN = "G";
-const int CANTIDAD_PIEDRA = 100;
-const int CANTIDAD_MADERA = 50;
-const int CANTIDAD_METAL = 50;
-const int CANTIDAD_ANDYCOIN = 250;
-
 
 class MaterialColocable{
  protected:
@@ -40,7 +30,7 @@ class MaterialColocable{
 
    //PRE: -.
    //POS: Devuelve un string que representa el nombre del material.
-   string mostrar_material();
+   string devolver_nombre();
 
    //Destructor
    //PRE: -.

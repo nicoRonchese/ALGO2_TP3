@@ -23,7 +23,7 @@ class Fabrica : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes a la fábrica.
     */
-    void recolectar(DatosMateriales* materiales);
+    void recolectar(DatosMateriales* materiales, int* energia);
 
     /*
     Destructor

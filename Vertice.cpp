@@ -6,24 +6,19 @@ Vertice::Vertice(int fila, int columna, int costo) {
     this->costo = costo;
 }
 
-string Vertice::obtenerNombre() {
-    string coordenada = "("+to_string(fila)+", "+to_string(columna)+")";
-    return coordenada;
+int Vertice::obtener_fila(){
+ return fila;
 }
 
-int Vertice::obtenerFila(){
-    return fila;
-}
-
-int Vertice::obtenerColumna(){
-    return columna;
+int Vertice::obtener_columna(){
+ return columna;
 }
 
 bool Vertice::comprobar_vertice(int fila, int columna){
-    return (this->fila == fila && this->columna == columna);
+ return (this->fila==fila && this->columna==columna);
 }
 
-int Vertice::obtenerCosto() {
+int Vertice::obtener_costo() {
     return costo;
 }
 

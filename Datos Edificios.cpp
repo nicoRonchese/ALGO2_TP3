@@ -1,11 +1,11 @@
-#include "Datos_Edificios.h"
+#include "Datos Edificios.h"
 
-Datos_edificios::Datos_edificios(){
+DatosEdificios::DatosEdificios(){
     cantidad_edificios = 0;
     leer_edificios();
 }
 
-void Datos_edificios::leer_edificios(){
+void DatosEdificios::leer_edificios(){
     ifstream archivo(PATH_EDIFICIOS);
     edificio aux;
     string llave,datos[6];
@@ -44,17 +44,17 @@ void Datos_edificios::leer_edificios(){
     archivo.close();
 }
 
-void Datos_edificios::agregar_edificio(string llave, edificio datos){
-    edificios.agregarElemento(llave,datos);
+void DatosEdificios::agregar_edificio(string llave, edificio datos){
+    edificios.agregar_elemento(llave,datos);
 }
 
-void Datos_edificios::mostrar_edificios(){
+void DatosEdificios::mostrar_edificios(){
     edificios.mostrar_edificios();
 }
 
-bool Datos_edificios::comprobar_edificio(string nombre){
+bool DatosEdificios::comprobar_edificio(string nombre){
   bool chequeo = false;
-  if(edificios.buscarElemento(nombre).maxima_cantidad_permitida != 0){
+  if(edificios.buscar_elemento(nombre).maxima_cantidad_permitida != 0){
       chequeo = true;
   } else{
     cout << "Edificio no encontrado" << endl;
@@ -63,11 +63,11 @@ bool Datos_edificios::comprobar_edificio(string nombre){
   return chequeo;
 }
 
-edificio Datos_edificios::buscar_edificio(string nombre){
-    return edificios.buscarElemento(nombre);
+edificio DatosEdificios::buscar_edificio(string nombre){
+    return edificios.buscar_elemento(nombre);
 }
 
-string Datos_edificios::datos_produccion(string nombre){
+string DatosEdificios::datos_produccion(string nombre){
     string produccion;
     if (ASERRADERO == nombre){
         produccion = PRODUCCION_ASERRADERO;
@@ -90,19 +90,22 @@ string Datos_edificios::datos_produccion(string nombre){
     return produccion;
   }
 
-void Datos_edificios::modificar_edificio(edificio dato, string llave){
+void DatosEdificios::modificar_edificio(edificio dato, string llave){
     dato.produccion = datos_produccion(llave);
     edificios.modificar_elemento(llave,dato);
 }
 
-void Datos_edificios::guardar_edificios(){
+void DatosEdificios::guardar_edificios(){
     ofstream archivo;
     archivo.open(PATH_EDIFICIOS,ios::out);
     if(!archivo)
-    cout << "Error abriendo el fichero" << endl;
+     cout << "Error abriendo el fichero" << endl;
+    else{
+     edificios.guardar_edificio(PATH_EDIFICIOS);
+     cout<<"Datos Edificios guardados"<<endl;
+    }
     archivo.close();
-    edificios.guardar_edificio(PATH_EDIFICIOS);
 }
 
-Datos_edificios::~Datos_edificios(){}
+DatosEdificios::~DatosEdificios(){}
 

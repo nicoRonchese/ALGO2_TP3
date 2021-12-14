@@ -13,60 +13,25 @@ private:
 
 /*MÉTODOS*/
 public:
-    /*
-    Constructor
-    * Pre: Recibe una fila, columna y costo.
-    * Post: Crea el nodo.
-    */
     Nodo(int fila, int columna, int costo);
 
-    /*
-    * Pre: -.
-    * Post: Devuelve el nodo siguiente.
-    */
-    Nodo<Tipo>* obtenerSiguiente();
+    //post: devuelve el nodo siguiente.
+    Nodo<Tipo>* obtener_siguiente();
 
-    /*
-    * Pre: -.
-    * Post: Devuelve el nombre del nodo.
-    */ 
-    string obtenerNombre();
+    //post: devuelve el nombre del nodo
+    string obtener_nombre();
 
-    /*
-    * Pre: -.
-    * Post: Devuelve la fila del nodo.
-    */
-    int obtenerFila();
+    int obtener_fila();
 
-    /*
-    * Pre: -.
-    * Post: Devuelve la columna del nodo.
-    */
-    int obtenerColumna();
+    int obtener_columna();
 
-    /*
-    * Pre: -.
-    * Post: Devuelve el costo del nodo.
-    */
-    int obtenerCosto();
+    int obtener_costo();
 
-    /*
-    * Pre: -.
-    * Post: Devuelve 'true' si la fila y columna es la correspondiente al nodo y 'false' de no ser así.
-    */
     bool comprobar_nodo(int fila, int columna);
 
-    /*
-    * Pre: -.
-    * Post: le asigna como siguiente el nodo recibido.
-    */
-    void asignarSiguiente(Nodo<Tipo>* siguiente);
+    //post: le asigna como siguiente el nodo recibido
+    void asignar_siguiente(Nodo<Tipo>* siguiente);
 
-    /*
-    Destructor
-    * Pre: -.
-    * Post: Libera la memoria.
-    */
     ~Nodo();
 };
 
@@ -77,28 +42,28 @@ Nodo<Tipo>::Nodo(int fila, int columna, int costo) {
 }
 
 template<typename Tipo>
-Nodo<Tipo> *Nodo<Tipo>::obtenerSiguiente() {
+Nodo<Tipo> *Nodo<Tipo>::obtener_siguiente() {
     return siguiente;
 }
 
 template<typename Tipo>
-string Nodo<Tipo>::obtenerNombre() {
-    return elemento -> obtenerNombre();
+string Nodo<Tipo>::obtener_nombre() {
+    return elemento -> obtener_nombre();
 }
 
 template<typename Tipo>
-int Nodo<Tipo>::obtenerFila() {
-    return elemento -> obtenerFila();
+int Nodo<Tipo>::obtener_fila() {
+    return elemento -> obtener_fila();
 }
 
 template<typename Tipo>
-int Nodo<Tipo>::obtenerColumna() {
-    return elemento -> obtenerColumna();
+int Nodo<Tipo>::obtener_columna() {
+    return elemento -> obtener_columna();
 }
 
 template<typename Tipo>
-int Nodo<Tipo>::obtenerCosto() {
-    return elemento -> obtenerCosto();
+int Nodo<Tipo>::obtener_costo() {
+    return elemento -> obtener_costo();
 }
 
 template<typename Tipo>
@@ -107,7 +72,7 @@ bool Nodo<Tipo>::comprobar_nodo(int fila, int columna){
 }
 
 template<typename Tipo>
-void Nodo<Tipo>::asignarSiguiente(Nodo<Tipo> *siguiente) {
+void Nodo<Tipo>::asignar_siguiente(Nodo<Tipo> *siguiente) {
     this -> siguiente = siguiente;
 }
 

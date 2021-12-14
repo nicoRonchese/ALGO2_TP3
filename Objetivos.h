@@ -4,33 +4,14 @@
 #include <string.h>
 #include <random>
 #include <ctime>
+#include "Structs Constantes.h"
 
 using namespace std;
 
-const int COMPRAR_ANDYPOLIS = 0;
-const int EDAD_PIEDRA = 1;
-const int BOMBARDERO = 2;
-const int ENERGETICO = 3;
-const int LETRADO = 4;
-const int MINERO = 5;
-const int CANSADO = 6;
-const int CONSTRUCTOR = 7;
-const int ARMADO = 8;
-const int EXTREMISTA = 9;
-const int TOTAL_OBJETIVOS = 9;
-const int TOTAL_OBJETIVOS_JUGADOR = 3;
-const int TOTAL_OBJETIVOS_PARA_GANAR = 2;
-
-struct Objetivo{
-    int tipo_objetivo;
-    bool cumplido;
-    int cantidad;
-};
 
 class Objetivos{
-private:
-  //Atributos
-  Objetivo** objetivos;
+ private:
+  objetivo** objetivos;
   int maximo_escuelas;
   bool obelisco = false;
   bool escuela = false;
@@ -41,17 +22,17 @@ private:
   bool planta_electrica = false;
 
  public:
-  //MÃ©todos pÃºblicos
+  //Métodos públicos
   /*
   Constructor
-  * Pre: Recibe el mÃ¡ximo de escuelas.
+  * Pre: Recibe el máximo de escuelas.
   * Post: Crea los objetivos.
   */
   Objetivos(int maximo_escuelas);
 
   /*
   * Pre: -.
-  * Post: Se cumple el objetivo de construcciÃ³n del obelisco.
+  * Post: Se cumple el objetivo de construcción del obelisco.
   */
   void construccion_obelisco();
 
@@ -63,7 +44,7 @@ private:
 
   /*
   * Pre: -.
-  * Post: Devuelve 'true' si se cumplieron los objetivos necesarios para ganar o 'false' en caso 
+  * Post: Devuelve 'true' si se cumplieron los objetivos necesarios para ganar o 'false' en caso
   *       contrario.
   */
   bool comprobar_objetivos_cumplidos();
@@ -253,13 +234,13 @@ private:
 
   /*
   * Pre:  -.
-  * Post: Sortea un nÃºmero para elegir los objetivos.
+  * Post: Sortea un número para elegir los objetivos.
   */
   void sortear_objetivos(int* objetivos_preparados, int total_objetivos_jugador);
 
   /*
   * Pre:  -.
-  * Post: Devuelve 'true' si hay un objetivo repetido y 'false' de no ser asÃ­.
+  * Post: Devuelve 'true' si hay un objetivo repetido y 'false' de no ser así.
   */
   bool hay_objetivo_repetido(int* objetivos_preparados, int objetivo_actual);
 };

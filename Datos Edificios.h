@@ -1,26 +1,17 @@
-#ifndef DATOS_EDIFICIOS_H_INCLUDED
-#define DATOS_EDIFICIOS_H_INCLUDED
+#ifndef DatosEdificios_H_INCLUDED
+#define DatosEdificios_H_INCLUDED
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "diccionario.h"
-#include "Edificio Colocable.h"
+#include "Diccionario.h"
+#include "Structs Constantes.h"
 using namespace std;
 
-const string PATH_EDIFICIOS = "edificios.txt";
-const string PRODUCCION_ASERRADERO = "Produce 25 de madera";
-const string PRODUCCION_MINA = "Produce 15 de piedra";
-const string PRODUCCION_FABRICA = "Produce 40 de metal";
-const string PRODUCCION_ESCUELA = "Produce 25 andycoins";
-const string PRODUCCION_PLANTA_ELECTRICA = "Produce 15 de energia";
-const string PRODUCCION_MINA_ORO = "Produce 50 andycoins";
-
-class Datos_edificios
-{
+class DatosEdificios{
 private:
     //Atributos
 
-    diccionario<edificio> edificios;
+    Diccionario<edificio> edificios;
     int cantidad_edificios;
 
 public:
@@ -30,7 +21,7 @@ public:
     //PRE: El archivo edificios.txt debe existir en el directorio donde se encuentre el programa.
     //POS: Carga la informacion del archivo en el vector dinamico edificios y la cantidad de
     //     edificios que haya en cantidad_edificios.
-    Datos_edificios();
+    DatosEdificios();
 
     //PRE: -.
     //POS: Muestra en la terminal los nombres de los edificios disponibles.
@@ -55,7 +46,7 @@ public:
     //Destructor
     //PRE: -.
     //POS:libera la memoria tomada para en edificios.
-    ~Datos_edificios();
+    ~DatosEdificios();
 
 private:
     //Métodos privados
@@ -73,4 +64,4 @@ private:
 };
 
 
-#endif // DATOS_EDIFICIOS_H_INCLUDED
+#endif // DatosEdificios_H_INCLUDED

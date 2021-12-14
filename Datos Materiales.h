@@ -1,37 +1,20 @@
-#ifndef DATOSMATERIALES_H_INCLUDED
-#define DATOSMATERIALES_H_INCLUDED
+#ifndef DATOS_MATERIALES_H_INCLUDED
+#define DATOS_MATERIALES_H_INCLUDED
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "Menu.h"
-#include "Datos_Edificios.h"
+#include "Datos Edificios.h"
+#include "Structs Constantes.h"
 //#include "Datos Edificios.h"
 //#include "Material Colocable.h"
 
 using namespace std;
-const string PATH_MATERIALES = "materiales.txt";
-const int PIEDRA = 0;
-const int MADERA = 1;
-const int METAL = 2;
-const int ANDYCOIN = 3;
-const int BOMBA = 4;
-const string NOMBRE_PIEDRA = "piedra";
-const string NOMBRE_MADERA = "madera";
-const string NOMBRE_METAL = "metal";
-const string NOMBRE_ANDYCOIN = "andycoins";
-const string NOMBRE_BOMBA = "bombas";
-const int COSTO_BOMBA = 100;
-
-struct Material{
-    string nombre;
-    int cantidad;
-};
 
 class DatosMateriales{
    private:
 
     //Atributos
-    Material*** materiales;
+    material*** materiales;
     int cantidad_materiales;
     int cantidad_jugadores;
 
@@ -77,9 +60,9 @@ class DatosMateriales{
     void sumar_demolicion_materiales(edificio edificio, int jugador);
 
     //PRE: Recibe un edificio y un jugador valido.
-    //POS: Devuelve 'true' si hay materiales suficientes para reparar el edifico y 'false' 
+    //POS: Devuelve 'true' si hay materiales suficientes para reparar el edifico y 'false'
     //     de no ser así.
-    bool reparacion_edificio(edificio edificio, int jugador);
+    bool comprobar_materiales_reparacion(edificio edificio, int jugador);
 
     //Destructor
     //PRE: -
@@ -99,7 +82,7 @@ class DatosMateriales{
 
     //PRE: Recibir un puntero de un material.
     //POS: Redimensiona el vector que guarda los materiales y le agrega el nuevo material.
-    void agregar_material(Material* material, int jugador);
+    void agregar_material(material* material, int jugador);
 
     //PRE: Recibir posiciones dentro del tamaño del vector.
     //POS: Cambia el contenido de las 2 posiciones entre si.
@@ -115,4 +98,4 @@ class DatosMateriales{
 
 };
 
-#endif // DATOSMATERIALES_H_INCLUDED
+#endif // DATOS_MATERIALES_H_INCLUDED

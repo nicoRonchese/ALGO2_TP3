@@ -17,7 +17,7 @@ MaterialColocable::MaterialColocable(string nombre){
       this->nombre = nombre;
       this->signo_mapa = SIGNO_ANDYCOIN;
       this->cantidad = CANTIDAD_ANDYCOIN;
-   }  
+   }
   }
 
 void MaterialColocable::mostrar(){
@@ -28,7 +28,7 @@ string MaterialColocable::devolver_signo(){
   return this->signo_mapa;
 }
 
-string MaterialColocable::mostrar_material(){
+string MaterialColocable::devolver_nombre(){
   return nombre;
 }
 

@@ -1,0 +1,230 @@
+==15309== Memcheck, a memory error detector
+==15309== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==15309== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==15309== Command: ./main
+==15309== Parent PID: 8416
+==15309== 
+--15309-- 
+--15309-- Valgrind options:
+--15309--    --leak-check=full
+--15309--    --show-leak-kinds=all
+--15309--    --track-origins=yes
+--15309--    --verbose
+--15309--    --log-file=valgrind-out.txt
+--15309-- Contents of /proc/version:
+--15309--   Linux version 5.11.0-41-generic (buildd@lgw01-amd64-005) (gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #45~20.04.1-Ubuntu SMP Wed Nov 10 10:20:10 UTC 2021
+--15309-- 
+--15309-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--15309-- Page sizes: currently 4096, max supported 4096
+--15309-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--15309-- Reading syms from /home/nrm/Documents/ALGO2_TP3-main/main
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--15309--   Considering /usr/lib/x86_64-linux-gnu/ld-2.31.so ..
+--15309--   .. CRC mismatch (computed 975d0390 wanted 30bd717f)
+--15309--   Considering /lib/x86_64-linux-gnu/ld-2.31.so ..
+--15309--   .. CRC mismatch (computed 975d0390 wanted 30bd717f)
+--15309--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.31.so ..
+--15309--   .. CRC is valid
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--15309--    object doesn't have a symbol table
+--15309--    object doesn't have a dynamic symbol table
+--15309-- Scheduler: using generic scheduler lock implementation.
+--15309-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==15309== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-15309-by-nrm-on-???
+==15309== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-15309-by-nrm-on-???
+==15309== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-15309-by-nrm-on-???
+==15309== 
+==15309== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==15309== don't want to do, unless you know exactly what you're doing,
+==15309== or are doing some strange experiment):
+==15309==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=15309 ...command...
+==15309== 
+==15309== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==15309==   /path/to/gdb ./main
+==15309== and then give GDB the following command
+==15309==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=15309
+==15309== --pid is optional if only one valgrind process is running
+==15309== 
+--15309-- REDIR: 0x4022e10 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--15309-- REDIR: 0x4022be0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--15309--    object doesn't have a symbol table
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--15309--    object doesn't have a symbol table
+==15309== WARNING: new redirection conflicts with existing -- ignoring it
+--15309--     old: 0x04022e10 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--15309--     new: 0x04022e10 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--15309-- REDIR: 0x401f5f0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--15309-- REDIR: 0x4023370 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+--15309--    object doesn't have a symbol table
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+--15309--    object doesn't have a symbol table
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--15309--   Considering /usr/lib/x86_64-linux-gnu/libc-2.31.so ..
+--15309--   .. CRC mismatch (computed 86b78530 wanted e380f01c)
+--15309--   Considering /lib/x86_64-linux-gnu/libc-2.31.so ..
+--15309--   .. CRC mismatch (computed 86b78530 wanted e380f01c)
+--15309--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.31.so ..
+--15309--   .. CRC is valid
+--15309-- Reading syms from /usr/lib/x86_64-linux-gnu/libm-2.31.so
+--15309--   Considering /usr/lib/x86_64-linux-gnu/libm-2.31.so ..
+--15309--   .. CRC mismatch (computed fcb42c76 wanted f6c95789)
+--15309--   Considering /lib/x86_64-linux-gnu/libm-2.31.so ..
+--15309--   .. CRC mismatch (computed fcb42c76 wanted f6c95789)
+--15309--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.31.so ..
+--15309--   .. CRC is valid
+--15309-- REDIR: 0x4afc600 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb900 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc930 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb220 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb960 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afddd0 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b18e60 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b189a0 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc760 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc590 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb890 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb2d0 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc6c0 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b18960 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb7f0 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb3b0 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc980 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb350 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afcad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b1a0d0 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b189e0 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb9a0 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb280 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afb7b0 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b04d20 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc9d0 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc550 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4b18ab0 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afbc60 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc8d0 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afc870 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afde10 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4afca20 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--15309-- REDIR: 0x4be4490 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--15309-- REDIR: 0x4af6260 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--15309-- REDIR: 0x4be4660 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
+--15309-- REDIR: 0x4be0c50 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x48421e0 (bcmp)
+--15309-- REDIR: 0x4bdfb60 (libc.so.6:__strcmp_avx2) redirected to 0x483fed0 (strcmp)
+--15309-- REDIR: 0x4be7670 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
+--15309-- REDIR: 0x4906b20 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x483bdf0 (operator new(unsigned long))
+--15309-- REDIR: 0x4af7c90 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
+--15309-- REDIR: 0x4afc120 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
+--15309-- REDIR: 0x4906b80 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x483c510 (operator new[](unsigned long))
+==15309== Conditional jump or move depends on uninitialised value(s)
+==15309==    at 0x12CBAD: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12B463: Mapa::definir_casillero(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AF5D: Mapa::crear_matriz_archivo() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AC3F: Mapa::Mapa() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123847: Juego::Juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298A7: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==  Uninitialised value was created by a heap allocation
+==15309==    at 0x483BE63: operator new(unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12383C: Juego::Juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298A7: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+--15309-- REDIR: 0x4904da0 (libstdc++.so.6:operator delete[](void*)) redirected to 0x483d6e0 (operator delete[](void*))
+--15309-- REDIR: 0x4af6850 (libc.so.6:free) redirected to 0x483c9d0 (free)
+--15309-- REDIR: 0x4904d70 (libstdc++.so.6:operator delete(void*)) redirected to 0x483cf50 (operator delete(void*))
+--15309-- REDIR: 0x4be04c0 (libc.so.6:__memchr_avx2) redirected to 0x4840050 (memchr)
+--15309-- REDIR: 0x4be42a0 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
+--15309-- REDIR: 0x4be7650 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
+--15309-- REDIR: 0x4904d80 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x483d160 (operator delete(void*, unsigned long))
+==15309== Mismatched free() / delete / delete []
+==15309==    at 0x483D1CF: operator delete(void*, unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CBBB: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12FA55: Mapa::cambiar_posicion(int, camino_especifico, DatosMateriales*) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x127EC0: Juego::moverse_coordenada() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125D84: Juego::procesar_opcion_juego(int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1244B0: Juego::menu_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125AB3: Juego::comenzar_partida() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123EA8: Juego::empezar_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298B3: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==  Address 0x4dc91f0 is 0 bytes after a block of size 0 alloc'd
+==15309==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CC1E: Mapa::eliminar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12D38D: Mapa::lluvia_materiales() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125AD6: Juego::lluvia_recursos() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125A8F: Juego::comenzar_partida() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123EA8: Juego::empezar_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298B3: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+==15309== 
+==15309== HEAP SUMMARY:
+==15309==     in use at exit: 40 bytes in 5 blocks
+==15309==   total heap usage: 549 allocs, 544 frees, 239,287 bytes allocated
+==15309== 
+==15309== Searching for pointers to 5 not-freed blocks
+==15309== Checked 143,752 bytes
+==15309== 
+==15309== 8 bytes in 1 blocks are definitely lost in loss record 1 of 2
+==15309==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CB30: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12F6BB: Mapa::recolectar_material_tirado(int, int, int, DatosMateriales*) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12F92D: Mapa::cambiar_posicion(int, camino_especifico, DatosMateriales*) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x127EC0: Juego::moverse_coordenada() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125D84: Juego::procesar_opcion_juego(int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1244B0: Juego::menu_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125AB3: Juego::comenzar_partida() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123EA8: Juego::empezar_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298B3: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+==15309== 32 bytes in 4 blocks are definitely lost in loss record 2 of 2
+==15309==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CB30: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12B463: Mapa::definir_casillero(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AF5D: Mapa::crear_matriz_archivo() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AC3F: Mapa::Mapa() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123847: Juego::Juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298A7: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+==15309== LEAK SUMMARY:
+==15309==    definitely lost: 40 bytes in 5 blocks
+==15309==    indirectly lost: 0 bytes in 0 blocks
+==15309==      possibly lost: 0 bytes in 0 blocks
+==15309==    still reachable: 0 bytes in 0 blocks
+==15309==         suppressed: 0 bytes in 0 blocks
+==15309== 
+==15309== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==15309== 
+==15309== 1 errors in context 1 of 4:
+==15309== Mismatched free() / delete / delete []
+==15309==    at 0x483D1CF: operator delete(void*, unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CBBB: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12FA55: Mapa::cambiar_posicion(int, camino_especifico, DatosMateriales*) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x127EC0: Juego::moverse_coordenada() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125D84: Juego::procesar_opcion_juego(int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1244B0: Juego::menu_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125AB3: Juego::comenzar_partida() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123EA8: Juego::empezar_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298B3: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==  Address 0x4dc91f0 is 0 bytes after a block of size 0 alloc'd
+==15309==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12CC1E: Mapa::eliminar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12D38D: Mapa::lluvia_materiales() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125AD6: Juego::lluvia_recursos() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x125A8F: Juego::comenzar_partida() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123EA8: Juego::empezar_juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298B3: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+==15309== 
+==15309== 1 errors in context 2 of 4:
+==15309== Conditional jump or move depends on uninitialised value(s)
+==15309==    at 0x12CBAD: Mapa::agregar_transitables(int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12B463: Mapa::definir_casillero(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int) (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AF5D: Mapa::crear_matriz_archivo() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x12AC3F: Mapa::Mapa() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x123847: Juego::Juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298A7: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==  Uninitialised value was created by a heap allocation
+==15309==    at 0x483BE63: operator new(unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15309==    by 0x12383C: Juego::Juego() (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309==    by 0x1298A7: main (in /home/nrm/Documents/ALGO2_TP3-main/main)
+==15309== 
+==15309== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

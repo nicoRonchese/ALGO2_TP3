@@ -1,0 +1,7 @@
+-los signos de los jugadores estan representados por numeros ya que pueden ser varios
+-los edificios tienen vida, y cada bomba les saca 50 de vida
+-a la hora de moverse los jugadores pueden moverse por todos los casilleros pero no se pueden quedar
+donde hay un jugador o edificio
+-antes de comenzar la partida se puede aumentar la cantidad de jugadores
+-casi todo el codigo esta en snake pero los nombres de los objetos estan en CammelCase
+-hay una perdida de memoria en eliminar_transitables

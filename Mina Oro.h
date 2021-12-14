@@ -2,6 +2,7 @@
 #define MINA_ORO_H_INCLUDED
 #include "Edificio Colocable.h"
 
+
 class MinaOro : public EdificioColocable{
 
  public:
@@ -24,7 +25,7 @@ class MinaOro : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes a la mina de oro.
     */
-    void recolectar(DatosMateriales* materiales);
+    void recolectar(DatosMateriales* materiales, int* energia);
 
     /*
     Destructor

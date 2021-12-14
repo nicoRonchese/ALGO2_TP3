@@ -2,44 +2,44 @@
 
 
 
-void Floyd::crearMatrizCamino_Costos(int ** matrizAdyacencia){
-    int ** caminos = new int*[cantidadVertices];
-    int ** costos = new int*[cantidadVertices];
-    for(int i = 0; i < cantidadVertices; i++){
-        caminos[i] = new int[cantidadVertices];
-        costos[i] = new int[cantidadVertices];
+void Floyd::crear_matriz_camino_costos(int ** matriz_adyacencia){
+    int ** caminos = new int*[cantidad_vertices];
+    int ** costos = new int*[cantidad_vertices];
+    for(int i = 0; i < cantidad_vertices; i++){
+        caminos[i] = new int[cantidad_vertices];
+        costos[i] = new int[cantidad_vertices];
     }
 
-    for(int i = 0; i < cantidadVertices; i++){
-        for(int j = 0; j < cantidadVertices; j++) {
+    for(int i = 0; i < cantidad_vertices; i++){
+        for(int j = 0; j < cantidad_vertices; j++) {
             caminos[i][j] = j;
-            costos[i][j] = matrizAdyacencia[i][j];
+            costos[i][j] = matriz_adyacencia[i][j];
         }
     }
-    matrizCaminos = caminos;
-    matrizCostos = costos;
+    matriz_caminos = caminos;
+    matriz_costos = costos;
 }
 
-void Floyd::calcularMatrices() {
+void Floyd::calcular_matrices() {
 
-    //matrizCostos = crearMatrizCostos(matrizAdyacencia);
-    //matrizCaminos = crearMatrizCaminos();
+    //matriz_costos = crearmatriz_costos(matriz_adyacencia);
+    //matriz_caminos = crearmatriz_caminos();
 
-    crearMatrizCamino_Costos(matrizAdyacencia);
+    crear_matriz_camino_costos(matriz_adyacencia);
 
-    for (int verticeIntermedio = 0; verticeIntermedio < cantidadVertices; verticeIntermedio++) {
+    for (int verticeIntermedio = 0; verticeIntermedio < cantidad_vertices; verticeIntermedio++) {
 
-        for (int origen = 0; origen < cantidadVertices; origen++){
+        for (int origen = 0; origen < cantidad_vertices; origen++){
 
-            for (int destino = 0; destino < cantidadVertices; destino++) {
+            for (int destino = 0; destino < cantidad_vertices; destino++) {
 
-                int costo = matrizCostos[origen][verticeIntermedio] + matrizCostos[verticeIntermedio][destino];
+                int costo = matriz_costos[origen][verticeIntermedio] + matriz_costos[verticeIntermedio][destino];
 
-                if (matrizCostos[origen][destino] > costo) {
-                    matrizCostos[origen][destino] = costo;
-                    matrizCaminos[origen][destino] = matrizCaminos[origen][verticeIntermedio];
-                } else if (matrizCostos[origen][destino] == INFINITO){
-                    matrizCaminos[origen][destino] = POSICION_NO_ENCONTRADA;
+                if (matriz_costos[origen][destino] > costo) {
+                    matriz_costos[origen][destino] = costo;
+                    matriz_caminos[origen][destino] = matriz_caminos[origen][verticeIntermedio];
+                } else if (matriz_costos[origen][destino] == INFINITO){
+                    matriz_caminos[origen][destino] = POSICION_NO_ENCONTRADA;
                 }
 
             }
@@ -49,7 +49,7 @@ void Floyd::calcularMatrices() {
 
 }
 
-void Floyd::agrandarCaminoEspecifico(camino_especifico *dato, int fila ,int columna){
+void Floyd::agrandar_camino_especifico(camino_especifico *dato, int fila ,int columna){
     int** camino_aux = new int*[dato->longitud+1];
     for(int i = 0; i < (dato->longitud); i++){
         camino_aux[i] = dato->camino[i];
@@ -64,36 +64,34 @@ void Floyd::agrandarCaminoEspecifico(camino_especifico *dato, int fila ,int colu
     dato->longitud++;
 }
 
-camino_especifico Floyd::caminoMinimo(int origen, int destino) {
-    camino_especifico* datos = new camino_especifico;
-    datos->longitud = 0;
-    datos->costo = matrizCostos[origen][destino];
-    agrandarCaminoEspecifico(datos,vertices->obtenerFila(origen +1),vertices->obtenerColumna(origen +1));
-    if(matrizCaminos[origen][destino] == POSICION_NO_ENCONTRADA){
-        cout << "No hay un camino que conecte " <<  vertices->obtenerNombre(origen + 1) << " con " << vertices->obtenerNombre(destino + 1);
-    }else{
-        do{
-            origen = matrizCaminos[origen][destino];
-            agrandarCaminoEspecifico(datos,vertices->obtenerFila(origen +1),vertices->obtenerColumna(origen +1));
+camino_especifico Floyd::camino_minimo(int origen, int destino) {
+    camino_especifico* aux = new camino_especifico();
+    camino_especifico datos;
+    aux->longitud = 0;
+    aux->costo = matriz_costos[origen][destino];
+    agrandar_camino_especifico(aux,vertices->obtener_fila(origen +1),vertices->obtener_columna(origen +1));
+    do{
+        origen = matriz_caminos[origen][destino];
+        agrandar_camino_especifico(aux,vertices->obtener_fila(origen +1),vertices->obtener_columna(origen +1));
 
-        }while(origen != destino);
-    }
+    }while(origen != destino);
     cout << endl;
-    return *datos;
-
+    datos = *aux;
+    delete aux;
+    return datos;
 }
 
 void Floyd::liberarMatrices() {
-    if(matrizCostos != nullptr && matrizCaminos != nullptr){
-        for(int i = 0; i < cantidadVertices; i++){
-            delete[] matrizCostos[i];
-            delete[] matrizCaminos[i];
+    if(matriz_costos != nullptr && matriz_caminos != nullptr){
+        for(int i = 0; i < cantidad_vertices; i++){
+            delete[] matriz_costos[i];
+            delete[] matriz_caminos[i];
         }
-        delete[] matrizCostos;
-        delete[] matrizCaminos;
+        delete[] matriz_costos;
+        delete[] matriz_caminos;
 
-        matrizCostos = nullptr;
-        matrizCaminos = nullptr;
+        matriz_costos = nullptr;
+        matriz_caminos = nullptr;
     }
 }
 
@@ -101,12 +99,11 @@ Floyd::~Floyd(){
     liberarMatrices();
 }
 
-Floyd::Floyd(Lista<Vertice> *vertices, int ** matrizAdyacencia) {
+Floyd::Floyd(Lista<Vertice> *vertices, int ** matriz_adyacencia) {
     this -> vertices = vertices;
-    this -> matrizAdyacencia = matrizAdyacencia;
-    cantidadVertices = vertices -> obtenerCantidadDeElementos();
-    calcularMatrices();
-//    mostrarMatrices();
+    this -> matriz_adyacencia = matriz_adyacencia;
+    cantidad_vertices = vertices -> obtener_cantidad_elementos();
+    calcular_matrices();
 }
 
 

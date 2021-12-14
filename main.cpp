@@ -1,13 +1,12 @@
 #include <iostream>
-#include "Menu.h"
-#include "Menu.cpp"
+#include "Juego.h"
 using namespace std;
 
 
 int main()
 {
-    srand (time(NULL));
-    Menu menu;
-    menu.empezar_menu();
+    srand ((unsigned)time(NULL));
+    Juego Juego;
+    Juego.empezar_juego();
     return 0;
 }

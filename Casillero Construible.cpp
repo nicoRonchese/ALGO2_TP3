@@ -1,12 +1,5 @@
 #include "Casillero Construible.h"
-#include "Escuela.cpp"
-#include "Fabrica.cpp"
-#include "Aserradero.cpp"
-#include "Mina.cpp"
-#include "MinaOro.cpp"
-#include "PlantaElectrica.cpp"
-#include "Edificio Colocable.cpp"
-#include "Contador Edificios.cpp"
+
 
 
 CasilleroConstruible::CasilleroConstruible(string tipo_terreno) : Casillero(tipo_terreno) {
@@ -59,41 +52,23 @@ void CasilleroConstruible:: mostrar_en_mapa(){
    cout << COLOR_TERRENO << signo << END_COLOR;
 }
 
-void CasilleroConstruible::recolectar_producido(DatosMateriales* materiales, int* energia, int jugador){
-   if (edificio->nombre_edificio() == ASERRADERO){
-      materiales->sumar_materiales(MADERA, PRODUCCION_ASERRADERO_CANTIDAD, jugador);
-      cout << ASERRADERO << " produjo " << PRODUCCION_ASERRADERO_CANTIDAD << " de madera" << endl;
-   } else if (edificio->nombre_edificio() == MINA){
-      materiales->sumar_materiales(PIEDRA, PRODUCCION_MINA_CANTIDAD, jugador);
-      cout << MINA << " produjo " << PRODUCCION_MINA_CANTIDAD << " de piedra" << endl;
-   } else if (edificio->nombre_edificio() == FABRICA){
-      materiales->sumar_materiales(METAL, PRODUCCION_FABRICA_CANTIDAD, jugador);
-      cout << FABRICA << " produjo " << PRODUCCION_FABRICA_CANTIDAD << " de metal" << endl;
-   } else if (edificio->nombre_edificio() == ESCUELA){
-      materiales->sumar_materiales(ANDYCOIN, PRODUCCION_ESCUELA_CANTIDAD, jugador);
-      cout << ESCUELA << " produjo " << PRODUCCION_ESCUELA_CANTIDAD << " andycoins" << endl;
-   } else if (edificio->nombre_edificio() == PLANTA_ELECTRICA){
-      energia[jugador] += PRODUCCION_PLANTA_ELECTRICA_CANTIDAD;
-      cout << PLANTA_ELECTRICA << " produjo " << PRODUCCION_PLANTA_ELECTRICA_CANTIDAD << " de energia" << endl;
-   } else if (edificio->nombre_edificio() == MINA_ORO){
-      materiales->sumar_materiales(ANDYCOIN, PRODUCCION_MINA_ORO_CANTIDAD, jugador);
-      cout << MINA_ORO << " produjo "<< PRODUCCION_MINA_ORO_CANTIDAD << " andycoins" << endl;
-   }
+void CasilleroConstruible::recolectar_producido(DatosMateriales* materiales, int* energia){
+   edificio->recolectar(materiales, energia);
 }
 
 
 string CasilleroConstruible::demoler_edificio(){
-   string nombre_edificio = edificio->nombre_edificio();
+   string nombre_edificio = edificio->devolver_nombre();
    delete edificio;
    edificio = nullptr;
    return (nombre_edificio);
 }
 
-void CasilleroConstruible::atacar_edificio(Contador_edificios** edificios_construidos){
+void CasilleroConstruible::atacar_edificio(ContadorEdificios** edificios_construidos){
    edificio->recibir_bomba();
-   cout << edificio->nombre_edificio() << " fue atacado/a con exito y";
+   cout << edificio->devolver_nombre() << " fue atacado/a con exito y";
    if (edificio->devolver_vida() == 0){
-      edificios_construidos[edificio->propietario_edificio()]->restar_edificio(edificio->nombre_edificio());
+      edificios_construidos[edificio->propietario_edificio()]->restar_edificio(edificio->devolver_nombre());
       delete edificio;
       edificio = nullptr;
       cout<< " se ha destruido" << endl;
@@ -104,10 +79,9 @@ void CasilleroConstruible::atacar_edificio(Contador_edificios** edificios_constr
 
 bool CasilleroConstruible::consultar_vida(){
    bool vida_maxima = false;
-
-   if (edificio->nombre_edificio() == MINA && edificio->devolver_vida() == VIDA_EDIFICIO_FUERTE){
+   if (edificio->devolver_nombre() == MINA && edificio->devolver_vida() == VIDA_EDIFICIO_FUERTE){
       vida_maxima = true;
-   }else if (edificio->nombre_edificio() == FABRICA && edificio->devolver_vida() == VIDA_EDIFICIO_FUERTE){
+   }else if (edificio->devolver_nombre() == FABRICA && edificio->devolver_vida() == VIDA_EDIFICIO_FUERTE){
       vida_maxima = true;
    }else if (edificio->devolver_vida() == VIDA_EDIFICIO_DEBIL){
       vida_maxima = true;
@@ -125,7 +99,7 @@ int CasilleroConstruible::devolver_propietario(){
 }
 
 string CasilleroConstruible::devolver_elemento_colocable(){
-   return (edificio->nombre_edificio());
+   return (edificio->devolver_nombre());
 }
 
 CasilleroConstruible::~CasilleroConstruible(){

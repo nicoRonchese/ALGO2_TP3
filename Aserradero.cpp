@@ -11,4 +11,9 @@ void Aserradero::mostrar(){
  cout << "Tengo " << vida << " de vida y mi propietario es el jugador " << propietario + 1 << endl;
 }
 
+void Aserradero::recolectar(DatosMateriales* materiales, int* energia){
+ materiales->sumar_materiales(MADERA, PRODUCCION_ASERRADERO_CANTIDAD, propietario);
+ cout << nombre << " produjo " << PRODUCCION_ASERRADERO_CANTIDAD << " de madera" << endl;
+}
+
 Aserradero::~Aserradero(){}

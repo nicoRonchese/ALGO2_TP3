@@ -1,5 +1,4 @@
 #include "Casillero Transitable.h"
-#include "Material Colocable.cpp"
 
 
 CasilleroTransitable::CasilleroTransitable(string tipo_terreno) : Casillero(tipo_terreno) {
@@ -65,27 +64,27 @@ void CasilleroTransitable:: colocar_material(MaterialColocable* material){
 }
 
 void CasilleroTransitable:: recolectar_material(DatosMateriales* materiales, int jugador){
-   if (this->material->mostrar_material() == NOMBRE_MADERA){
+   if (this->material->devolver_nombre() == NOMBRE_MADERA){
       materiales->sumar_materiales(MADERA, CANTIDAD_MADERA, jugador);
    }
-   if (this->material->mostrar_material() == NOMBRE_PIEDRA){
+   if (this->material->devolver_nombre() == NOMBRE_PIEDRA){
       materiales->sumar_materiales(PIEDRA, CANTIDAD_PIEDRA, jugador);
    }
-   if (this->material->mostrar_material() == NOMBRE_METAL){
+   if (this->material->devolver_nombre() == NOMBRE_METAL){
       materiales->sumar_materiales(METAL, CANTIDAD_METAL, jugador);
    }
-   if (this->material->mostrar_material() == NOMBRE_ANDYCOIN){
+   if (this->material->devolver_nombre() == NOMBRE_ANDYCOIN){
       materiales->sumar_materiales(ANDYCOIN, CANTIDAD_ANDYCOIN, jugador);
    }
 
-   cout<< "se recolecto " << material->mostrar_material() << endl;
+   cout<< "se recolecto " << material->devolver_nombre() << endl;
    delete material;
    material = nullptr;
 }
 
 string CasilleroTransitable::devolver_elemento_colocable(){
    //return material->nombre_material();
-   return material->mostrar_material();
+   return material->devolver_nombre();
 }
 
 CasilleroTransitable::~CasilleroTransitable(){

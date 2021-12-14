@@ -11,4 +11,9 @@ void Escuela::mostrar(){
     cout << "Tengo  "<< vida <<" de vida y mi propietario es jugador " << propietario + 1 << endl;
 }
 
+void Escuela::recolectar(DatosMateriales* materiales, int* energia){
+ materiales->sumar_materiales(ANDYCOIN, PRODUCCION_ESCUELA_CANTIDAD, propietario);
+ cout << nombre << " produjo " << PRODUCCION_ESCUELA_CANTIDAD << " anydcoins" << endl;
+}
+
 Escuela::~Escuela(){}

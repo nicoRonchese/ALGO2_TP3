@@ -1,8 +1,14 @@
-#ifndef CONTADOR_EDIFICIOS_H_INCLUDED
-#define CONTADOR_EDIFICIOS_H_INCLUDED
+#ifndef ContadorEdificios_H_INCLUDED
+#define ContadorEdificios_H_INCLUDED
+#include <string>
+#include <iostream>
+#include "Structs Constantes.h"
 
-class Contador_edificios {
+using namespace std;
+
+class ContadorEdificios {
  private:
+  //Atributos
 
   int cantidad_aserraderos = 0;
   int cantidad_fabricas = 0;
@@ -12,24 +18,27 @@ class Contador_edificios {
   int cantidad_plantas_electricas = 0;
 
  public:
-  //MÃ©todos pÃºblicos
+  //Métodos públicos
   /*
   * Pre: Recibe el nombre de un edificio valido.
   * Post: Devuelve la cantidad de construcciones del edificio pasado por parametro.
   */
   int devolver_cantidad_construida(string nombre);
-
-  /*
+   /*
   * Pre: Recibe el nombre de un edificio valido.
-  * Post: Le suma una construcciÃ³n al edificio pasado por parametro.
+  * Post: Le suma una construcción al edificio pasado por parametro.
   */
   void sumar_edificio(string nombre);
-
   /*
   * Pre: Recibe el nombre de un edificio valido.
-  * Post: Le resta una construcciÃ³n al edificio pasado por parametro.
+  * Post: Le resta una construcción al edificio pasado por parametro.
   */
   void restar_edificio(string nombre);
+  /*
+  * Pre:
+  * Post: Devuelve la cantidad de construcciones
+  */
+  int devolver_cantidad_edificios_construidos();
 };
 
-#endif // CONTADOR_EDIFICIOS_H_INCLUDED
+#endif // ContadorEdificios_H_INCLUDED

@@ -1,7 +1,7 @@
-#include "DatosMateriales.h"
+#include "Datos Materiales.h"
 
 DatosMateriales::DatosMateriales(int cantidad_jugadores) {
-    this->materiales = new Material**[cantidad_jugadores];
+    this->materiales = new material**[cantidad_jugadores];
     this->cantidad_jugadores = cantidad_jugadores;
     if (cantidad_jugadores == CANTIDAD_JUGADORES){
         leer_archivo();
@@ -15,8 +15,8 @@ void DatosMateriales::leer_archivo_inicial(){
     cantidad_materiales = 0;
     ifstream archivo(PATH_MATERIALES);
     string nombre, cantidad_uno, cantidad_dos;
-    Material* material;
-    Material aux;
+    material* material_leido;
+    material aux;
     if(archivo.fail()){
      cout << "Error abriendo el fichero " << PATH_MATERIALES << endl;
     }
@@ -24,16 +24,16 @@ void DatosMateriales::leer_archivo_inicial(){
      while(archivo >> nombre){
         archivo >> cantidad_uno;
         archivo >> cantidad_dos;
-        material = new Material;
-        material -> nombre = nombre;
-        material -> cantidad = 0;
+        material_leido = new material;
+        material_leido -> nombre = nombre;
+        material_leido -> cantidad = 0;
         for (int jugador = 0; jugador<cantidad_jugadores; jugador++){
-         agregar_material(material, jugador);
-         aux = *material;
-         material = new Material;
-         *material = aux;
+         agregar_material(material_leido, jugador);
+         aux = *material_leido;
+         material_leido = new material;
+         *material_leido = aux;
         }
-        delete material;
+        delete material_leido;
         cantidad_materiales++;
      }
     }
@@ -44,8 +44,8 @@ void DatosMateriales::leer_archivo(){
     cantidad_materiales = 0;
     ifstream archivo(PATH_MATERIALES);
     string nombre, cantidad_uno, cantidad_dos;
-    Material* material_uno;
-    Material* material_dos;
+    material* material_uno;
+    material* material_dos;
     if(archivo.fail()){
      cout << "Error abriendo el fichero " << PATH_MATERIALES << endl;
     }
@@ -53,8 +53,8 @@ void DatosMateriales::leer_archivo(){
      while(archivo >> nombre){
         archivo >> cantidad_uno;
         archivo >> cantidad_dos;
-        material_uno = new Material;
-        material_dos = new Material;
+        material_uno = new material;
+        material_dos = new material;
         material_uno -> nombre = nombre;
         material_dos -> nombre = nombre;
         material_uno -> cantidad = stoi(cantidad_uno);
@@ -67,12 +67,12 @@ void DatosMateriales::leer_archivo(){
     archivo.close();
 }
 
-void DatosMateriales::agregar_material(Material* material, int jugador){
-    Material** materiales_aux = new Material*[(cantidad_materiales + 1)];
+void DatosMateriales::agregar_material(material* material_leido, int jugador){
+    material** materiales_aux = new material*[(cantidad_materiales + 1)];
     for(int i = 0; i < cantidad_materiales; i++){
         materiales_aux[i] = materiales[jugador][i];
     }
-    materiales_aux[cantidad_materiales] = material;
+    materiales_aux[cantidad_materiales] = material_leido;
     if (cantidad_materiales != 0){
         delete [] materiales[jugador];
     }
@@ -103,7 +103,7 @@ bool DatosMateriales::comprar_bombas(int jugador, int cantidad){
 }
 
 void DatosMateriales::cambio(int posicion1, int posicion2){
-    Material *aux;
+    material *aux;
     for (int jugador = 0; jugador < cantidad_jugadores; jugador++){
         aux = materiales[jugador][posicion1];
         materiales[jugador][posicion1] = materiales[jugador][posicion2];
@@ -162,9 +162,9 @@ void DatosMateriales::sumar_demolicion_materiales(edificio edificio, int jugador
     materiales[jugador][METAL]->cantidad += edificio.cantidad_metal/2;
 }
 
-bool DatosMateriales::reparacion_edificio(edificio edificio, int jugador){
+bool DatosMateriales::comprobar_materiales_reparacion(edificio edificio, int jugador){
     bool materiales_suficientes = false;
-    if  (materiales[jugador][PIEDRA]->cantidad >= edificio.cantidad_piedra/4 & materiales[jugador][MADERA]->cantidad >= edificio.cantidad_madera/4 & materiales[jugador][METAL]->cantidad >= edificio.cantidad_metal/4){
+    if  (materiales[jugador][PIEDRA]->cantidad >= edificio.cantidad_piedra/4 && materiales[jugador][MADERA]->cantidad >= edificio.cantidad_madera/4 && materiales[jugador][METAL]->cantidad >= edificio.cantidad_metal/4){
         materiales_suficientes = true;
         restar_reparacion_materiales(edificio, jugador);
     }

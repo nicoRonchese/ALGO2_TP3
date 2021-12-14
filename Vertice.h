@@ -6,14 +6,14 @@
 using namespace std;
 
 class Vertice {
-/*ATRIBUTOS*/
 private:
+    /*ATRIBUTOS*/
     int fila;
     int columna;
     int costo;
 
-/*MÉTODOS*/
 public:
+    /*MÉTODOS PÚBLICOS*/
     /*
     Constructor.
     * Pre: -.
@@ -21,11 +21,6 @@ public:
     */
     Vertice(int fila, int columna, int peso);
 
-    /*
-    * Pre:  -.
-    * Post: Devuelve la coordenada en forma de string.
-    */
-    string obtenerNombre();
 
     /*
     * Pre:  -.
@@ -38,19 +33,19 @@ public:
     * Pre:  -.
     * Post: Devuelve el costo.
     */
-    int obtenerCosto();
+    int obtener_costo();
 
     /*
     * Pre:  -.
     * Post: Devuelve la fila.
     */
-    int obtenerFila();
+    int obtener_fila();
 
     /*
     * Pre:  -.
     * Post: Devuelve la columna.
     */
-    int obtenerColumna();
+    int obtener_columna();
 
     /*
     Destructor

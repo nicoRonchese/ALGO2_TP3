@@ -1,68 +1,58 @@
 #ifndef GRAFOS_FLOYD_H
 #define GRAFOS_FLOYD_H
 #include <string>
+#include <iostream>
 #include "Lista.h"
 #include "Vertice.h"
-#include "Vertice.cpp"
-#include <iostream>
-
-const int INFINITO = 99999999;
-
-struct camino_especifico
-{
-    int **camino;
-    int costo;
-    int longitud;
-};
-
+#include "Structs Constantes.h"
 
 using namespace std;
 
 class Floyd {
 private:
     //Atributos
-    int ** matrizAdyacencia;
+    int ** matriz_adyacencia;
     Lista<Vertice> * vertices;
-    int cantidadVertices;
-    int ** matrizCostos;
-    int ** matrizCaminos;
+    int cantidad_vertices;
+    int ** matriz_costos;
+    int ** matriz_caminos;
 
     //Metodos privados
     /*
     * Pre: -.
     * Post: Crea la matriz de caminos y costos.
     */
-    void crearMatrizCamino_Costos(int ** matrizAdyacencia);
+    void crear_matriz_camino_costos(int ** matriz_adyacencia);
 
-    /*
+     /*
     * Pre: -.
     * Post: Agranda el camino pasado por parametro.
     */
-    void agrandarCaminoEspecifico(camino_especifico *datos, int fila , int columna);
+    void agrandar_camino_especifico(camino_especifico *datos, int fila , int columna);
 
     /*
-    * Pre: Recibe el nombre de un edificio valido.
+    * Pre:
     * Post: Libera la memoria de las matrices de costos y caminos.
     */
     void liberarMatrices();
 
-    /*
+     /*
     * Pre: -.
     * Post: Calcula las matrices de costos y caminos
     */
-    void calcularMatrices();
+    void calcular_matrices();
 
 public:
     //Métodos públicos
     //Constructor
-    Floyd(Lista<Vertice> *vertices, int ** matrizAdyacencia);
+    Floyd(Lista<Vertice> *vertices, int ** matriz_adyacencia);
 
     /*
     * Pre: Recibe un origen y un destino.
-    * Post: Muestra por pantalla el camino mínimo entre el origen y el destino, 
+    * Post: Muestra por pantalla el camino mínimo entre el origen y el destino,
     *       detallando su recorrido y peso.
     */
-    camino_especifico caminoMinimo(int origen, int destino);
+    camino_especifico camino_minimo(int origen, int destino);
 
     //Destructor
     ~Floyd();

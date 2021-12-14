@@ -2,22 +2,14 @@
 #define CASILLERO_H_INCLUDED
 #include <iostream>
 #include <string>
-#include "DatosMateriales.h"
+#include "Datos Materiales.h"
 #include "Material Colocable.h"
 #include "Edificio Colocable.h"
 #include "Contador Edificios.h"
+#include "Structs Constantes.h"
 
 
 using namespace std;
-const string CONSTRUIBLE = "C";
-const string INACCESIBLE = "L";
-const string TRANSITABLE = "T";
-const string LAGO = "L";
-const string CAMINO = "C";
-const string MUELLE = "M";
-const string BETUN = "B";
-const string TERRENO = "T";
-const string VACIO = "V";
 
 #define COLOR_CAMINO "\033[48;5;246m"
 #define COLOR_BETUN "\033[48;5;8m"
@@ -33,7 +25,7 @@ class Casillero{
     string* jugador_colocado;
     string tipo_casillero;
     string tipo_terreno;
-    bool casillero_marcado_camino;
+    bool casillero_marcado_camino = false;
 
  public:
    //Metódos públicos
@@ -42,9 +34,9 @@ class Casillero{
    //PRE:
    //POS: Asigna el tipo de casillero.
    Casillero(string tipo_terreno);
-   
+
    //PRE: Recibe un jugador valido.
-   //POS: Coloca el jugador en el casillero.
+   //POS: Muestra en terminal un mensaje indicando que tipo  de casillero es.
    void colocar_jugador(int jugador);
 
    //PRE: -.
@@ -80,7 +72,7 @@ class Casillero{
    virtual void colocar_edificio(EdificioColocable* edificio);
 
    //PRE: -.
-   //POS: En los casilleros coonstruibles y transitables verifica si hay un material 
+   //POS: En los casilleros coonstruibles y transitables verifica si hay un material
    //     o un edificio en ese casillero.
    virtual bool comprobar_vacio();
 
@@ -102,7 +94,7 @@ class Casillero{
 
    //PRE: -.
    //POS: Ataca el edificio ubicado en el casillero y muestra por pantalla el estado del mismo.
-   virtual void atacar_edificio(Contador_edificios** datos);
+   virtual void atacar_edificio(ContadorEdificios** datos);
 
    //PRE: -.
    //POS: Devuelve 'true' si el edificio tiene su vida total y 'false' de lo contrario.

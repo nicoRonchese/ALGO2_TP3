@@ -23,7 +23,7 @@ public:
     * Pre: -.
     * Post: Recolecta los materiales correspondientes al aserradero.
     */
-    void recolectar(DatosMateriales* materiales);
+    void recolectar(DatosMateriales* materiales, int* energia);
 
     /*
     Destructor

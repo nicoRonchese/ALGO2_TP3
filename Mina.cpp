@@ -11,4 +11,9 @@ void Mina::mostrar(){
  cout << "Tengo " << vida << " de vida y mi propietario es el jugador " << propietario + 1 << endl;
 }
 
+void Mina::recolectar(DatosMateriales* materiales, int* energia){
+ materiales->sumar_materiales(PIEDRA, PRODUCCION_MINA_CANTIDAD, propietario);
+ cout << nombre << " produjo " << PRODUCCION_MINA_CANTIDAD << " de piedra" << endl;
+}
+
 Mina::~Mina(){}

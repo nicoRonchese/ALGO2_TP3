@@ -22,7 +22,7 @@ class Escuela : public EdificioColocable{
     * Pre: -.
     * Post: Recolecta los materiales correspondientes a la escuela.
     */
-    void recolectar(DatosMateriales* materiales);
+    void recolectar(DatosMateriales* materiales, int* energia);
 
     /*
     Destructor

@@ -11,4 +11,9 @@ void Fabrica::mostrar(){
     cout << "Tengo "<< vida <<" de vida y mi propietario es el jugador "<< propietario + 1 << endl;
 }
 
+void Fabrica::recolectar(DatosMateriales* materiales, int* energia){
+ materiales->sumar_materiales(METAL, PRODUCCION_FABRICA_CANTIDAD, propietario);
+ cout << nombre << " produjo " << PRODUCCION_FABRICA_CANTIDAD << " de metal" << endl;
+}
+
 Fabrica::~Fabrica(){}

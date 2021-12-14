@@ -1,16 +1,9 @@
 #ifndef CASILLERO_CONSTRUIBLE_H_INCLUDED
 #define CASILLERO_CONSTRUIBLE_H_INCLUDED
 #include "Casillero.h"
-#include "DatosMateriales.h"
-
-
-const int PRODUCCION_ASERRADERO_CANTIDAD = 25;
-const int PRODUCCION_FABRICA_CANTIDAD = 40;
-const int PRODUCCION_MINA_CANTIDAD = 15;
-const int PRODUCCION_ESCUELA_CANTIDAD = 25;
-const int PRODUCCION_MINA_ORO_CANTIDAD = 50;
-const int PRODUCCION_PLANTA_ELECTRICA_CANTIDAD = 15;
-
+#include "Datos Materiales.h"
+#include "Contador Edificios.h"
+#include "Structs Constantes.h"
 
 class CasilleroConstruible : public Casillero {
   private:
@@ -36,7 +29,7 @@ class CasilleroConstruible : public Casillero {
 
     /*
     * Pre: -.
-    * Post: Imprime por el signo del objeto ubicado en el casillero y el color correspondiente al 
+    * Post: Imprime por el signo del objeto ubicado en el casillero y el color correspondiente al
     *       terreno.
     */
     void mostrar_en_mapa();
@@ -65,12 +58,12 @@ class CasilleroConstruible : public Casillero {
     * Post: Demuele el edificio y devuelve su nombre.
     */
     string demoler_edificio();
-    
+
     /*
     * Pre: -.
     * Post: Ataca el edificio ubicado en el casillero y muestra por pantalla el estado del mismo.
     */
-    void atacar_edificio(Contador_edificios** edificios_construidos);
+    void atacar_edificio(ContadorEdificios** edificios_construidos);
 
     /*
     * Pre: -.
@@ -89,7 +82,7 @@ class CasilleroConstruible : public Casillero {
     * Post: Recolecta los materiales producidos por el edificio del casillero. Muestra por pantalla
     *       lo recolectado.
     */
-    void recolectar_producido(DatosMateriales* materiales, int* energia, int jugador);
+    void recolectar_producido(DatosMateriales* materiales, int* energia);
 
     /*
     * Pre: -.
@@ -111,7 +104,7 @@ class CasilleroConstruible : public Casillero {
     ~CasilleroConstruible();
 
   private:
-  
+
     //Métodos privados
     /*
     * Pre: -.

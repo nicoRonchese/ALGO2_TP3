@@ -1,6 +1,6 @@
 #include "Contador Edificios.h"
 
-int Contador_edificios::devolver_cantidad_construida(string nombre){
+int ContadorEdificios::devolver_cantidad_construida(string nombre){
  int cantidad_construida;
  if (nombre==ESCUELA)
     cantidad_construida = cantidad_escuelas;
@@ -17,7 +17,7 @@ int Contador_edificios::devolver_cantidad_construida(string nombre){
  return cantidad_construida;
 }
 
-void Contador_edificios::sumar_edificio(string nombre){
+void ContadorEdificios::sumar_edificio(string nombre){
  if (nombre==ESCUELA){
     cantidad_escuelas++;
  }
@@ -38,7 +38,7 @@ void Contador_edificios::sumar_edificio(string nombre){
  }
 }
 
-void Contador_edificios::restar_edificio(string nombre){
+void ContadorEdificios::restar_edificio(string nombre){
  if (nombre==ESCUELA)
     cantidad_escuelas--;
  else if (nombre==FABRICA)
@@ -51,4 +51,9 @@ void Contador_edificios::restar_edificio(string nombre){
     cantidad_plantas_electricas--;
  else if (nombre==ASERRADERO)
     cantidad_aserraderos--;
+}
+
+int ContadorEdificios::devolver_cantidad_edificios_construidos(){
+ int cantidad_total = cantidad_aserraderos + cantidad_escuelas + cantidad_fabricas + cantidad_minas + cantidad_minas_oro + cantidad_plantas_electricas;
+ return cantidad_total;
 }
